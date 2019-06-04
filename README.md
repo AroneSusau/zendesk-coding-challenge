@@ -44,13 +44,17 @@ The following section contains links to super useful resources I found while bui
 
 Zendesk docs quick links
 [Tickets](https://developer.zendesk.com/rest_api/docs/support/tickets#show-ticket)
+
 [Basic Authentication](https://developer.zendesk.com/rest_api/docs/support/introduction#basic-authentication)
+
 [Pagination](https://developer.zendesk.com/rest_api/docs/support/introduction#pagination)
 
 [Node Best Practices](https://github.com/i0natan/nodebestpractices)
+
 Awesome tips that helped make my code more clean organised.
 
 [Github MD Files Formatting](https://help.github.com/en/articles/basic-writing-and-formatting-syntax)
 
 [Jest Expect Refernce](https://jestjs.io/docs/en/expect.html)
+
 [Readline-sync NPM Refernce](https://www.npmjs.com/package/readline-sync)

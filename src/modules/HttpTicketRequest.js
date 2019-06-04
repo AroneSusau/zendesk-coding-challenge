@@ -10,20 +10,18 @@ class HttpTicketsRequest {
 	 * Login to Zendesk account using node-fetch GET with Basic Authentication, retriving Tickets,
 	 * split via pagination.
 	 *
-	 * @param {Number} pageNumber Current page numbber.
-	 * @param {Number} perPage Number of results returned per page.
 	 * @returns {Promise} Returns Promise from fetch request.
 	 */
-	fetchZendeskTickets(pageNumber, perPage) {
-		this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json?page=${pageNumber}&per_page=${perPage}`
+	async fetchZendeskTickets() {
+		this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json`
 		return fetch(this.url, { headers: this.headers }).then(result => result.json())
 	}
 
 	/**
 	 * Sets login credentials and authorisation header option.
 	 *
-	 * @param {Number} pageNumber Current page numbber.
-	 * @param {Number} perPage Number of results returned per page.
+	 * @param {String} username Zendesk account username.
+	 * @param {String} password Zendesk account password.
 	 */
 	setLoginCredentials(username, password) {
 		this.login = new LoginCredentials(username, password)

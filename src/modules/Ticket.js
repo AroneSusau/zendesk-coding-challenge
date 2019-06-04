@@ -16,7 +16,7 @@ class Ticket {
 	/**
 	 * Returns summary details for Ticket as a string.
 	 */
-	toStringReduced() {
+	toStringSummary() {
 		return (
 			'Id: ' +
 			this.id +
@@ -31,7 +31,7 @@ class Ticket {
 	/**
 	 * Returns all details for Ticket as a string.
 	 */
-	toStringFull() {
+	toStringAllDetails() {
 		return (
 			'Rquester: ' +
 			this.id +

@@ -56,7 +56,7 @@ The following section contains links to super useful resources I found while bui
 * Great reference that helped me make this page look how is it at the moment.
   * [Github MD Files Formatting](https://help.github.com/en/articles/basic-writing-and-formatting-syntax)
 
-* A mustt need when writing out my unit tests as its something I'm still trying to get better at.
+* A must need when writing out my unit tests as it is something I'm still improving at everyday!
   * [Jest Expect Refernce](https://jestjs.io/docs/en/expect.html)
 
 * I had trouble implementing my own synchronous readline but found this package easy to use and implement.

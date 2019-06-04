@@ -38,9 +38,11 @@ const viewAllTickets = async () => {
 
 	requester.setLoginCredentials(username, password)
 	apiResponse = await requester.fetchZendeskTickets()
-	ticketsList = requester.formatTickets(apiResponse.tickets)
 
-	ticketsList.forEach(paginateTicketOutput)
+	if (apiResponse.tickets != undefined) {
+		ticketsList = requester.formatTickets(apiResponse.tickets)
+		ticketsList.forEach(paginateTicketOutput)
+	}
 }
 
 const viewASingleTickets = () => {}

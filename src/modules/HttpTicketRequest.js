@@ -14,7 +14,24 @@ class HttpTicketsRequest {
 	 */
 	async fetchZendeskTickets() {
 		this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json`
-		return fetch(this.url, { headers: this.headers }).then(result => result.json())
+		return fetch(this.url, { headers: this.headers })
+			.then(this.handlesErrors)
+			.then(result => result.json())
+			.catch(err => {
+				console.log(err)
+			})
+	}
+
+	handlesErrors(response) {
+		if (!response.ok) {
+			console.log('API Request Issue..')
+		}
+
+		if (response.status == 401) {
+			console.log(response.statusText, ": Couldn't authenticate you")
+		}
+
+		return response
 	}
 
 	/**

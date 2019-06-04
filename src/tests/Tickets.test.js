@@ -10,7 +10,7 @@ test('API returns object when provided correct credentials', async () => {
 test('API returns failed authentication when provided incorrect credentials.', async () => {
 	const requester = new HttpTicketRequest()
 	requester.username = 'username'
-	requester.username = 'password'
+	requester.password = 'password'
 	const list = await requester.fetchZendeskTickets()
 	expect(list).toEqual({
 		error: "Couldn't authenticate you"

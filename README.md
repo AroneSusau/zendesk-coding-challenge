@@ -50,12 +50,14 @@ Zendesk docs quick links
 
 * [Pagination](https://developer.zendesk.com/rest_api/docs/support/introduction#pagination)
 
+Awesome tips that helped make my code more clean organised.
 * [Node Best Practices](https://github.com/i0natan/nodebestpractices)
 
-Awesome tips that helped make my code more clean organised.
-
+Great reference that helped me make this page look how is it at the moment.
 * [Github MD Files Formatting](https://help.github.com/en/articles/basic-writing-and-formatting-syntax)
 
+A mustt need when writing out my unit tests as its something I'm still trying to get better at.
 * [Jest Expect Refernce](https://jestjs.io/docs/en/expect.html)
 
+I had trouble implementing my own synchronous readline but found this package easy to use and implement.
 * [Readline-sync NPM Refernce](https://www.npmjs.com/package/readline-sync)

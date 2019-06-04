@@ -1,6 +1,6 @@
 'use-strict'
 
-class loginCredentials {
+class LoginCredentials {
   /**
    * LoginCredentials Class
    *
@@ -14,4 +14,4 @@ class loginCredentials {
   }
 }
 
-module.exports = loginCredentials
+module.exports = LoginCredentials

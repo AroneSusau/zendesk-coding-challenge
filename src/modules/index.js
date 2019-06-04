@@ -1,6 +1,6 @@
 'use-strict'
-const httpTicketRequest = require('./httpTicketRequest')
-const requester = new httpTicketRequest()
+const HttpTicketRequest = require('./HttpTicketRequest')
+const requester = new HttpTicketRequest()
 const console = require('console')
 const readline = require('readline-sync')
 
@@ -8,11 +8,19 @@ const readline = require('readline-sync')
  * Prints menu help to console.
  */
 const printMenu = () => {
-  console.log('\nPress 1 to view all tickets')
-  console.log('Press 2 to view a ticket')
-  console.log('Type quit to exit')
+  console.log('\n• Press 1 to view all tickets')
+  console.log('• Press 2 to view a ticket')
+  console.log('• Type "exit" to close the program')
 }
 
+/**
+ * Paginates list of tickets if the list contains more
+ * than 25 tickets.
+ *
+ * @param {Ticket} ticket Individial ticket from Array.
+ * @param {Number} index Current index value of array.
+ * @param {Array} list
+ */
 const paginateTicketOutput = (ticket, index, list) => {
   if (list.length < 25) {
     console.log(ticket.toStringSummary())
@@ -26,17 +34,13 @@ const paginateTicketOutput = (ticket, index, list) => {
 }
 
 /**
- *
+ * Makes a
  */
 const viewAllTickets = async () => {
-  let username = 'arone.s@live.com.au'
-  let password = 'Arone2019@'
   let apiResponse
   let ticketsList
 
   console.log('\nRetriving tickets from zendesk..\n')
-
-  requester.setLoginCredentials(username, password)
   apiResponse = await requester.fetchZendeskTickets()
 
   if (apiResponse.tickets != undefined) {
@@ -51,7 +55,14 @@ const viewASingleTickets = () => {}
  * Program entry point.
  */
 const main = async () => {
-  console.log('Welcome to the ticket viewer.')
+  console.log('Welcome to the ticket viewer')
+
+  const username = readline.question('\nPlease enter your username..\n>')
+  const password = readline.question('\nPlease enter your password..\n>', {
+    hideEchoBack: true
+  })
+  requester.setLoginCredentialsAndHeaders(username, password)
+
   let ticketViewInUse = true
 
   while (ticketViewInUse) {

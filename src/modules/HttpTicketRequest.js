@@ -2,13 +2,13 @@
 
 const fetch = require('node-fetch')
 const fetchHeaders = require('fetch-headers')
-const loginCredentials = require('./loginCredentials')
-const ticket = require('./ticket')
+const LoginCredentials = require('./LoginCredentials')
+const ticket = require('./Ticket')
 const console = require('console')
 
-class httpTicketRequest {
+class HttpTicketRequest {
   /**
-   * Login to Zendesk account using node-fetch GET with Basic Authentication, retriving Tickets,
+   * Login to Zendesk account using node-fetch with Basic Authentication, retriving Tickets,
    * split via pagination.
    *
    * @returns {Promise} Returns Promise from fetch request.
@@ -41,10 +41,11 @@ class httpTicketRequest {
    * @param {String} username Zendesk account username.
    * @param {String} password Zendesk account password.
    */
-  setLoginCredentials(username, password) {
-    this.login = new loginCredentials(username, password)
+  setLoginCredentialsAndHeaders(username, password) {
+    this.login = new LoginCredentials(username, password)
     this.headers = new fetchHeaders()
     this.headers.append('Authorization', 'Basic ' + this.login.base64)
+    this.headers.append('method', 'post')
   }
 
   /**
@@ -61,4 +62,4 @@ class httpTicketRequest {
   }
 }
 
-module.exports = httpTicketRequest
+module.exports = HttpTicketRequest

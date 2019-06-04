@@ -20,9 +20,9 @@ class Ticket {
     return (
       'Id: ' +
       this.id +
-      'Subject: '.padStart(10, ' ') +
+      ' - Subject: ' +
       this.subject +
-      'Description: '.padStart(10, '') +
+      ' - Description: ' +
       this.description.trim().substr(0, 20) +
       '...'
     )

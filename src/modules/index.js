@@ -1,6 +1,6 @@
 'use-strict'
-const HttpTicketRequest = require('./HttpTicketRequest')
-const requester = new HttpTicketRequest()
+const httpTicketRequest = require('./httpTicketRequest')
+const requester = new httpTicketRequest()
 const console = require('console')
 const readline = require('readline-sync')
 
@@ -56,7 +56,7 @@ const main = async () => {
 
 	while (ticketViewInUse) {
 		let userAction = readline.question(
-			'\nType "menu" to view options or "exit" to end the program.\n\n>'
+			'\nType "menu" to view options or "exit" to close the program.\n\n>'
 		)
 
 		if (userAction === 'menu') {

@@ -1,0 +1,21 @@
+{
+  "name": "Zendesk-Coding-Challange",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fetch-headers": "^2.0.0",
+    "jest": "^24.8.0",
+    "node-fetch": "^2.6.0",
+    "readline-sync": "^1.4.9"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  }
+}

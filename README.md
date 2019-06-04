@@ -43,18 +43,19 @@ npm run test
 The following section contains links to super useful resources I found while building this application.
 
 Zendesk docs quick links
-[Tickets](https://developer.zendesk.com/rest_api/docs/support/tickets#show-ticket)
 
-[Basic Authentication](https://developer.zendesk.com/rest_api/docs/support/introduction#basic-authentication)
+* [Tickets](https://developer.zendesk.com/rest_api/docs/support/tickets#show-ticket)
 
-[Pagination](https://developer.zendesk.com/rest_api/docs/support/introduction#pagination)
+* [Basic Authentication](https://developer.zendesk.com/rest_api/docs/support/introduction#basic-authentication)
 
-[Node Best Practices](https://github.com/i0natan/nodebestpractices)
+* [Pagination](https://developer.zendesk.com/rest_api/docs/support/introduction#pagination)
+
+* [Node Best Practices](https://github.com/i0natan/nodebestpractices)
 
 Awesome tips that helped make my code more clean organised.
 
-[Github MD Files Formatting](https://help.github.com/en/articles/basic-writing-and-formatting-syntax)
+* [Github MD Files Formatting](https://help.github.com/en/articles/basic-writing-and-formatting-syntax)
 
-[Jest Expect Refernce](https://jestjs.io/docs/en/expect.html)
+* [Jest Expect Refernce](https://jestjs.io/docs/en/expect.html)
 
-[Readline-sync NPM Refernce](https://www.npmjs.com/package/readline-sync)
+* [Readline-sync NPM Refernce](https://www.npmjs.com/package/readline-sync)

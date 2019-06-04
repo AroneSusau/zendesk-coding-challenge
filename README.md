@@ -1,5 +1,16 @@
 # Zendesk-Coding-Challange
 
+A coding challenge provided by the Zendesk team for an internship opportunity.
+
+## Challange Functional Requirements
+
+- Connect to the Zendesk API.
+- Request the tickets for your account.
+- Page through tickets when more than 25 are returned.
+- Display tickets in a list.
+- Display individual ticket details.
+- Happy path tests provided (minimum).
+
 ## Prerequisite Installations
 
 - NodeJS v10.16.0 or greater
@@ -26,3 +37,18 @@ node src/modules/App
 ```
 npm run test
 ```
+
+### Learning Resources
+
+The following section contains links to super useful resources I found while building this application.
+
+Zendesk docs quick links
+[Tickets](https://developer.zendesk.com/rest_api/docs/support/tickets#show-ticket)
+[Basic Authentication](https://developer.zendesk.com/rest_api/docs/support/introduction#basic-authentication)
+[Pagination](https://developer.zendesk.com/rest_api/docs/support/introduction#pagination)
+
+[Node Best Practices](https://github.com/i0natan/nodebestpractices)
+Awesome tips that helped make my code more clean organised.
+
+[Jest Expect Refernce](https://jestjs.io/docs/en/expect.html)
+[Readline-sync NPM Refernce](https://www.npmjs.com/package/readline-sync)

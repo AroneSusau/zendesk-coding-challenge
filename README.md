@@ -38,7 +38,7 @@ node src/modules/index
 npm run test
 ```
 
-### Learning Resources
+## Learning Resources
 
 The following section contains links to super useful resources I found while building this application.
 

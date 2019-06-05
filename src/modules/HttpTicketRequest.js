@@ -83,6 +83,12 @@ class HttpTicketRequest {
     })
   }
 
+  async retriveTickets(isMulti, ticketId) {
+    isMulti ? this.setUrlForAllTickets() : this.setUrlForSingleTicket(ticketId)
+    let apiResponse = await this.fetchZendeskTickets()
+    return isMulti ? apiResponse.tickets : apiResponse.ticket
+  }
+
   setUrlForAllTickets() {
     this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json`
   }

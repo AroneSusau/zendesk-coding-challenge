@@ -17,6 +17,8 @@ class Ticket {
 
   /**
    * Returns summary details for Ticket as a string.
+   *
+   * @returns {String} Summary ticket details.
    */
   toStringSummary() {
     const id = '\x1b[2m' + this.id
@@ -33,17 +35,20 @@ class Ticket {
 
   /**
    * Returns all details for Ticket as a string.
+   *
+   * @returns {String} All ticket details.
    */
   toStringAllDetails() {
     return (
-      'Requester: ' +
+      'Requester: \x1b[2m' +
       this.id +
-      '\nId: ' +
+      '\n\x1b[0mId: \x1b[2m' +
       this.requesterId +
-      '\nSubject: ' +
+      '\n\x1b[0mSubject: \x1b[2m' +
       this.subject +
-      '\n\n' +
-      this.description
+      '\x1b[0m\n\nDescription\n\x1b[2m' +
+      this.description +
+      '\x1b[0m'
     )
   }
 }

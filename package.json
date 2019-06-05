@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/modules/index",
+    "start": "node src/index",
     "test": "jest"
   },
   "keywords": [],

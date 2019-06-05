@@ -33,11 +33,11 @@ class Ticket {
    */
   toStringAllDetails() {
     return (
-      'Rquester: ' +
+      'Requester: ' +
       this.id +
-      'Id: ' +
+      '\nId: ' +
       this.requesterId +
-      'Subject: ' +
+      '\nSubject: ' +
       this.subject +
       '\n\n' +
       this.description

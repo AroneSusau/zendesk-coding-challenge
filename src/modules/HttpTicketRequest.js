@@ -8,13 +8,21 @@ const console = require('console')
 
 class HttpTicketRequest {
   /**
+   * HttpTicketRequest Class
+   */
+  constructor() {
+    this.headers = null
+    this.login = null
+    this.url = ''
+  }
+
+  /**
    * Login to Zendesk account using node-fetch with Basic Authentication, retriving Tickets,
    * split via pagination.
    *
    * @returns {Promise} Returns Promise from fetch request.
    */
   async fetchZendeskTickets() {
-    this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json`
     return fetch(this.url, { headers: this.headers })
       .then(this.handlesErrors)
       .then(result => result.json())
@@ -23,13 +31,23 @@ class HttpTicketRequest {
       })
   }
 
+  /**
+   * Basic error handling for the fetch request to the Zendesk API.
+   *
+   * @param {Object} response Response returned from fetch request to the Zendesk API.
+   */
   handlesErrors(response) {
     if (!response.ok) {
       console.log('API Request Issue..')
     }
 
-    if (response.status == 401) {
-      console.log(response.statusText, ": Couldn't authenticate you")
+    switch (response.status) {
+      case 401:
+        console.log(response.statusText, ": Couldn't authenticate you")
+        break
+      case 404:
+        console.log(response.statusText, ': Page not found')
+        break
     }
 
     return response
@@ -45,7 +63,7 @@ class HttpTicketRequest {
     this.login = new LoginCredentials(username, password)
     this.headers = new fetchHeaders()
     this.headers.append('Authorization', 'Basic ' + this.login.base64)
-    this.headers.append('method', 'post')
+    this.headers.append('method', 'POST')
   }
 
   /**
@@ -59,6 +77,14 @@ class HttpTicketRequest {
     return ticketsList.map(ticketObject => {
       return new ticket(ticketObject)
     })
+  }
+
+  setUrlForAllTickets() {
+    this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json`
+  }
+
+  setUrlForSingleTicket(id) {
+    this.url = `https://aronesusau.zendesk.com/api/v2/tickets/${id}.json`
   }
 }
 

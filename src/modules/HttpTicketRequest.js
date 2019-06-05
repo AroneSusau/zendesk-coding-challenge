@@ -37,18 +37,23 @@ class HttpTicketRequest {
    * @param {Object} response Response returned from fetch request to the Zendesk API.
    */
   handlesErrors(response) {
-    if (!response.ok) {
+    if (!response.ok && process.env.NODE_ENV !== 'test') {
       console.log('\x1b[31mAPI Request Issue..')
+      switch (response.status) {
+        case 401:
+          console.log(response.statusText, ": Couldn't authenticate you\x1b[0m")
+          break
+        case 404:
+          console.log(response.statusText, ': Ticket not found\x1b[0m')
+          break
+        case 400:
+          console.log(response.statusText, ': Invalid Ticket Id\x1b[0m')
+          break
+        default:
+          console.log(response.statusText, '\x1b[0m')
+      }
     }
 
-    switch (response.status) {
-      case 401:
-        console.log(response.statusText, ": Couldn't authenticate you\x1b[0m")
-        break
-      case 404:
-        console.log(response.statusText, ': Page not found\x1b[0m')
-        break
-    }
     return response
   }
 

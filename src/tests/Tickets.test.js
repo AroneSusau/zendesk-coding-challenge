@@ -1,32 +1,43 @@
 'use-strict'
-const HttpTicketRequest = require('../modules/HttpTicketRequest')
-const Ticket = require('./../modules/Ticket')
+const Ticket = require('../modules/Ticket')
 
-test('API returns object when provided correct credentials.', async () => {
-  const requester = new HttpTicketRequest()
-  requester.setUrlForAllTickets()
-  requester.setLoginCredentialsAndHeaders('arone.s@live.com.au', 'Arone2019@')
-  const list = await requester.fetchZendeskTickets()
-  expect(list).not.toBeNull()
-})
-
-test('API returns failed authentication when provided incorrect credentials.', async () => {
-  const requester = new HttpTicketRequest()
-  requester.setLoginCredentialsAndHeaders('username', 'password')
-  requester.setUrlForAllTickets()
-  const apiResponse = await requester.fetchZendeskTickets()
-  expect(apiResponse).toEqual({
-    error: "Couldn't authenticate you"
+describe('Ticket', () => {
+  it('should return an instanceof a Ticket', () => {
+    const mockTicket = new Ticket({})
+    expect(mockTicket instanceof Ticket).toBe(true)
   })
-})
 
-test('Ticket should be formatted into the correct data structure with defaults set.', () => {
-  const testTicket = { testAttribute: null }
-  const result = new Ticket(testTicket)
-  expect(result).toEqual({
-    id: 0,
-    subject: 'None',
-    description: 'None',
-    requesterId: 0
+  it('should format the tickets into the correct structure when provided an unformatted ticket object.', () => {
+    const mockTicket = { testAttribute: null }
+    expect(new Ticket(mockTicket)).toEqual({
+      id: 0,
+      subject: 'None',
+      description: 'None',
+      requesterId: 0
+    })
+  })
+
+  it('should not change the tickets attributes value if the values are not null', () => {
+    const mockTicket = {
+      id: 123,
+      subject: 'Hello World!',
+      description: 'foo bar',
+      requester_id: 123123
+    }
+    expect(new Ticket(mockTicket)).toEqual({
+      id: 123,
+      subject: 'Hello World!',
+      description: 'foo bar',
+      requesterId: 123123
+    })
+  })
+
+  it('should return a Ticket object with default attributes when the constructor is passed an invalid value', () => {
+    expect(new Ticket(undefined)).toEqual({
+      id: 0,
+      subject: 'None',
+      description: 'None',
+      requesterId: 0
+    })
   })
 })

@@ -7,6 +7,8 @@ class Ticket {
    * @param {Object} object Ticket object retured from Zendesk tickets API.
    */
   constructor(object) {
+    const objectType = typeof object
+    object = objectType === 'object' ? object : {}
     this.id = object.id || 0
     this.subject = object.subject || 'None'
     this.description = object.description || 'None'

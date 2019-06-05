@@ -33,7 +33,7 @@ class Display {
   /**
    * Prints welcome message when program is first started.
    */
-  printProgramOpen() {
+  printWelcomeMessage() {
     console.log(
       `${this.bright}${this.fgMagenta}Welcome to the ticket viewer${this.reset}`
     )
@@ -42,7 +42,7 @@ class Display {
   /**
    * Prints farewell message when program is exited.
    */
-  printProgramClose() {
+  printGoodbyeMessage() {
     console.log(
       `${this.fgGreen + this.bright}Thank you for using the viewer :)${this.fgCyan +
         this.bright} Goodbye!\n`
@@ -53,7 +53,7 @@ class Display {
   /**
    * Prints invalid warning when invalid command entered.
    */
-  printInvalidCommand() {
+  printInvalidInputMessage() {
     console.log(`\n${this.dim}Sorry, invalid command entered!${this.reset}`)
   }
 
@@ -64,7 +64,7 @@ class Display {
     console.log(`\n${this.fgYellow}Retriving tickets from zendesk..${this.reset}`)
   }
 
-  printSuccess() {
+  printSuccessMessage() {
     console.log(`${this.fgGreen}Sucessfully Retrived Tickets${this.reset}\n`)
   }
 

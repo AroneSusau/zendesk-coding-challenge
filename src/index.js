@@ -8,7 +8,7 @@ const requester = new HttpTicketRequest()
  * Program entry point
  */
 ;(async function main() {
-  view.printProgramOpen()
+  view.printWelcomeMessage()
   let programRunning = true
 
   let username = view.getCustomInput('\nPlease enter username..\n>')
@@ -23,14 +23,14 @@ const requester = new HttpTicketRequest()
     if (input === 'menu') {
       view.printMenu()
     } else if (input === 'exit') {
-      view.printProgramClose()
+      view.printGoodbyeMessage()
       programRunning = false
     } else if (input === '1') {
       // Get all tickets from Zendesk API.
       view.printRetrivingTickets()
       let response = await requester.retriveTickets(true)
       if (response != null) {
-        view.printSuccess()
+        view.printSuccessMessage()
         view.multiTicketOutput(requester.formatTickets(response))
       }
     } else if (input === '2') {
@@ -39,11 +39,11 @@ const requester = new HttpTicketRequest()
       view.printRetrivingTickets()
       let response = await requester.retriveTickets(false, ticketId)
       if (response != null) {
-        view.printSuccess()
+        view.printSuccessMessage()
         view.singleTicketOutput(response)
       }
     } else {
-      view.printInvalidCommand()
+      view.printInvalidInputMessage()
     }
   }
 })()

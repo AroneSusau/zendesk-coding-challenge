@@ -29,7 +29,7 @@ npm install
 4. Run the program with the following code.
 
 ```
-node src/modules/index
+npm run start
 ```
 
 5. Run the tests with the following code.

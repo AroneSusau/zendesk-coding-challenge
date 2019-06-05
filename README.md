@@ -29,13 +29,13 @@ npm install
 4. Run the program with the following code.
 
 ```
-npm run start
+npm start
 ```
 
 5. Run the tests with the following code.
 
 ```
-npm run test
+npm test
 ```
 
 ## Learning Resources
@@ -63,4 +63,8 @@ The following section contains links to resources I found super useful while bui
   - [Jest Expect Refernce](https://jestjs.io/docs/en/expect.html)
 
 - I had trouble implementing my own synchronous readline but found this package easy to use and implement.
+
   - [Readline-sync NPM Refernce](https://www.npmjs.com/package/readline-sync)
+
+- Basic reference I found on stackoverflow for changing terminal output colours.
+  - [Terminal Colour Reference](https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color)

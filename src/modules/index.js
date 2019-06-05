@@ -65,25 +65,26 @@ const viewTicketsManager = async displayTicketsMethod => {
  * Sets the user credentials for Zendesk API authentication.
  */
 const setInitialCredentials = () => {
-  const username = readline.question('\nPlease enter your username..\n>')
-  const password = readline.question('\nPlease enter your password..\n>', {
-    hideEchoBack: true
-  })
-  requester.setLoginCredentialsAndHeaders(username, password)
+  // LEAVE AS IS FOR TESTING PURPOSES - add username/password variables later.
+  // const username = readline.question('\nPlease enter your username..\n>')
+  // const password = readline.question('\nPlease enter your password..\n>', {
+  //   hideEchoBack: true
+  // })
+  requester.setLoginCredentialsAndHeaders('Arone.s@live.com.au', 'Arone2019@')
 }
 
 /**
  * Program entry point.
  */
 const main = async () => {
-  console.log('Welcome to the ticket viewer')
+  console.log('\x1b[35m\x1b[1mWelcome to the ticket viewer\x1b[0m')
 
   let ticketViewerInUse = true
   setInitialCredentials()
 
   while (ticketViewerInUse) {
     let userAction = readline.question(
-      '\nType "menu" to view options or "exit" to close the program.\n>'
+      '\nType "\x1b[34mmenu\x1b[0m" to view options or "\x1b[34mexit\x1b[0m" to close the program.\n>'
     )
 
     if (userAction === 'menu') {
@@ -99,7 +100,9 @@ const main = async () => {
       await viewTicketsManager(singleTicketOutput)
     } else if (userAction === 'exit') {
       // Close program
-      console.log('\nThank you for using the viewer :)')
+      console.log(
+        '\n\x1b[32m\x1b[1mThank you for using the viewer :)\x1b[36m\x1b[1m Goodbye!'
+      )
       ticketViewerInUse = false
     } else {
       console.log('\nSorry, invalid command entered!')

@@ -12,7 +12,7 @@ class LoginCredentials {
     password = typeof password == 'string' ? password : ''
     this.username = username
     this.password = password
-    this.base64 = Buffer.from(this.username + ':' + this.password).toString('base64')
+    this.base64 = Buffer.from(username + ':' + password).toString('base64')
   }
 }
 

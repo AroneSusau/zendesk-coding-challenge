@@ -3,7 +3,7 @@
 const fetch = require('node-fetch')
 const fetchHeaders = require('fetch-headers')
 const LoginCredentials = require('./LoginCredentials')
-const ticket = require('./Ticket')
+const Ticket = require('./Ticket')
 const console = require('console')
 
 class HttpTicketRequest {
@@ -17,8 +17,7 @@ class HttpTicketRequest {
   }
 
   /**
-   * Login to Zendesk account using node-fetch with Basic Authentication, retriving Tickets,
-   * split via pagination.
+   * Basic fetch request to Zendesk API using Basic Authentication.
    *
    * @returns {Promise} Returns Promise from fetch request.
    */
@@ -79,20 +78,38 @@ class HttpTicketRequest {
    */
   formatTickets(ticketsList) {
     return ticketsList.map(ticketObject => {
-      return new ticket(ticketObject)
+      return new Ticket(ticketObject)
     })
   }
 
-  async retriveTickets(isMulti, ticketId) {
-    isMulti ? this.setUrlForAllTickets() : this.setUrlForSingleTicket(ticketId)
+  /**
+   * Makes fetch request to Zendesk API for tickets
+   *
+   * @param {Boolean} isRequestingMultiple Flag to check if the request is for multiple tickets or a single ticket
+   * @param {number} ticketId Sets the id for the requested ticket if the isMulti flag is true.
+   *
+   * @returns {Mixed} Returns a single ticket object or the full tickets list depending on the isMulti flag.
+   */
+  async retriveTickets(isRequestingMultiple, ticketId) {
+    isRequestingMultiple
+      ? this.setUrlForAllTickets()
+      : this.setUrlForSingleTicket(ticketId)
     let apiResponse = await this.fetchZendeskTickets()
-    return isMulti ? apiResponse.tickets : apiResponse.ticket
+    return isRequestingMultiple ? apiResponse.tickets : new Ticket(apiResponse.ticket)
   }
 
+  /**
+   * Sets the url to retrive all tickets from the Zendesk API.
+   */
   setUrlForAllTickets() {
     this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json`
   }
 
+  /**
+   * Sets the url to retrive a single ticket by its id from the Zendesk API.
+   *
+   * @param {number} id Id of ticket to be requested.
+   */
   setUrlForSingleTicket(id) {
     this.url = `https://aronesusau.zendesk.com/api/v2/tickets/${id}.json`
   }

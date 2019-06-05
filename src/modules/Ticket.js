@@ -22,10 +22,8 @@ class Ticket {
    */
   toStringSummary() {
     const id = '\x1b[2m' + this.id
-
     const subjectGap = 5 - this.id.toString().length
     const subject = ''.padStart(subjectGap, ' ') + this.subject
-
     const descriptionGap = 50 - this.subject.length
     const description =
       ''.padStart(descriptionGap, ' ') + this.description.substr(0, 50).trim()

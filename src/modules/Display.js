@@ -7,13 +7,11 @@ class Display {
    * Display Constructor
    */
   constructor() {
-    this.ticketsPerPage = 10
-    this.ticketsPageLimit = 25
     // console colours
     this.reset = '\x1b[0m'
     this.bright = '\x1b[1m'
     this.dim = '\x1b[2m'
-    this.underscore = '\x1b[4m'
+    this.red = '\x1b[31m'
     this.fgGreen = '\x1b[32m'
     this.fgYellow = '\x1b[33m'
     this.fgBlue = '\x1b[34m'
@@ -35,7 +33,7 @@ class Display {
    */
   printWelcomeMessage() {
     console.log(
-      `${this.bright}${this.fgMagenta}Welcome to the ticket viewer${this.reset}`
+      `${this.bright + this.fgMagenta}Welcome to the ticket viewer${this.reset}`
     )
   }
 
@@ -64,6 +62,9 @@ class Display {
     console.log(`\n${this.fgYellow}Retriving tickets from zendesk..${this.reset}`)
   }
 
+  /**
+   * Simple update message for successful API requests.
+   */
   printSuccessMessage() {
     console.log(`${this.fgGreen}Sucessfully Retrived Tickets${this.reset}\n`)
   }
@@ -94,24 +95,40 @@ class Display {
   }
 
   /**
-   * Prints out multiple tickets in summary form and praginates the output if the ticketsList has a greater length than 25.
+   * Prints out multiple tickets in summary form and praginates the output if the ticketsList has a length greater than 25.
    *
    * @param {Array} ticketsList List of all tickets retrived from Zendesk API.
    */
   multiTicketOutput(ticketsList) {
-    console.log('Id', 'Subject'.padStart(9, ' '), 'Description'.padStart(53, ' '))
+    const subjectPadding = 9
+    const descriptionPadding = 53
+    const ticketsPerPage = 10
+    const ticketsPageLimit = 25
+    console.log(
+      'Id',
+      'Subject'.padStart(subjectPadding, ' '),
+      'Description'.padStart(descriptionPadding, ' ')
+    )
     ticketsList.forEach((ticket, index, list) => {
-      if (list.length < this.ticketPageLimit) {
-        console.log(ticket.toStringSummary())
-      } else {
-        // Pauses program if 25 or more results are returned.
-        if (index % this.ticketsPerPage === 0 && index != 0) {
-          const pageCount = Math.floor(list.length / this.ticketsPerPage)
-          const currentPage = Math.floor(index / this.ticketsPerPage)
-          readline.question(`\n${currentPage}/${pageCount} - Enter anything for more..\n`)
-          console.log('Id', 'Subject'.padStart(9, ' '), 'Description'.padStart(53, ' '))
+      if (ticket instanceof Ticket) {
+        if (list.length < ticketsPageLimit) {
+          console.log(ticket.toStringSummary())
+        } else {
+          // Pauses program if 25 or more results are returned.
+          if (index % ticketsPerPage === 0 && index != 0) {
+            const pageCount = Math.floor(list.length / ticketsPerPage)
+            const currentPage = Math.floor(index / ticketsPerPage)
+            readline.question(`\n${currentPage}/${pageCount} - Press enter for more..\n`)
+            console.log(
+              'Id',
+              'Subject'.padStart(subjectPadding, ' '),
+              'Description'.padStart(descriptionPadding, ' ')
+            )
+          }
+          console.log(ticket.toStringSummary())
         }
-        console.log(ticket.toStringSummary())
+      } else {
+        console.log(`\n${this.red}Invalid Ticked - Cannot Display`)
       }
     })
   }
@@ -122,7 +139,11 @@ class Display {
    * @param {Object} ticket Ticket object returned from Zendesk API.
    */
   singleTicketOutput(ticket) {
-    console.log(new Ticket(ticket).toStringAllDetails())
+    if (ticket instanceof Ticket) {
+      console.log(ticket.toStringAllDetails())
+    } else {
+      console.log(`\n${this.red}Invalid Ticked - Cannot Display`)
+    }
   }
 }
 

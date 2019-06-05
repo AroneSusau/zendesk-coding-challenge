@@ -22,13 +22,17 @@ const printMenu = () => {
  */
 const paginateTicketOutput = ticketsObject => {
   let ticketsList = requester.formatTickets(ticketsObject.tickets)
+  const ticketsPerPage = 10
+  const tickPageLimit = 25
   ticketsList.forEach((ticket, index, list) => {
-    if (list.length < 25) {
+    if (list.length < tickPageLimit) {
       console.log(ticket.toStringSummary())
     } else {
       // Pauses program if 25 or more results are returned.
-      if (index % 10 === 0 && index != 0) {
-        readline.question('\nEnter anything for more..\n')
+      if (index % ticketsPerPage === 0 && index != 0) {
+        const pageCount = Math.floor(list.length / ticketsPerPage)
+        const currentPage = Math.floor(index / ticketsPerPage)
+        readline.question(`\n${currentPage}/${pageCount} - Enter anything for more..\n`)
       }
       console.log(ticket.toStringSummary())
     }
@@ -79,7 +83,7 @@ const main = async () => {
 
   while (ticketViewerInUse) {
     let userAction = readline.question(
-      '\nType "menu" to view options or "exit" to close the program.\n\n>'
+      '\nType "menu" to view options or "exit" to close the program.\n>'
     )
 
     if (userAction === 'menu') {

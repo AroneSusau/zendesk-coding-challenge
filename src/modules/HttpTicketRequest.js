@@ -38,18 +38,17 @@ class HttpTicketRequest {
    */
   handlesErrors(response) {
     if (!response.ok) {
-      console.log('API Request Issue..')
+      console.log('\x1b[31mAPI Request Issue..')
     }
 
     switch (response.status) {
       case 401:
-        console.log(response.statusText, ": Couldn't authenticate you")
+        console.log(response.statusText, ": Couldn't authenticate you\x1b[0m")
         break
       case 404:
-        console.log(response.statusText, ': Page not found')
+        console.log(response.statusText, ': Page not found\x1b[0m')
         break
     }
-
     return response
   }
 

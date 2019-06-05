@@ -9,9 +9,9 @@ const readline = require('readline-sync')
  * Prints menu help to console.
  */
 const printMenu = () => {
-  console.log('\n• Press 1 to view all tickets')
-  console.log('• Press 2 to view a ticket')
-  console.log('• Type "exit" to close the program')
+  console.log('\n• Press \x1b[2m1\x1b[0m to view all tickets')
+  console.log('• Press \x1b[2m2\x1b[0m to view a ticket')
+  console.log('• Type \x1b[2mexit\x1b[0m to close the program')
 }
 
 /**
@@ -24,6 +24,7 @@ const paginateTicketOutput = ticketsObject => {
   let ticketsList = requester.formatTickets(ticketsObject.tickets)
   const ticketsPerPage = 10
   const tickPageLimit = 25
+  console.log('Id', 'Subject'.padStart(9, ' '), 'Description'.padStart(53, ' '))
   ticketsList.forEach((ticket, index, list) => {
     if (list.length < tickPageLimit) {
       console.log(ticket.toStringSummary())
@@ -33,6 +34,7 @@ const paginateTicketOutput = ticketsObject => {
         const pageCount = Math.floor(list.length / ticketsPerPage)
         const currentPage = Math.floor(index / ticketsPerPage)
         readline.question(`\n${currentPage}/${pageCount} - Enter anything for more..\n`)
+        console.log('Id', 'Subject'.padStart(9, ' '), 'Description'.padStart(53, ' '))
       }
       console.log(ticket.toStringSummary())
     }
@@ -53,10 +55,11 @@ const singleTicketOutput = apiResponse => {
 const viewTicketsManager = async displayTicketsMethod => {
   let apiResponse
 
-  console.log('\nRetriving tickets from zendesk..\n')
+  console.log('\n\x1b[33mRetriving tickets from zendesk..\x1b[0m')
   apiResponse = await requester.fetchZendeskTickets()
 
   if (apiResponse.tickets !== undefined || apiResponse.ticket !== undefined) {
+    console.log('\x1b[32mSucessfully Retrived Tickets\x1b[0m\n')
     displayTicketsMethod(apiResponse)
   }
 }
@@ -101,11 +104,12 @@ const main = async () => {
     } else if (userAction === 'exit') {
       // Close program
       console.log(
-        '\n\x1b[32m\x1b[1mThank you for using the viewer :)\x1b[36m\x1b[1m Goodbye!'
+        '\n\x1b[32m\x1b[1mThank you for using the viewer :)\x1b[36m\x1b[1m Goodbye!\n'
       )
+      console.log('\x1b[0m\x1b[2mCreated By Arone Susau\n')
       ticketViewerInUse = false
     } else {
-      console.log('\nSorry, invalid command entered!')
+      console.log('\n\x1b[2mSorry, invalid command entered!\x1b[0m')
     }
   }
 }

@@ -17,15 +17,14 @@ class Ticket {
    * Returns summary details for Ticket as a string.
    */
   toStringSummary() {
-    const id = '\x1b[0mId: \x1b[2m' + this.id
+    const id = '\x1b[2m' + this.id
 
-    const subjectGap = 23 - this.id.toString().length
-    const subject = '\x1b[0m Subject: \x1b[2m'.padStart(subjectGap, ' ') + this.subject
+    const subjectGap = 5 - this.id.toString().length
+    const subject = ''.padStart(subjectGap, ' ') + this.subject
 
-    const descriptionGap = 70 - this.subject.length
+    const descriptionGap = 50 - this.subject.length
     const description =
-      '\x1b[0m Description: \x1b[2m'.padStart(descriptionGap) +
-      this.description.trim().substr(0, 40)
+      ''.padStart(descriptionGap, ' ') + this.description.substr(0, 50).trim()
 
     return id + subject + description + '...\x1b[0m'
   }

@@ -159,7 +159,13 @@ class Display {
           console.log(`${this.fgRed}Invalid Ticked - Cannot Display`, this.reset)
         }
       })
+      // Checks if next page exits, outputs update if more to come.
+      ticketsList.nextPage
+        ? console.log(`\n${this.dim + this.fgBlue}More tickets coming..${this.reset}`)
+        : console.log(`\n${this.dim + this.fgGreen}All tickets retrived.${this.reset}`)
+      return ticketsList.nextPage
     }
+    return null
   }
 
   /**

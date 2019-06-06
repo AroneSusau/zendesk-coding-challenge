@@ -89,21 +89,33 @@ class HttpTicketRequest {
    *
    * @returns {Mixed} Returns a single ticket object or the full tickets list depending on the isMulti flag.
    */
-  async retriveTickets(isRequestingMultiple, ticketId) {
+  async retriveTickets(isRequestingMultiple, ticketId, nextUrl) {
     // Prints if not in testing mode
     if (process.env.NODE_ENV !== 'test')
       console.log(`\n\x1b[33mRetriving tickets from zendesk..\x1b[0m`)
+    // Set url
+    if (nextUrl) {
+      this.url = nextUrl
+    } else {
+      isRequestingMultiple
+        ? this.setUrlForAllTickets()
+        : this.setUrlForSingleTicket(ticketId)
+    }
 
-    isRequestingMultiple
-      ? this.setUrlForAllTickets()
-      : this.setUrlForSingleTicket(ticketId)
+    // Make fetch request
     let apiResponse = await this.templateFetchRequest()
     if (apiResponse.error) {
       return null
     } else {
-      return isRequestingMultiple
-        ? this.formatTickets(apiResponse.tickets)
-        : new Ticket(apiResponse.ticket)
+      if (isRequestingMultiple) {
+        // Add next and previous page
+        let result = this.formatTickets(apiResponse.tickets)
+        result.nextPage = apiResponse.next_page
+        result.previousPage = apiResponse.previous_page
+        return result
+      } else {
+        return new Ticket(apiResponse.ticket)
+      }
     }
   }
 
@@ -111,7 +123,7 @@ class HttpTicketRequest {
    * Sets the url to retrive all tickets from the Zendesk API.
    */
   setUrlForAllTickets() {
-    this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json`
+    this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=100`
   }
 
   /**

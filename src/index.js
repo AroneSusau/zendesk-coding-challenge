@@ -17,9 +17,11 @@ const requester = new HttpTicketRequest()
   let FETCH_TICKET_BY_ID = '2'
   let FULL_LIST = true
   let SINGLE_BY_ID = false
+  let NO_ID = null
 
   display.welcomeMessage()
-  requester.setLoginCredentialsAndHeaders(display.getUsername(), display.getPassword())
+  // add later  - display.getUsername(), display.getPassword()
+  requester.setLoginCredentialsAndHeaders('arone.s@live.com.au', 'Arone2019@')
 
   // Main program loop
   while (programRunning) {
@@ -31,7 +33,14 @@ const requester = new HttpTicketRequest()
       programRunning = !programRunning
       display.goodbyeMessage()
     } else if (userInput === FETCH_ALL_TICKETS) {
-      display.multipleTicketOutput(await requester.retriveTickets(FULL_LIST))
+      let nextPage = false
+      let scrolling = true
+      while (scrolling) {
+        nextPage = display.multipleTicketOutput(
+          await requester.retriveTickets(FULL_LIST, NO_ID, nextPage)
+        )
+        if (!nextPage) scrolling = !scrolling
+      }
     } else if (userInput === FETCH_TICKET_BY_ID) {
       display.singleTicketOutput(
         await requester.retriveTickets(SINGLE_BY_ID, display.getTicketId())

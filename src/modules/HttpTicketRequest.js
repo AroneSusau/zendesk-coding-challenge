@@ -123,7 +123,7 @@ class HttpTicketRequest {
    * Sets the url to retrive all tickets from the Zendesk API.
    */
   setUrlForAllTickets() {
-    this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=100`
+    this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json`
   }
 
   /**

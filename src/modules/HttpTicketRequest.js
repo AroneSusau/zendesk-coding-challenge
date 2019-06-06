@@ -91,11 +91,18 @@ class HttpTicketRequest {
    * @returns {Mixed} Returns a single ticket object or the full tickets list depending on the isMulti flag.
    */
   async retriveTickets(isRequestingMultiple, ticketId) {
+    console.log(`\n\x1b[33mRetriving tickets from zendesk..\x1b[0m`)
     isRequestingMultiple
       ? this.setUrlForAllTickets()
       : this.setUrlForSingleTicket(ticketId)
     let apiResponse = await this.fetchZendeskTickets()
-    return isRequestingMultiple ? apiResponse.tickets : new Ticket(apiResponse.ticket)
+    if (apiResponse.error) {
+      return null
+    } else {
+      return isRequestingMultiple
+        ? this.formatTickets(apiResponse.tickets)
+        : new Ticket(apiResponse.ticket)
+    }
   }
 
   /**

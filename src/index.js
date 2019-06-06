@@ -8,8 +8,7 @@ const requester = new HttpTicketRequest()
  * Program entry point
  */
 ;(async function main() {
-  view.printWelcomeMessage()
-
+  // Named Arguments
   let programRunning = true
   let PRINT_MENU = 'menu'
   let EXIT_PROGRAM = 'exit'
@@ -17,13 +16,9 @@ const requester = new HttpTicketRequest()
   let FETCH_TICKET_BY_ID = '2'
   let FULL_LIST = true
   let SINGLE_BY_ID = false
-  let API_ERROR = null
 
-  let username = view.getCustomInput('\nPlease enter username..\n>')
-  let password = view.getCustomInput('\nPlease enter password..\n>', {
-    hideEchoBack: true
-  })
-  requester.setLoginCredentialsAndHeaders(username, password)
+  view.printWelcomeMessage()
+  requester.setLoginCredentialsAndHeaders(view.getUsername(), view.getPassword())
 
   while (programRunning) {
     let input = view.getGeneralInput()
@@ -31,25 +26,14 @@ const requester = new HttpTicketRequest()
     if (input === PRINT_MENU) {
       view.printMenu()
     } else if (input === EXIT_PROGRAM) {
+      programRunning = !programRunning
       view.printGoodbyeMessage()
-      programRunning = false
     } else if (input === FETCH_ALL_TICKETS) {
-      // Get all tickets
-      view.printRetrivingTickets()
-      let response = await requester.retriveTickets(FULL_LIST)
-      if (response != API_ERROR) {
-        view.printSuccessMessage()
-        view.multiTicketOutput(requester.formatTickets(response))
-      }
+      view.multiTicketOutput(await requester.retriveTickets(FULL_LIST))
     } else if (input === FETCH_TICKET_BY_ID) {
-      // Get all ticket by id.
-      let ticketId = view.getCustomInput('\nPlease enter ticket id\n>')
-      view.printRetrivingTickets()
-      let response = await requester.retriveTickets(SINGLE_BY_ID, ticketId)
-      if (response != API_ERROR) {
-        view.printSuccessMessage()
-        view.singleTicketOutput(response)
-      }
+      view.singleTicketOutput(
+        await requester.retriveTickets(SINGLE_BY_ID, view.getTicketId())
+      )
     } else {
       view.printInvalidInputMessage()
     }

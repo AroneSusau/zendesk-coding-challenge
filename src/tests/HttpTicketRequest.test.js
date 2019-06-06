@@ -2,7 +2,7 @@
 const HttpTicketRequest = require('../modules/HttpTicketRequest')
 
 describe('HttpTicketRequet', () => {
-  it('should return object when provided correct credentials.', async () => {
+  it('HAPPY PATH: should return object when provided correct credentials.', async () => {
     const requester = new HttpTicketRequest()
     requester.setUrlForAllTickets()
     requester.setLoginCredentialsAndHeaders('arone.s@live.com.au', 'Arone2019@')

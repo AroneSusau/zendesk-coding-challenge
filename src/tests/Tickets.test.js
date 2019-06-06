@@ -2,12 +2,7 @@
 const Ticket = require('../modules/Ticket')
 
 describe('Ticket', () => {
-  it('should return an instanceof a Ticket', () => {
-    const mockTicket = new Ticket({})
-    expect(mockTicket instanceof Ticket).toBe(true)
-  })
-
-  it('should format the tickets into the correct structure when provided an unformatted ticket object.', () => {
+  it('HAPPY PATH: should format the tickets into the correct structure when provided an unformatted ticket object.', () => {
     const mockTicket = { testAttribute: null }
     expect(new Ticket(mockTicket)).toEqual({
       id: 0,
@@ -17,7 +12,7 @@ describe('Ticket', () => {
     })
   })
 
-  it('should not change the tickets attributes value if the values are not null', () => {
+  it('HAPPY PATH: should not change the tickets attributes value if the values are not null', () => {
     const mockTicket = {
       id: 123,
       subject: 'Hello World!',

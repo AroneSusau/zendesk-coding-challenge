@@ -17,8 +17,7 @@ const requester = new HttpTicketRequest()
   let FETCH_TICKET_BY_ID = '2'
 
   display.welcomeMessage()
-  // add later  - display.getUsername(), display.getPassword()
-  requester.setLoginCredentialsAndHeaders('arone.s@live.com.au', 'Arone2019@')
+  requester.setLoginCredentialsAndHeaders(display.getUsername(), display.getPassword())
 
   // Main program loop
   while (PROGRAM_RUNNING) {
@@ -34,11 +33,13 @@ const requester = new HttpTicketRequest()
       let scrolling = true
       // Ensures there are no more pages of ticket requests before exiting loop
       while (scrolling) {
-        nextPage = display.allTicketsOutput(await requester.retriveAllTickets(nextPage))
+        nextPage = display.allTicketsOutput(await requester.retrieveAllTickets(nextPage))
         scrolling = nextPage
       }
     } else if (userInput === FETCH_TICKET_BY_ID) {
-      display.singleTicketOutput(await requester.retriveTicketById(display.getTicketId()))
+      display.singleTicketOutput(
+        await requester.retrieveTicketById(display.getTicketId())
+      )
     } else {
       display.invalidInputMessage()
     }

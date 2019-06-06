@@ -1,8 +1,8 @@
 # Zendesk-Coding-Challange
 
-A coding challenge provided by the Zendesk team for an internship opportunity.
+A console based application that is written in javascript using the NodeJS runtime. The app makes HTTP requests to the Zendesk API to retrieve account tickets displayed in either a summary table or full details format.
 
-## Challange Functional Requirements
+## Challange Requirements
 
 - Connect to the Zendesk API.
 - Request the tickets for your account.
@@ -13,8 +13,8 @@ A coding challenge provided by the Zendesk team for an internship opportunity.
 
 ## Prerequisite Installations
 
-- NodeJS v10.16.0 or greater
-- NPM v6.9.0 or greater
+- [NodeJS](https://nodejs.org/en/) v10.16.0 or greater
+- NPM v6.9.0 or greater (At the time of making this documentation, NPM comes with the NodeJS installation)
 
 ## How to run main program on MacOS
 

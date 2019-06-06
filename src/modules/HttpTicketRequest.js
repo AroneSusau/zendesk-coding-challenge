@@ -72,7 +72,7 @@ class HttpTicketRequest {
    * Passes current ticket list and returns Ticket object with
    * nessacary data.
    *
-   * @param {Array} ticketsList Tickets list retrived from Zendesk API.
+   * @param {Array} ticketsList Tickets list retrieved from Zendesk API.
    * @returns {Array} Returns array with Ticket objects.
    */
   formatTickets(ticketsList) {
@@ -82,14 +82,14 @@ class HttpTicketRequest {
   }
 
   /**
-   * Makes fetch request to Zendesk API for tickets
+   * Makes fetch request to Zendesk API for all tickets.
    *
    * @param {Boolean} isRequestingMultiple Flag to check if the request is for multiple tickets or a single ticket
    * @param {number} ticketId Sets the id for the requested ticket if the isMulti flag is true.
    *
-   * @returns {Mixed} Returns a single ticket object or the full tickets list depending on the isMulti flag.
+   * @returns {Mixed} Returns a list of tickets from the Zendesk API or null if an error occurs.
    */
-  async retriveAllTickets(nextUrl) {
+  async retrieveAllTickets(nextUrl) {
     // Prints if not in testing mode
     if (process.env.NODE_ENV !== 'test')
       console.log(`\n\x1b[33mRetriving tickets from zendesk..\x1b[0m`)
@@ -114,7 +114,14 @@ class HttpTicketRequest {
     }
   }
 
-  async retriveTicketById(ticketId) {
+  /**
+   * akes fetch request to Zendesk API for a single tickets by id.
+   *
+   * @param {Number} ticketId Id for ticket.
+   *
+   * @returns {Mixed} Returns a list of tickets from the Zendesk API or null if an error occurs.
+   */
+  async retrieveTicketById(ticketId) {
     // Prints if not in testing mode
     if (process.env.NODE_ENV !== 'test')
       console.log(`\n\x1b[33mRetriving tickets from zendesk..\x1b[0m`)
@@ -125,14 +132,14 @@ class HttpTicketRequest {
   }
 
   /**
-   * Sets the url to retrive all tickets from the Zendesk API.
+   * Sets the url to retrieve all tickets from the Zendesk API.
    */
   setUrlForAllTickets() {
     this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json`
   }
 
   /**
-   * Sets the url to retrive a single ticket by its id from the Zendesk API.
+   * Sets the url to retrieve a single ticket by its id from the Zendesk API.
    *
    * @param {number} id Id of ticket to be requested.
    */

@@ -1,13 +1,16 @@
 'use-strict'
 const console = require('console')
 const readline = require('readline-sync')
-const Ticket = require('./Ticket')
 
 class Display {
   /**
    * Display Constructor
    */
   constructor() {
+    this.subjectPadding = 9
+    this.descriptionPadding = 53
+    this.ticketsPerPage = 10
+    this.ticketsPageLimit = 25
     // console colours
     this.reset = '\x1b[0m'
     this.bright = '\x1b[1m'
@@ -118,51 +121,49 @@ class Display {
     return readline.question(question, options)
   }
 
+  printTableTitles() {
+    console.log(
+      'Id',
+      'Subject'.padStart(this.subjectPadding, ' '),
+      'Description'.padStart(this.descriptionPadding, ' ')
+    )
+  }
+
+  /**
+   *
+   * @param {Mixed} moreComing List of all tickets
+   */
+  printFinishedRequest(moreComing) {
+    moreComing
+      ? console.log(`\n${this.dim + this.fgBlue}More tickets coming..${this.reset}`)
+      : console.log(`\n${this.dim + this.fgGreen}All tickets retrieved.${this.reset}`)
+  }
+
   /**
    * Prints out multiple tickets in summary form and praginates the output if the ticketsList has a length greater than 25.
    *
-   * @param {Array} ticketsList List of all tickets retrived from Zendesk API.
+   * @param {Array} ticketsList List of all tickets retrieved from Zendesk API.
    */
   allTicketsOutput(ticketsList) {
     if (ticketsList) {
-      const subjectPadding = 9
-      const descriptionPadding = 53
-      const ticketsPerPage = 10
-      const ticketsPageLimit = 25
       this.successMessage()
-      console.log(
-        'Id',
-        'Subject'.padStart(subjectPadding, ' '),
-        'Description'.padStart(descriptionPadding, ' ')
-      )
+      this.printTableTitles()
       ticketsList.forEach((ticket, index, list) => {
-        if (ticket instanceof Ticket) {
-          if (list.length < ticketsPageLimit) {
-            console.log(ticket.toStringSummary())
-          } else {
-            // Pauses program if 25 or more results are returned.
-            if (index % ticketsPerPage === 0 && index != 0) {
-              const pageCount = Math.floor(list.length / ticketsPerPage)
-              const currentPage = Math.floor(index / ticketsPerPage)
-              readline.question(
-                `\n${currentPage}/${pageCount} - Press enter for more..\n`
-              )
-              console.log(
-                'Id',
-                'Subject'.padStart(subjectPadding, ' '),
-                'Description'.padStart(descriptionPadding, ' ')
-              )
-            }
-            console.log(ticket.toStringSummary())
-          }
+        if (list.length < this.ticketsPageLimit) {
+          console.log(ticket.toStringSummary())
         } else {
-          console.log(`${this.fgRed}Invalid Ticked - Cannot Display`, this.reset)
+          // Pauses program if 25 or more results are returned.
+          if (index % this.ticketsPerPage === 0 && index != 0) {
+            const pageCount = Math.floor(list.length / this.ticketsPerPage)
+            const currentPage = Math.floor(index / this.ticketsPerPage)
+            readline.question(`\n${currentPage}/${pageCount} - Press enter for more..\n`)
+            this.printTableTitles()
+          }
+          console.log(ticket.toStringSummary())
         }
       })
       // Checks if next page exits, outputs update if more to come.
-      ticketsList.nextPage
-        ? console.log(`\n${this.dim + this.fgBlue}More tickets coming..${this.reset}`)
-        : console.log(`\n${this.dim + this.fgGreen}All tickets retrived.${this.reset}`)
+      this.printFinishedRequest(ticketsList.nextPage)
       return ticketsList.nextPage
     }
     return null
@@ -175,12 +176,8 @@ class Display {
    */
   singleTicketOutput(ticket) {
     if (ticket) {
-      if (ticket instanceof Ticket) {
-        this.successMessage()
-        console.log(ticket.toStringAllDetails())
-      } else {
-        console.log(`${this.fgRed}Invalid Ticked - Cannot Display`, this.reset)
-      }
+      this.successMessage()
+      console.log(ticket.toStringAllDetails())
     }
   }
 }

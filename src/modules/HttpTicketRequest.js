@@ -16,11 +16,11 @@ class HttpTicketRequest {
   }
 
   /**
-   * Basic fetch request to Zendesk API using Basic Authentication.
+   * Template fetch request.
    *
    * @returns {Promise} Returns Promise from fetch request.
    */
-  async fetchZendeskTickets() {
+  async templateFetchRequest() {
     return fetch(this.url, { headers: this.headers })
       .then(this.handlesErrors)
       .then(result => result.json())
@@ -90,11 +90,14 @@ class HttpTicketRequest {
    * @returns {Mixed} Returns a single ticket object or the full tickets list depending on the isMulti flag.
    */
   async retriveTickets(isRequestingMultiple, ticketId) {
-    console.log(`\n\x1b[33mRetriving tickets from zendesk..\x1b[0m`)
+    // Prints if not in testing mode
+    if (process.env.NODE_ENV !== 'test')
+      console.log(`\n\x1b[33mRetriving tickets from zendesk..\x1b[0m`)
+
     isRequestingMultiple
       ? this.setUrlForAllTickets()
       : this.setUrlForSingleTicket(ticketId)
-    let apiResponse = await this.fetchZendeskTickets()
+    let apiResponse = await this.templateFetchRequest()
     if (apiResponse.error) {
       return null
     } else {

@@ -21,6 +21,7 @@ const requester = new HttpTicketRequest()
   display.welcomeMessage()
   requester.setLoginCredentialsAndHeaders(display.getUsername(), display.getPassword())
 
+  // Main program loop
   while (programRunning) {
     let userInput = display.getGeneralInput()
 

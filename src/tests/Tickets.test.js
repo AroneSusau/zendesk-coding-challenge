@@ -2,7 +2,7 @@
 const Ticket = require('../modules/Ticket')
 
 describe('Ticket', () => {
-  it('HAPPY PATH: should format the tickets into the correct structure when provided an unformatted ticket object.', () => {
+  it('HAPPY PATH: formats the tickets into the correct structure when provided an unformatted ticket object.', () => {
     const mockTicket = { testAttribute: null }
     expect(new Ticket(mockTicket)).toEqual({
       id: 0,
@@ -27,7 +27,7 @@ describe('Ticket', () => {
     })
   })
 
-  it('should return a Ticket object with default attributes when the constructor is passed an invalid value', () => {
+  it('returns a Ticket object with default attributes when the constructor is passed an invalid value', () => {
     expect(new Ticket(undefined)).toEqual({
       id: 0,
       subject: 'None',

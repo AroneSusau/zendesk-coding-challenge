@@ -1,6 +1,7 @@
 'use-strict'
 const console = require('console')
 const readline = require('readline-sync')
+console.log = process.env.NODE_ENV != 'test' ? require('console') : function() {}
 
 class Display {
   /**
@@ -48,7 +49,7 @@ class Display {
   goodbyeMessage() {
     console.log(
       `${this.fgGreen + this.bright}\nThank you for using the Ticket Viewer :)${this
-        .fgCyan + this.bright} Goodbye!\n`
+        .fgCyan + this.bright}Goodbye!\n`
     )
     console.log(`${this.reset + this.dim}Created By Arone Susau\n`)
   }

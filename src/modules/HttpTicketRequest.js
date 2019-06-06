@@ -4,6 +4,8 @@ const fetchHeaders = require('fetch-headers')
 const LoginCredentials = require('./LoginCredentials')
 const Ticket = require('./Ticket')
 const console = require('console')
+// Disables debug output in testing environment
+console.log = process.env.NODE_ENV != 'test' ? require('console') : function() {}
 
 class HttpTicketRequest {
   /**
@@ -24,9 +26,6 @@ class HttpTicketRequest {
     return fetch(this.url, { headers: this.headers })
       .then(this.handlesErrors)
       .then(result => result.json())
-      .catch(err => {
-        console.log(err)
-      })
   }
 
   /**
@@ -35,7 +34,7 @@ class HttpTicketRequest {
    * @param {Object} response Response returned from fetch request to the Zendesk API.
    */
   handlesErrors(response) {
-    if (!response.ok && process.env.NODE_ENV !== 'test') {
+    if (!response.ok) {
       console.log('\x1b[31mAPI Request Issue..')
       switch (response.status) {
         case 401:
@@ -88,9 +87,7 @@ class HttpTicketRequest {
    * @returns {Mixed} Returns a list of tickets from the Zendesk API or null if an error occurs.
    */
   async retrieveAllTickets(nextUrl) {
-    // Prints if not in testing mode
-    if (process.env.NODE_ENV !== 'test')
-      console.log(`\n\x1b[33mRetriving tickets from zendesk..\x1b[0m`)
+    console.log(`\n\x1b[33mRetriving tickets from zendesk..\x1b[0m`)
 
     // Set url
     if (nextUrl) {
@@ -121,11 +118,8 @@ class HttpTicketRequest {
    * @returns {Mixed} Returns a list of tickets from the Zendesk API or null if an error occurs.
    */
   async retrieveTicketById(ticketId) {
-    // Prints if not in testing mode
-    if (process.env.NODE_ENV !== 'test')
-      console.log(`\n\x1b[33mRetriving tickets from zendesk..\x1b[0m`)
+    console.log(`\n\x1b[33mRetriving tickets from zendesk..\x1b[0m`)
     this.setUrlForSingleTicket(ticketId)
-
     let apiResponse = await this.templateFetchRequest()
     return apiResponse.error ? null : new Ticket(apiResponse.ticket)
   }

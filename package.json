@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +16,7 @@
     "readline-sync": "^1.4.9"
   },
   "devDependencies": {
-    "jest": "^24.8.0",
-    "eslint": "^5.16.0"
+    "eslint": "^5.16.0",
+    "jest": "^24.8.0"
   }
 }

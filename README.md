@@ -58,7 +58,7 @@ The following section contains links to resources I found super useful while bui
 
   - [Github MD Files Formatting](https://help.github.com/en/articles/basic-writing-and-formatting-syntax)
 
-- As writing tests is something I'm improving at everything, the Jest reference is a must need!
+- As writing tests is something I'm improving at everyday, the Jest reference is a must need!
 
   - [Jest Expect Refernce](https://jestjs.io/docs/en/expect.html)
 

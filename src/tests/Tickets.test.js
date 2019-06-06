@@ -1,6 +1,7 @@
 'use-strict'
 const Ticket = require('../modules/Ticket')
 
+// Constructor tests
 describe('Ticket', () => {
   it('HAPPY PATH: formats the tickets into the correct structure when provided an unformatted ticket object.', () => {
     const mockTicket = { testAttribute: null }
@@ -34,5 +35,23 @@ describe('Ticket', () => {
       description: 'None',
       requesterId: 0
     })
+  })
+
+  // Output text tests
+  it('HAPPY PATH: returns a condensed summary of the Ticket with default values when passed a default object', () => {
+    const mock = new Ticket(undefined)
+      .toStringSummary()
+      .split(' ')
+      .join('')
+    expect(mock).toEqual('\x1b[2m0NoneNone...\x1b[0m')
+  })
+
+  it('HAPPY PATH: returns a full detail description of the Ticket with default values when passed a default object', () => {
+    const mock = new Ticket(undefined)
+      .toStringAllDetails()
+      // Removes return or colour characters, eslint did not recognise \x1b or \x1b as esacpable characters hence the following disable comment.
+      // eslint-disable-next-line no-control-regex
+      .replace(/\x1b\[0m|\x1b\[2m|\r?\n|\r| /g, '')
+    expect(mock).toEqual('Requester:0Id:0Subject:NoneDescriptionNone')
   })
 })

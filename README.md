@@ -16,7 +16,7 @@ A console based application that is written in javascript using the NodeJS runti
 - [NodeJS](https://nodejs.org/en/) v10.16.0 or greater
 - NPM v6.9.0 or greater (At the time of making this documentation, NPM comes with the NodeJS installation)
 
-## How to run main program on MacOS
+## How to run (MacOS)
 
 1. Download the repository to your local machine.
 2. Navigate to the repository directory in your MacOS Terminal or equivalent shell application.
@@ -54,15 +54,15 @@ The following section contains links to resources I found super useful while bui
 
   - [Node Best Practices](https://github.com/i0natan/nodebestpractices)
 
-- Great reference that helped me make this page look how is it at the moment.
+- Great reference that helped me format the Readme.md file.
 
   - [Github MD Files Formatting](https://help.github.com/en/articles/basic-writing-and-formatting-syntax)
 
-- A must need when writing out my unit tests as it is something I'm still improving at everyday!
+- As writing tests is something I'm improving at everything, the Jest reference is a must need!
 
   - [Jest Expect Refernce](https://jestjs.io/docs/en/expect.html)
 
-- I had trouble implementing my own synchronous readline but found this package easy to use and implement.
+- I found this easy to use and set up synchronous console input package.
 
   - [Readline-sync NPM Refernce](https://www.npmjs.com/package/readline-sync)
 

@@ -69,8 +69,7 @@ class HttpTicketRequest {
   }
 
   /**
-   * Passes current ticket list and returns Ticket object with
-   * nessacary data.
+   * Formats a list of tickets retrieved from the Zendesk API into the Ticket data model.
    *
    * @param {Array} ticketsList Tickets list retrieved from Zendesk API.
    * @returns {Array} Returns array with Ticket objects.
@@ -82,10 +81,9 @@ class HttpTicketRequest {
   }
 
   /**
-   * Makes fetch request to Zendesk API for all tickets.
+   * Makes a fetch request to the Zendesk API for all tickets.
    *
-   * @param {Boolean} isRequestingMultiple Flag to check if the request is for multiple tickets or a single ticket
-   * @param {number} ticketId Sets the id for the requested ticket if the isMulti flag is true.
+   * @param {Mixed} nextUrl URL for the next page of tickets.
    *
    * @returns {Mixed} Returns a list of tickets from the Zendesk API or null if an error occurs.
    */
@@ -106,16 +104,17 @@ class HttpTicketRequest {
     if (apiResponse.error) {
       return null
     } else {
-      // Add next and previous page
+      // Add next/previous page and count to result object
       let result = this.formatTickets(apiResponse.tickets)
       result.nextPage = apiResponse.next_page
       result.previousPage = apiResponse.previous_page
+      result.count = apiResponse.count
       return result
     }
   }
 
   /**
-   * akes fetch request to Zendesk API for a single tickets by id.
+   * Fetch request to Zendesk API for a single tickets by its id.
    *
    * @param {Number} ticketId Id for ticket.
    *
@@ -135,7 +134,7 @@ class HttpTicketRequest {
    * Sets the url to retrieve all tickets from the Zendesk API.
    */
   setUrlForAllTickets() {
-    this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json`
+    this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=100`
   }
 
   /**

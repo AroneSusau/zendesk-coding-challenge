@@ -11,10 +11,11 @@ const requester = new HttpTicketRequest()
 ;(async function main() {
   // Named Arguments
   let PROGRAM_RUNNING = true
-  let PRINT_MENU = 'menu'
-  let EXIT_PROGRAM = 'exit'
-  let FETCH_ALL_TICKETS = '1'
-  let FETCH_TICKET_BY_ID = '2'
+  const PRINT_MENU = 'menu'
+  const EXIT_PROGRAM = 'exit'
+  const FETCH_ALL_TICKETS = '1'
+  const FETCH_TICKET_BY_ID = '2'
+  const HAVE_ERROR_OCCUR = null
 
   display.welcomeMessage()
   requester.setLoginCredentialsAndHeaders(display.getUsername(), display.getPassword())
@@ -31,9 +32,14 @@ const requester = new HttpTicketRequest()
     } else if (userInput === FETCH_ALL_TICKETS) {
       let nextPage = null
       let scrolling = true
-      // Ensures there are no more pages of ticket requests before exiting loop
+
       while (scrolling) {
-        nextPage = display.allTicketsOutput(await requester.retrieveAllTickets(nextPage))
+        let ticketsList = await requester.retrieveAllTickets(nextPage)
+        if (ticketsList != HAVE_ERROR_OCCUR) {
+          display.allTicketsOutput(ticketsList)
+          display.areAllTicketsRetrieved(ticketsList.nextPage)
+          nextPage = ticketsList.nextPage
+        }
         scrolling = nextPage
       }
     } else if (userInput === FETCH_TICKET_BY_ID) {

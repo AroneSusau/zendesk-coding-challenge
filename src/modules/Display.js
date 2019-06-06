@@ -47,14 +47,14 @@ class Display {
    */
   goodbyeMessage() {
     console.log(
-      `${this.fgGreen + this.bright}\nThank you for using the viewer :)${this.fgCyan +
-        this.bright} Goodbye!\n`
+      `${this.fgGreen + this.bright}\nThank you for using the Ticket Viewer :)${this
+        .fgCyan + this.bright} Goodbye!\n`
     )
     console.log(`${this.reset + this.dim}Created By Arone Susau\n`)
   }
 
   /**
-   * Prints invalid warning when invalid command entered.
+   * Prints invalid input warning when invalid command entered.
    */
   invalidInputMessage() {
     console.log(`\n${this.dim}Sorry, invalid command entered!${this.reset}`)
@@ -101,7 +101,7 @@ class Display {
   }
 
   /**
-   * Template prompt for ticket id
+   * Template prompt for ticket id input
    *
    * @returns {String} Ticket id for API request.
    */
@@ -121,7 +121,10 @@ class Display {
     return readline.question(question, options)
   }
 
-  printTableTitles() {
+  /**
+   * Prints tickets titles to console.
+   */
+  tableTitles() {
     console.log(
       'Id',
       'Subject'.padStart(this.subjectPadding, ' '),
@@ -130,10 +133,11 @@ class Display {
   }
 
   /**
+   * Update message to console if more tickets need to be dispalyed.
    *
    * @param {Mixed} moreComing List of all tickets
    */
-  printFinishedRequest(moreComing) {
+  areAllTicketsRetrieved(moreComing) {
     moreComing
       ? console.log(`\n${this.dim + this.fgBlue}More tickets coming..${this.reset}`)
       : console.log(`\n${this.dim + this.fgGreen}All tickets retrieved.${this.reset}`)
@@ -145,28 +149,22 @@ class Display {
    * @param {Array} ticketsList List of all tickets retrieved from Zendesk API.
    */
   allTicketsOutput(ticketsList) {
-    if (ticketsList) {
-      this.successMessage()
-      this.printTableTitles()
-      ticketsList.forEach((ticket, index, list) => {
-        if (list.length < this.ticketsPageLimit) {
-          console.log(ticket.toStringSummary())
-        } else {
-          // Pauses program if 25 or more results are returned.
-          if (index % this.ticketsPerPage === 0 && index != 0) {
-            const pageCount = Math.floor(list.length / this.ticketsPerPage)
-            const currentPage = Math.floor(index / this.ticketsPerPage)
-            readline.question(`\n${currentPage}/${pageCount} - Press enter for more..\n`)
-            this.printTableTitles()
-          }
-          console.log(ticket.toStringSummary())
+    this.successMessage()
+    this.tableTitles()
+    ticketsList.forEach((ticket, index, list) => {
+      if (ticketsList.length < this.ticketsPageLimit) {
+        console.log(ticket.toStringSummary())
+      } else {
+        // Pauses program if more that 25 results are returned to paginate list.
+        if (index % this.ticketsPerPage === 0 && index != 0) {
+          const pageCount = Math.floor(list.count / this.ticketsPerPage)
+          const currentPage = Math.floor(index / this.ticketsPerPage)
+          readline.question(`\n${currentPage}/${pageCount} - Press enter for more..\n`)
+          this.tableTitles()
         }
-      })
-      // Checks if next page exits, outputs update if more to come.
-      this.printFinishedRequest(ticketsList.nextPage)
-      return ticketsList.nextPage
-    }
-    return null
+        console.log(ticket.toStringSummary())
+      }
+    })
   }
 
   /**

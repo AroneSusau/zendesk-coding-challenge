@@ -12,11 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "fetch-headers": "^2.0.0",
-    "jest": "^24.8.0",
     "node-fetch": "^2.6.0",
     "readline-sync": "^1.4.9"
   },
   "devDependencies": {
+    "jest": "^24.8.0",
     "eslint": "^5.16.0"
   }
 }

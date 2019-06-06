@@ -5,7 +5,7 @@ const LoginCredentials = require('./LoginCredentials')
 const Ticket = require('./Ticket')
 const console = require('console')
 // Disables debug output in testing environment
-console.log = process.env.NODE_ENV != 'test' ? require('console') : function() {}
+console.log = process.env.NODE_ENV != 'test' ? console.log : function() {}
 
 class HttpTicketRequest {
   /**
@@ -87,8 +87,6 @@ class HttpTicketRequest {
    * @returns {Mixed} Returns a list of tickets from the Zendesk API or null if an error occurs.
    */
   async retrieveAllTickets(nextUrl) {
-    console.log(`\n\x1b[33mRetriving tickets from zendesk..\x1b[0m`)
-
     // Set url
     if (nextUrl) {
       this.url = nextUrl
@@ -118,7 +116,6 @@ class HttpTicketRequest {
    * @returns {Mixed} Returns a list of tickets from the Zendesk API or null if an error occurs.
    */
   async retrieveTicketById(ticketId) {
-    console.log(`\n\x1b[33mRetriving tickets from zendesk..\x1b[0m`)
     this.setUrlForSingleTicket(ticketId)
     let apiResponse = await this.templateFetchRequest()
     return apiResponse.error ? null : new Ticket(apiResponse.ticket)

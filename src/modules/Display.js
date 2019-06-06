@@ -1,7 +1,8 @@
 'use-strict'
 const console = require('console')
 const readline = require('readline-sync')
-console.log = process.env.NODE_ENV != 'test' ? require('console') : function() {}
+// Disables debug output in testing environment
+console.log = process.env.NODE_ENV != 'test' ? console.log : function() {}
 
 class Display {
   /**
@@ -66,6 +67,10 @@ class Display {
    */
   successMessage() {
     console.log(`${this.fgGreen}Sucessfully Retrived Tickets${this.reset}\n`)
+  }
+
+  fetchMessage() {
+    console.log(`\n\x1b[33mRetrieving tickets from zendesk..\x1b[0m`)
   }
 
   /**

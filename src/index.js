@@ -36,6 +36,7 @@ const requester = new HttpTicketRequest()
       while (scrolling) {
         let ticketsList = await requester.retrieveAllTickets(nextPage)
         if (ticketsList != HAVE_ERROR_OCCUR) {
+          display.fetchMessage()
           display.allTicketsOutput(ticketsList)
           display.areAllTicketsRetrieved(ticketsList.nextPage)
           nextPage = ticketsList.nextPage
@@ -43,6 +44,7 @@ const requester = new HttpTicketRequest()
         scrolling = nextPage
       }
     } else if (userInput === FETCH_TICKET_BY_ID) {
+      display.fetchMessage()
       display.singleTicketOutput(
         await requester.retrieveTicketById(display.getTicketId())
       )

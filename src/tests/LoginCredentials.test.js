@@ -1,3 +1,4 @@
+'use-strict'
 const LoginCredentials = require('./../modules/LoginCredentials')
 
 describe('LoginCredentials', () => {

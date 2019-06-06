@@ -1,3 +1,4 @@
+'use-strict'
 //const Display = require('./../modules/Display')
 
 describe('Display', () => {

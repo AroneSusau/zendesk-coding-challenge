@@ -1,5 +1,6 @@
+'use-strict'
 const Display = require('./modules/Display')
-const view = new Display()
+const display = new Display()
 
 const HttpTicketRequest = require('./modules/HttpTicketRequest')
 const requester = new HttpTicketRequest()
@@ -17,25 +18,25 @@ const requester = new HttpTicketRequest()
   let FULL_LIST = true
   let SINGLE_BY_ID = false
 
-  view.printWelcomeMessage()
-  requester.setLoginCredentialsAndHeaders(view.getUsername(), view.getPassword())
+  display.welcomeMessage()
+  requester.setLoginCredentialsAndHeaders(display.getUsername(), display.getPassword())
 
   while (programRunning) {
-    let input = view.getGeneralInput()
+    let userInput = display.getGeneralInput()
 
-    if (input === PRINT_MENU) {
-      view.printMenu()
-    } else if (input === EXIT_PROGRAM) {
+    if (userInput === PRINT_MENU) {
+      display.menu()
+    } else if (userInput === EXIT_PROGRAM) {
       programRunning = !programRunning
-      view.printGoodbyeMessage()
-    } else if (input === FETCH_ALL_TICKETS) {
-      view.multiTicketOutput(await requester.retriveTickets(FULL_LIST))
-    } else if (input === FETCH_TICKET_BY_ID) {
-      view.singleTicketOutput(
-        await requester.retriveTickets(SINGLE_BY_ID, view.getTicketId())
+      display.goodbyeMessage()
+    } else if (userInput === FETCH_ALL_TICKETS) {
+      display.multipleTicketOutput(await requester.retriveTickets(FULL_LIST))
+    } else if (userInput === FETCH_TICKET_BY_ID) {
+      display.singleTicketOutput(
+        await requester.retriveTickets(SINGLE_BY_ID, display.getTicketId())
       )
     } else {
-      view.printInvalidInputMessage()
+      display.invalidInputMessage()
     }
   }
 })()

@@ -1,3 +1,4 @@
+'use-strict'
 const console = require('console')
 const readline = require('readline-sync')
 const Ticket = require('./Ticket')
@@ -23,7 +24,7 @@ class Display {
   /**
    * Prints help menu to console.
    */
-  printMenu() {
+  menu() {
     console.log(`\n• Press ${this.dim}1${this.reset} to view all tickets`)
     console.log(`• Press ${this.dim}2${this.reset} to view a ticket`)
     console.log(`• Type ${this.dim}exit${this.reset} to close the program`)
@@ -32,7 +33,7 @@ class Display {
   /**
    * Prints welcome message when program is first started.
    */
-  printWelcomeMessage() {
+  welcomeMessage() {
     console.log(
       `${this.bright + this.fgMagenta}Welcome to the ticket viewer${this.reset}\n`
     )
@@ -41,7 +42,7 @@ class Display {
   /**
    * Prints farewell message when program is exited.
    */
-  printGoodbyeMessage() {
+  goodbyeMessage() {
     console.log(
       `${this.fgGreen + this.bright}\nThank you for using the viewer :)${this.fgCyan +
         this.bright} Goodbye!\n`
@@ -52,14 +53,14 @@ class Display {
   /**
    * Prints invalid warning when invalid command entered.
    */
-  printInvalidInputMessage() {
+  invalidInputMessage() {
     console.log(`\n${this.dim}Sorry, invalid command entered!${this.reset}`)
   }
 
   /**
    * Simple update message for successful API requests.
    */
-  printSuccessMessage() {
+  successMessage() {
     console.log(`${this.fgGreen}Sucessfully Retrived Tickets${this.reset}\n`)
   }
 
@@ -122,13 +123,13 @@ class Display {
    *
    * @param {Array} ticketsList List of all tickets retrived from Zendesk API.
    */
-  multiTicketOutput(ticketsList) {
+  multipleTicketOutput(ticketsList) {
     if (ticketsList) {
-      this.printSuccessMessage()
       const subjectPadding = 9
       const descriptionPadding = 53
       const ticketsPerPage = 10
       const ticketsPageLimit = 25
+      this.successMessage()
       console.log(
         'Id',
         'Subject'.padStart(subjectPadding, ' '),
@@ -169,7 +170,7 @@ class Display {
   singleTicketOutput(ticket) {
     if (ticket) {
       if (ticket instanceof Ticket) {
-        this.printSuccessMessage()
+        this.successMessage()
         console.log(ticket.toStringAllDetails())
       } else {
         console.log(`${this.fgRed}Invalid Ticked - Cannot Display`, this.reset)

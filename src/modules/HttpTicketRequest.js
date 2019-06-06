@@ -1,5 +1,4 @@
 'use-strict'
-
 const fetch = require('node-fetch')
 const fetchHeaders = require('fetch-headers')
 const LoginCredentials = require('./LoginCredentials')

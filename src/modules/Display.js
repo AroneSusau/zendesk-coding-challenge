@@ -123,7 +123,7 @@ class Display {
    *
    * @param {Array} ticketsList List of all tickets retrived from Zendesk API.
    */
-  multipleTicketOutput(ticketsList) {
+  allTicketsOutput(ticketsList) {
     if (ticketsList) {
       const subjectPadding = 9
       const descriptionPadding = 53

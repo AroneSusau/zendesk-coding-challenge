@@ -24,7 +24,7 @@ describe('HttpTicketRequet', () => {
   it('returns null for all tickets when provided incorrect credentials', async () => {
     const requester = new HttpTicketRequest()
     requester.setLoginCredentialsAndHeaders('username', 'password')
-    const apiResponse = await requester.retriveTickets(true)
+    const apiResponse = await requester.retriveAllTickets()
     expect(apiResponse).toBeNull()
   })
 
@@ -50,7 +50,7 @@ describe('HttpTicketRequet', () => {
   it('returns null for a single ticket when provided incorrect credentials', async () => {
     const requester = new HttpTicketRequest()
     requester.setLoginCredentialsAndHeaders('username', 'password')
-    const apiResponse = await requester.retriveTickets(false, 2)
+    const apiResponse = await requester.retriveTicketById(2)
     expect(apiResponse).toBeNull()
   })
 })

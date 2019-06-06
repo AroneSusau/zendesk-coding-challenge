@@ -15,9 +15,6 @@ const requester = new HttpTicketRequest()
   let EXIT_PROGRAM = 'exit'
   let FETCH_ALL_TICKETS = '1'
   let FETCH_TICKET_BY_ID = '2'
-  let FULL_LIST = true
-  let SINGLE_BY_ID = false
-  let NO_ID = null
 
   display.welcomeMessage()
   // add later  - display.getUsername(), display.getPassword()
@@ -37,15 +34,11 @@ const requester = new HttpTicketRequest()
       let scrolling = true
       // Ensures there are no more pages of ticket requests before exiting loop
       while (scrolling) {
-        nextPage = display.multipleTicketOutput(
-          await requester.retriveTickets(FULL_LIST, NO_ID, nextPage)
-        )
+        nextPage = display.allTicketsOutput(await requester.retriveAllTickets(nextPage))
         scrolling = nextPage
       }
     } else if (userInput === FETCH_TICKET_BY_ID) {
-      display.singleTicketOutput(
-        await requester.retriveTickets(SINGLE_BY_ID, display.getTicketId())
-      )
+      display.singleTicketOutput(await requester.retriveTicketById(display.getTicketId()))
     } else {
       display.invalidInputMessage()
     }

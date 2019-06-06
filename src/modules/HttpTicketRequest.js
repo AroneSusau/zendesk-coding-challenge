@@ -89,17 +89,16 @@ class HttpTicketRequest {
    *
    * @returns {Mixed} Returns a single ticket object or the full tickets list depending on the isMulti flag.
    */
-  async retriveTickets(isRequestingMultiple, ticketId, nextUrl) {
+  async retriveAllTickets(nextUrl) {
     // Prints if not in testing mode
     if (process.env.NODE_ENV !== 'test')
       console.log(`\n\x1b[33mRetriving tickets from zendesk..\x1b[0m`)
+
     // Set url
     if (nextUrl) {
       this.url = nextUrl
     } else {
-      isRequestingMultiple
-        ? this.setUrlForAllTickets()
-        : this.setUrlForSingleTicket(ticketId)
+      this.setUrlForAllTickets()
     }
 
     // Make fetch request
@@ -107,16 +106,22 @@ class HttpTicketRequest {
     if (apiResponse.error) {
       return null
     } else {
-      if (isRequestingMultiple) {
-        // Add next and previous page
-        let result = this.formatTickets(apiResponse.tickets)
-        result.nextPage = apiResponse.next_page
-        result.previousPage = apiResponse.previous_page
-        return result
-      } else {
-        return new Ticket(apiResponse.ticket)
-      }
+      // Add next and previous page
+      let result = this.formatTickets(apiResponse.tickets)
+      result.nextPage = apiResponse.next_page
+      result.previousPage = apiResponse.previous_page
+      return result
     }
+  }
+
+  async retriveTicketById(ticketId) {
+    // Prints if not in testing mode
+    if (process.env.NODE_ENV !== 'test')
+      console.log(`\n\x1b[33mRetriving tickets from zendesk..\x1b[0m`)
+    this.setUrlForSingleTicket(ticketId)
+
+    let apiResponse = await this.templateFetchRequest()
+    return apiResponse.error ? null : new Ticket(apiResponse.ticket)
   }
 
   /**

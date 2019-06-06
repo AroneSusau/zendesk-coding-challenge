@@ -155,22 +155,24 @@ class Display {
    * @param {Array} ticketsList List of all tickets retrieved from Zendesk API.
    */
   allTicketsOutput(ticketsList) {
-    this.successMessage()
-    this.tableTitles()
-    ticketsList.forEach((ticket, index, list) => {
-      if (ticketsList.length < this.ticketsPageLimit) {
-        console.log(ticket.toStringSummary())
-      } else {
-        // Pauses program if more that 25 results are returned to paginate list.
-        if (index % this.ticketsPerPage === 0 && index != 0) {
-          const pageCount = Math.floor(list.count / this.ticketsPerPage)
-          const currentPage = Math.floor(index / this.ticketsPerPage)
-          readline.question(`\n${currentPage}/${pageCount} - Press enter for more..\n`)
-          this.tableTitles()
+    if (ticketsList) {
+      this.successMessage()
+      this.tableTitles()
+      ticketsList.forEach((ticket, index, list) => {
+        if (ticketsList.length < this.ticketsPageLimit) {
+          console.log(ticket.toStringSummary())
+        } else {
+          // Pauses program if more that 25 results are returned to paginate list.
+          if (index % this.ticketsPerPage === 0 && index != 0) {
+            const pageCount = Math.floor(list.count / this.ticketsPerPage)
+            const currentPage = Math.floor(index / this.ticketsPerPage)
+            readline.question(`\n${currentPage}/${pageCount} - Press enter for more..\n`)
+            this.tableTitles()
+          }
+          console.log(ticket.toStringSummary())
         }
-        console.log(ticket.toStringSummary())
-      }
-    })
+      })
+    }
   }
 
   /**

@@ -5,12 +5,10 @@
   const display = new Display()
   const message = require('./components/Display/Message')
   const HttpTicketRequest = require('./components/HttpTicketRequest/HttpTicketRequest')
-  const requester = new HttpTicketRequest()
+  const requester = new HttpTicketRequest(process.env.USERNAME, process.env.PASSWORD)
 
   // Named Arguments
   const {
-    USERNAME,
-    PASSWORD,
     PRINT_MENU,
     EXIT_PROGRAM,
     FETCH_ALL_TICKETS,
@@ -18,8 +16,8 @@
     FETCH_TICKET_BY_ID
   } = require('./config')
   let PROGRAM_RUNNING = true
+
   display.print(message.welcome)
-  requester.setLoginCredentialsAndHeaders(USERNAME, PASSWORD)
 
   // Seperated into own function for readability
   const fetchAllTickets = async () => {

@@ -1,7 +1,6 @@
 'use-strict'
 const fetch = require('node-fetch')
 const fetchHeaders = require('fetch-headers')
-const LoginCredentials = require('../LoginCredential/LoginCredentials')
 const Ticket = require('../Ticket/Ticket')
 const console = require('console')
 // Disables debug output in testing environment
@@ -11,9 +10,11 @@ class HttpTicketRequest {
   /**
    * HttpTicketRequest Class
    */
-  constructor() {
-    this.headers = null
-    this.login = null
+  constructor(username, password) {
+    this.login = Buffer.from(username + ':' + password).toString('base64')
+    this.headers = new fetchHeaders()
+    this.headers.append('Authorization', 'Basic ' + this.login)
+    this.headers.append('method', 'POST')
     this.url = ''
   }
 
@@ -52,19 +53,6 @@ class HttpTicketRequest {
     }
 
     return response
-  }
-
-  /**
-   * Sets login credentials and authorisation header option.
-   *
-   * @param {String} username Zendesk account username.
-   * @param {String} password Zendesk account password.
-   */
-  setLoginCredentialsAndHeaders(username, password) {
-    this.login = new LoginCredentials(username, password)
-    this.headers = new fetchHeaders()
-    this.headers.append('Authorization', 'Basic ' + this.login.base64)
-    this.headers.append('method', 'POST')
   }
 
   /**

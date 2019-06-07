@@ -28,7 +28,7 @@ module.exports = {
   welcome: `${set.bright + set.fgMagenta}Welcome to the ticket viewer${set.reset}`,
   goodbye: `${set.fgGreen +
     set.bright}\nThank you for using the Ticket Viewer :)${set.fgCyan +
-    set.bright} Goodbye!\n${set.reset + set.dim}Created By Arone Susau\n`,
+    set.bright} Goodbye!\n${set.reset + set.dim}\nCreated By Arone Susau\n`,
   invalidInput: `\n${set.dim}Sorry, invalid command entered!${set.reset}`,
   success: `${set.fgGreen}Sucessfully Retrived Tickets${set.reset}\n`,
   fetch: `\n\x1b[33mRetrieving tickets from zendesk..\x1b[0m`,
@@ -36,6 +36,6 @@ module.exports = {
     'Id' +
     'Subject'.padStart(set.subjectPadding, ' ') +
     'Description'.padStart(set.descriptionPadding, ' '),
-  more: `\n${set.dim + set.fgBlue}Fetching more tickets..${set.reset}`,
-  done: `\n${set.dim + set.fgGreen}All tickets received.${set.reset}`
+  more: `${set.fgBlue}Fetching more tickets..${set.reset}`,
+  done: `\n${set.fgGreen}All tickets received.${set.reset}`
 }

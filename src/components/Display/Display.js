@@ -10,7 +10,6 @@ class Display {
    * Prompt user for input while in general menu.
    *
    * @param {String} question Question to display to user.
-   *
    * @returns {String} Input from user.
    */
   getInput(question) {
@@ -32,34 +31,18 @@ class Display {
    * @param {Array} tickets List of all tickets retrieved from Zendesk API.
    */
   printAllTickets(tickets) {
-    const scrollLimit = 10
-    const pageLimit = 25
-    const fetchLimit = 50
     this.print(message.success)
     this.print(message.tableTitles)
-    tickets.forEach((ticket, index, list) => {
-      if (tickets.length < pageLimit) {
-        this.print(ticket.getSummaryDetails())
-      } else {
-        // Pauses program if more that 25 results are returned to paginate list.
-        if (index % scrollLimit === 0 && index != 0) {
-          const pageCount = Math.floor(list.count / scrollLimit)
-          const pageNumber = Math.floor(
-            list.page * (list.count / scrollLimit / (list.count / fetchLimit)) +
-              index / scrollLimit
-          )
-          this.getInput(`\n${pageNumber}/${pageCount} Press enter for more..\n`)
-          this.print(message.tableTitles)
-        }
-        this.print(ticket.getSummaryDetails())
-      }
-    })
+    tickets.forEach(ticket => this.print(ticket.getSummaryDetails()))
+    this.print(`\n${tickets.page}/${tickets.count / 25}`)
+    if (tickets.nextPage) this.getInput(`\nPress enter for more..\n`)
+    this.print(tickets.nextPage ? message.more : message.done)
   }
 
   printSingleTicket(ticket) {
     if (ticket) {
       this.print(message.success)
-      this.print(ticket.getAllDetails)
+      this.print(ticket.getAllDetails())
     }
   }
 }

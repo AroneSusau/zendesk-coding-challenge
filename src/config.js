@@ -9,6 +9,5 @@ module.exports = {
   MENU: 'menu',
   EXIT: 'exit',
   GET_ALL_TICKETS: '1',
-  GET_TICKET_BY_ID: '2',
-  EMPTY: 'null'
+  GET_TICKET_BY_ID: '2'
 }

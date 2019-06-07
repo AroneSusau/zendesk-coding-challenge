@@ -24,7 +24,7 @@ describe('HttpTicketRequet - templateFetchRequest', () => {
   // All tickets request - retrieveAllTickets
   it('HAPPY PATH - ALL TICKETS: should return tickets array when provided correct credentials for full request method', async () => {
     const requester = new HttpTicketRequest()
-    requester.setLoginCredentialsAndHeaders(USERNAME, USERNAME)
+    requester.setLoginCredentialsAndHeaders(USERNAME, PASSWORD)
     const apiResponse = await requester.retrieveAllTickets()
     expect(apiResponse).not.toBeNull()
     expect(apiResponse.count).not.toBeNull()
@@ -32,7 +32,7 @@ describe('HttpTicketRequet - templateFetchRequest', () => {
 
   it('HAPPY PATH - ALL TICKETS: should return an object with the correct length when provided the nextUrl param', async () => {
     const requester = new HttpTicketRequest()
-    requester.setLoginCredentialsAndHeaders(USERNAME, USERNAME)
+    requester.setLoginCredentialsAndHeaders(USERNAME, PASSWORD)
     const apiResponse = await requester.retrieveAllTickets(
       'https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=25'
     )
@@ -50,14 +50,14 @@ describe('HttpTicketRequet - templateFetchRequest', () => {
   it('HAPPY PATH - SINGLE TICKET:should return a ticket object when provided correct credentials for simple fetch request.', async () => {
     const requester = new HttpTicketRequest()
     requester.setUrlForSingleTicket(2)
-    requester.setLoginCredentialsAndHeaders(USERNAME, USERNAME)
+    requester.setLoginCredentialsAndHeaders(USERNAME, PASSWORD)
     const apiResponse = await requester.templateFetchRequest()
     expect(apiResponse.ticket).not.toBeNull()
   })
 
   it('HAPPY PATH - SINGLE TICKET:should return a ticket object when provided correct credentials for full fetch request.', async () => {
     const requester = new HttpTicketRequest()
-    requester.setLoginCredentialsAndHeaders(USERNAME, USERNAME)
+    requester.setLoginCredentialsAndHeaders(USERNAME, PASSWORD)
     const ticket = await requester.retrieveTicketById(2)
     expect(ticket instanceof Ticket).not.toBeNull()
   })
@@ -79,7 +79,7 @@ describe('HttpTicketRequet - templateFetchRequest', () => {
 
   it('should return null for a single ticket when provided an incorrect ticket id', async () => {
     const requester = new HttpTicketRequest()
-    requester.setLoginCredentialsAndHeaders(USERNAME, USERNAME)
+    requester.setLoginCredentialsAndHeaders(USERNAME, PASSWORD)
     const apiResponse = await requester.retrieveTicketById(-100)
     expect(apiResponse).toBeNull()
   })
@@ -112,23 +112,7 @@ describe('HttpTicketRequet - templateFetchRequest', () => {
     ])
   })
 
-  // Handles errors
-  it('should return which ever object is passed into it', () => {
-    const requester = new HttpTicketRequest()
-    expect(requester.handlesErrors({ mock: 'mock' })).toEqual({ mock: 'mock' })
-    expect(
-      requester.handlesErrors({ ok: false, status: 401, statusText: 'mock' })
-    ).toEqual({ ok: false, status: 401, statusText: 'mock' })
-    expect(
-      requester.handlesErrors({ ok: false, status: 404, statusText: 'mock' })
-    ).toEqual({ ok: false, status: 404, statusText: 'mock' })
-    expect(
-      requester.handlesErrors({ ok: false, status: 400, statusText: 'mock' })
-    ).toEqual({ ok: false, status: 400, statusText: 'mock' })
-    expect(requester.handlesErrors({ ok: false, status: 0, statusText: 'mock' })).toEqual(
-      { ok: false, status: 0, statusText: 'mock' }
-    )
-  })
+  // Handles errors TODO
 
   // Sets login credentials and headers
   it('HAPPY PATH: should set the correct base64 credentials when provided the username and password', () => {

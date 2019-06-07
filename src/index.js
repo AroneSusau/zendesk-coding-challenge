@@ -21,13 +21,14 @@
   display.print(message.welcome)
   requester.setLoginCredentialsAndHeaders(USERNAME, PASSWORD)
 
+  // Seperated into own function for readability
   const fetchAllTickets = async () => {
     let nextPage = null
     let scrolling = true
     while (scrolling) {
+      display.print(message.fetch)
       const ticketsList = await requester.retrieveAllTickets(nextPage)
       if (ticketsList != HAVE_ERROR_OCCUR) {
-        display.print(message.fetch)
         display.printAllTickets(ticketsList)
         display.print(ticketsList.nextPage ? message.more : message.done)
         nextPage = ticketsList.nextPage
@@ -36,16 +37,23 @@
     }
   }
 
+  const fetchSingleTicket = async () => {
+    const ticketId = display.getInput(message.id)
+    display.print(message.fetch)
+    const ticket = await requester.retrieveTicketById(ticketId)
+    if (ticket) {
+      display.print(message.success)
+      display.print(ticket.toStringSummary())
+    }
+  }
+
   // Main program loop
   while (PROGRAM_RUNNING) {
-    let userInput = await display.getInput(message.main)
+    let userInput = display.getInput(message.main)
     if (userInput === FETCH_ALL_TICKETS) {
-      fetchAllTickets()
+      await fetchAllTickets()
     } else if (userInput === FETCH_TICKET_BY_ID) {
-      display.print(message.fetch)
-      const ticketId = await display.getInput(message.id)
-      const ticket = await requester.retrieveTicketById(ticketId)
-      display.printSingleTicket(ticket)
+      await fetchSingleTicket()
     } else if (userInput === PRINT_MENU) {
       display.print(message.menu)
     } else if (userInput === EXIT_PROGRAM) {

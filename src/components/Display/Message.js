@@ -3,8 +3,8 @@
  */
 
 const set = {
-  subjectPadding: 9,
-  descriptionPadding: 53,
+  subjectPadding: 10,
+  descriptionPadding: 54,
   reset: '\x1b[0m',
   bright: '\x1b[1m',
   dim: '\x1b[2m',
@@ -25,7 +25,7 @@ module.exports = {
     set.reset
   } to view a ticket\n• Type ${set.dim}exit${set.reset} to close the program`,
   id: `\n${set.dim}Enter ticket id..${set.reset}`,
-  welcome: `${set.bright + set.fgMagenta}Welcome to the ticket viewer${set.reset}\n`,
+  welcome: `${set.bright + set.fgMagenta}Welcome to the ticket viewer${set.reset}`,
   goodbye: `${set.fgGreen +
     set.bright}\nThank you for using the Ticket Viewer :)${set.fgCyan +
     set.bright} Goodbye!\n${set.reset + set.dim}Created By Arone Susau\n`,
@@ -33,9 +33,9 @@ module.exports = {
   success: `${set.fgGreen}Sucessfully Retrived Tickets${set.reset}\n`,
   fetch: `\n\x1b[33mRetrieving tickets from zendesk..\x1b[0m`,
   tableTitles:
-    '\n\nId' +
+    'Id' +
     'Subject'.padStart(set.subjectPadding, ' ') +
     'Description'.padStart(set.descriptionPadding, ' '),
-  more: `\n${this.dim + this.fgBlue}Fetching more tickets..${this.reset}`,
-  done: `\n${this.dim + this.fgGreen}All tickets received.${this.reset}`
+  more: `\n${set.dim + set.fgBlue}Fetching more tickets..${set.reset}`,
+  done: `\n${set.dim + set.fgGreen}All tickets received.${set.reset}`
 }

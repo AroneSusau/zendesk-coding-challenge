@@ -1,11 +1,7 @@
 'use-strict'
 const console = require('console')
-const readline = require('readline')
+const readline = require('readline-sync')
 const message = require('./Message')
-const inquirer = readline.Interface({
-  input: process.stdin,
-  output: process.stdout
-})
 // Disables debug output in testing environment
 console.log = process.env.NODE_ENV != 'test' ? console.log : function() {}
 
@@ -18,16 +14,7 @@ class Display {
    * @returns {String} Input from user.
    */
   getInput(question) {
-    return new Promise((resolve, reject) => {
-      try {
-        inquirer.question(question, answer => {
-          resolve(answer)
-          inquirer.close()
-        })
-      } catch (error) {
-        reject(error)
-      }
-    })
+    return readline.question(question)
   }
 
   /**
@@ -67,16 +54,6 @@ class Display {
         this.print(ticket.toStringSummary())
       }
     })
-  }
-
-  /**
-   * Prints full details for individual ticket.
-   *
-   * @param {Object} ticket Ticket object returned from Zendesk API.
-   */
-  printSingleTicket(ticket) {
-    this.print(message.success)
-    this.print(ticket.toStringAllDetails())
   }
 }
 

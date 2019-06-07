@@ -4,11 +4,11 @@
   const Display = require('./components/Display/Display')
   const display = new Display()
   const message = require('./components/Display/Message')
-  const HttpTicketRequest = require('./components/HttpTicketRequest/HttpTicketRequest')
+  const TicketFetcher = require('./components/TicketFetcher/TicketFetcher')
 
   // Named Arguments
   const { MENU, EXIT, GET_ALL_TICKETS, GET_TICKET_BY_ID } = require('./config')
-  const requester = new HttpTicketRequest(process.env.USERNAME, process.env.PASSWORD)
+  const requester = new TicketFetcher(process.env.USERNAME, process.env.PASSWORD)
   let PROGRAM_RUNNING = true
 
   display.print(message.welcome)
@@ -16,10 +16,12 @@
   // Main program loop
   while (PROGRAM_RUNNING) {
     let userInput = display.getInput(message.main)
+
     if (userInput === GET_ALL_TICKETS) {
       let scrolling = true
       const apiCaller = await requester.fetchAllTickets()
       display.print(message.fetch)
+
       while (scrolling) {
         const tickets = await apiCaller()
         tickets ? display.printAllTickets(tickets) : (scrolling = false)

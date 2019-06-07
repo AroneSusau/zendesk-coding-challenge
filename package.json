@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.0.0",
     "fetch-headers": "^2.0.0",
     "node-fetch": "^2.6.0",
     "readline-sync": "^1.4.9"

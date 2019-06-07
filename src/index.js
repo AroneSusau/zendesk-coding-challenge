@@ -4,22 +4,24 @@
  */
 ;(async function main() {
   // Client Display
-  const View = require('./../View/View')
+  const View = require('./components/View/View')
   const view = new View()
   // Ticket Requester
-  const HttpTicketRequest = require('./../HttpTicketRequest/HttpTicketRequest')
+  const HttpTicketRequest = require('./components/HttpTicketRequest/HttpTicketRequest')
   const requester = new HttpTicketRequest()
 
   // Named Arguments
-  let PROGRAM_RUNNING = true
-  const PRINT_MENU = 'menu'
-  const EXIT_PROGRAM = 'exit'
-  const FETCH_ALL_TICKETS = '1'
-  const FETCH_TICKET_BY_ID = '2'
-  const HAVE_ERROR_OCCUR = null
+  var {
+    PROGRAM_RUNNING,
+    PRINT_MENU,
+    EXIT_PROGRAM,
+    FETCH_ALL_TICKETS,
+    HAVE_ERROR_OCCUR,
+    FETCH_TICKET_BY_ID
+  } = require('./config')
 
   view.welcomeMessage()
-  requester.setLoginCredentialsAndHeaders('arone.s@live.com.au', 'Arone2019@') //view.getUsername(), view.getPassword())
+  requester.setLoginCredentialsAndHeaders(process.env.USERNAME, process.env.PASSWORD)
 
   // Main program loop
   while (PROGRAM_RUNNING) {

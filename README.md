@@ -16,10 +16,10 @@ A console based application that is written in javascript using the NodeJS runti
 - [NodeJS](https://nodejs.org/en/) v10.16.0 or greater
 - NPM v6.9.0 or greater (At the time of making this documentation, NPM comes with the NodeJS installation)
 
-## How to run (MacOS)
+## How to run (MacOS/Windows)
 
 1. Download the repository to your local machine.
-2. Navigate to the repository directory in your MacOS Terminal or equivalent shell application.
+2. Navigate to the repository directory in your MacOS Terminal or equivalent command line application.
 3. Install all npm modules with the following code.
 
 ```

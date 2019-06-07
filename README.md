@@ -62,9 +62,5 @@ The following section contains links to resources I found super useful while bui
 
   - [Jest Expect Refernce](https://jestjs.io/docs/en/expect.html)
 
-- I found this easy to use and set up synchronous console input package.
-
-  - [Readline-sync NPM Refernce](https://www.npmjs.com/package/readline-sync)
-
 - Basic reference I found on stackoverflow for changing terminal output colours.
   - [Terminal Colour Reference](https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color)

@@ -11,8 +11,6 @@ class Display {
   constructor() {
     this.subjectPadding = 9
     this.descriptionPadding = 53
-    this.ticketsPerPage = 10
-    this.ticketsPageLimit = 25
     // console colours
     this.reset = '\x1b[0m'
     this.bright = '\x1b[1m'
@@ -145,34 +143,38 @@ class Display {
    */
   areAllTicketsRetrieved(moreComing) {
     moreComing
-      ? console.log(`\n${this.dim + this.fgBlue}More tickets coming..${this.reset}`)
-      : console.log(`\n${this.dim + this.fgGreen}All tickets retrieved.${this.reset}`)
+      ? console.log(`\n${this.dim + this.fgBlue}Fetching more tickets..${this.reset}`)
+      : console.log(`\n${this.dim + this.fgGreen}All tickets received.${this.reset}`)
   }
 
   /**
-   * Prints out multiple tickets in summary form and praginates the output if the ticketsList has a length greater than 25.
+   * Prints out multiple tickets in summary form and praginates the output if the tickets has a length greater than 25.
    *
-   * @param {Array} ticketsList List of all tickets retrieved from Zendesk API.
+   * @param {Array} tickets List of all tickets retrieved from Zendesk API.
    */
-  allTicketsOutput(ticketsList) {
-    if (ticketsList) {
-      this.successMessage()
-      this.tableTitles()
-      ticketsList.forEach((ticket, index, list) => {
-        if (ticketsList.length < this.ticketsPageLimit) {
-          console.log(ticket.toStringSummary())
-        } else {
-          // Pauses program if more that 25 results are returned to paginate list.
-          if (index % this.ticketsPerPage === 0 && index != 0) {
-            const pageCount = Math.floor(list.count / this.ticketsPerPage)
-            const currentPage = Math.floor(index / this.ticketsPerPage)
-            readline.question(`\n${currentPage}/${pageCount} - Press enter for more..\n`)
-            this.tableTitles()
-          }
-          console.log(ticket.toStringSummary())
+  allTicketsOutput(tickets) {
+    this.successMessage()
+    this.tableTitles()
+    const scrollLimit = 10
+    const pageLimit = 25
+    const fetchLimit = 50
+    tickets.forEach((ticket, index, list) => {
+      if (tickets.length < pageLimit) {
+        console.log(ticket.toStringSummary())
+      } else {
+        // Pauses program if more that 25 results are returned to paginate list.
+        if (index % scrollLimit === 0 && index != 0) {
+          const pageCount = Math.floor(list.count / scrollLimit)
+          const pageNumber = Math.floor(
+            list.page * (list.count / scrollLimit / (list.count / fetchLimit)) +
+              index / scrollLimit
+          )
+          readline.question(`\n${pageNumber}/${pageCount}Press enter for more..\n`)
+          this.tableTitles()
         }
-      })
-    }
+        console.log(ticket.toStringSummary())
+      }
+    })
   }
 
   /**
@@ -181,10 +183,8 @@ class Display {
    * @param {Object} ticket Ticket object returned from Zendesk API.
    */
   singleTicketOutput(ticket) {
-    if (ticket) {
-      this.successMessage()
-      console.log(ticket.toStringAllDetails())
-    }
+    this.successMessage()
+    console.log(ticket.toStringAllDetails())
   }
 }
 

@@ -1,14 +1,12 @@
 'use-strict'
-const Display = require('./modules/Display')
-const display = new Display()
-
-const HttpTicketRequest = require('./modules/HttpTicketRequest')
-const requester = new HttpTicketRequest()
-
-/**
- * Program entry point
- */
 ;(async function main() {
+  // Client Display
+  const Display = require('./modules/Display')
+  const display = new Display()
+  // Ticket Requester
+  const HttpTicketRequest = require('./modules/HttpTicketRequest')
+  const requester = new HttpTicketRequest()
+
   // Named Arguments
   let PROGRAM_RUNNING = true
   const PRINT_MENU = 'menu'
@@ -18,7 +16,7 @@ const requester = new HttpTicketRequest()
   const HAVE_ERROR_OCCUR = null
 
   display.welcomeMessage()
-  requester.setLoginCredentialsAndHeaders(display.getUsername(), display.getPassword())
+  requester.setLoginCredentialsAndHeaders('arone.s@live.com.au', 'Arone2019@') //display.getUsername(), display.getPassword())
 
   // Main program loop
   while (PROGRAM_RUNNING) {
@@ -32,7 +30,6 @@ const requester = new HttpTicketRequest()
     } else if (userInput === FETCH_ALL_TICKETS) {
       let nextPage = null
       let scrolling = true
-
       while (scrolling) {
         let ticketsList = await requester.retrieveAllTickets(nextPage)
         if (ticketsList != HAVE_ERROR_OCCUR) {
@@ -40,14 +37,14 @@ const requester = new HttpTicketRequest()
           display.allTicketsOutput(ticketsList)
           display.areAllTicketsRetrieved(ticketsList.nextPage)
           nextPage = ticketsList.nextPage
-        }
+        } else nextPage = null
         scrolling = nextPage
       }
     } else if (userInput === FETCH_TICKET_BY_ID) {
       display.fetchMessage()
-      display.singleTicketOutput(
-        await requester.retrieveTicketById(display.getTicketId())
-      )
+      const ticketId = display.getTicketId()
+      const ticket = await requester.retrieveTicketById(ticketId)
+      display.singleTicketOutput(ticket)
     } else {
       display.invalidInputMessage()
     }

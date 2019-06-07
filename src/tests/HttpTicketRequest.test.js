@@ -2,8 +2,8 @@
 const HttpTicketRequest = require('../modules/HttpTicketRequest')
 const Ticket = require('../modules/Ticket')
 
-describe('HttpTicketRequet', () => {
-  // All tickets request
+describe('HttpTicketRequet - templateFetchRequest', () => {
+  // All tickets request - templateFetchRequest
   it('HAPPY PATH - ALL TICKETS: should return tickets array when provided correct credentials for template fetch request.', async () => {
     const requester = new HttpTicketRequest()
     requester.setUrlForAllTickets()
@@ -12,32 +12,30 @@ describe('HttpTicketRequet', () => {
     expect(list.tickets).not.toBeNull()
   })
 
-  it('HAPPY PATH - ALL TICKETS: should tickets array when provided correct credentials for full request method', async () => {
-    const requester = new HttpTicketRequest()
-    requester.setLoginCredentialsAndHeaders('arone.s@live.com.au', 'Arone2019@')
-    const apiResponse = await requester.retrieveAllTickets()
-    expect(apiResponse.tickets).not.toBeNull()
-    expect(apiResponse.count).not.toBeNull()
-  })
-
-  it('HAPPY PATH - ALL TICKETS: should return an object with the correct count when provided the url', async () => {
-    const requester = new HttpTicketRequest()
-    requester.setLoginCredentialsAndHeaders('arone.s@live.com.au', 'Arone2019@')
-    const apiResponse = await requester.retrieveAllTickets(
-      'https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=25'
-    )
-    expect(apiResponse.tickets).not.toBeNull()
-    expect(apiResponse.nextPage).not.toBeNull()
-  })
-
   it('should fail authentication for all tickets when provided incorrect credentials.', async () => {
     const requester = new HttpTicketRequest()
     requester.setLoginCredentialsAndHeaders('username', 'password')
     requester.setUrlForAllTickets()
     const apiResponse = await requester.templateFetchRequest()
-    expect(apiResponse).toEqual({
-      error: "Couldn't authenticate you"
-    })
+    expect(apiResponse.error).not.toBeNull()
+  })
+
+  // All tickets request - retrieveAllTickets
+  it('HAPPY PATH - ALL TICKETS: should return tickets array when provided correct credentials for full request method', async () => {
+    const requester = new HttpTicketRequest()
+    requester.setLoginCredentialsAndHeaders('arone.s@live.com.au', 'Arone2019@')
+    const apiResponse = await requester.retrieveAllTickets()
+    expect(apiResponse).not.toBeNull()
+    expect(apiResponse.count).not.toBeNull()
+  })
+
+  it('HAPPY PATH - ALL TICKETS: should return an object with the correct length when provided the nextUrl param', async () => {
+    const requester = new HttpTicketRequest()
+    requester.setLoginCredentialsAndHeaders('arone.s@live.com.au', 'Arone2019@')
+    const apiResponse = await requester.retrieveAllTickets(
+      'https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=25'
+    )
+    expect(apiResponse.length).not.toBeNull()
   })
 
   it('should return null for all tickets when provided incorrect credentials', async () => {
@@ -47,7 +45,7 @@ describe('HttpTicketRequet', () => {
     expect(apiResponse).toBeNull()
   })
 
-  // Single ticket request
+  // Single ticket request - templateFetchRequest
   it('HAPPY PATH - SINGLE TICKET:should return a ticket object when provided correct credentials for simple fetch request.', async () => {
     const requester = new HttpTicketRequest()
     requester.setUrlForSingleTicket(2)
@@ -56,7 +54,6 @@ describe('HttpTicketRequet', () => {
     expect(apiResponse.ticket).not.toBeNull()
   })
 
-  // Single ticket request
   it('HAPPY PATH - SINGLE TICKET:should return a ticket object when provided correct credentials for full fetch request.', async () => {
     const requester = new HttpTicketRequest()
     requester.setLoginCredentialsAndHeaders('arone.s@live.com.au', 'Arone2019@')
@@ -93,7 +90,7 @@ describe('HttpTicketRequet', () => {
     const requester = new HttpTicketRequest()
     requester.setUrlForAllTickets()
     expect(requester.url).toMatch(
-      'https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=100'
+      'https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=50'
     )
   })
 

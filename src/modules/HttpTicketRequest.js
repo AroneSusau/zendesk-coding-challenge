@@ -88,12 +88,7 @@ class HttpTicketRequest {
    */
   async retrieveAllTickets(nextUrl) {
     // Set url
-    if (nextUrl) {
-      this.url = nextUrl
-    } else {
-      this.setUrlForAllTickets()
-    }
-
+    nextUrl ? (this.url = nextUrl) : this.setUrlForAllTickets()
     // Make fetch request
     let apiResponse = await this.templateFetchRequest()
     if (apiResponse.error) {
@@ -103,6 +98,7 @@ class HttpTicketRequest {
       let result = this.formatTickets(apiResponse.tickets)
       result.nextPage = apiResponse.next_page
       result.previousPage = apiResponse.previous_page
+      result.page = this.getPageNumberFromUrl()
       result.count = apiResponse.count
       return result
     }
@@ -125,7 +121,7 @@ class HttpTicketRequest {
    * Sets the url to retrieve all tickets from the Zendesk API.
    */
   setUrlForAllTickets() {
-    this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=100`
+    this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=50`
   }
 
   /**
@@ -135,6 +131,16 @@ class HttpTicketRequest {
    */
   setUrlForSingleTicket(id) {
     this.url = `https://aronesusau.zendesk.com/api/v2/tickets/${id}.json`
+  }
+
+  /**
+   * Uses a regex search function to find and return the current page number from URL.
+   *
+   * @returns {String} Page number of the current URL.
+   */
+  getPageNumberFromUrl() {
+    let page = this.url.match(/\?page=[0-9]*[0-9]/g)
+    return page ? page[0].split('=')[1] - 1 : 0
   }
 }
 

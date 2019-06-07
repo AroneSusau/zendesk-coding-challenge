@@ -39,7 +39,7 @@ class Display {
     this.print(message.tableTitles)
     tickets.forEach((ticket, index, list) => {
       if (tickets.length < pageLimit) {
-        this.print(ticket.toStringSummary())
+        this.print(ticket.getSummaryDetails())
       } else {
         // Pauses program if more that 25 results are returned to paginate list.
         if (index % scrollLimit === 0 && index != 0) {
@@ -51,9 +51,16 @@ class Display {
           this.getInput(`\n${pageNumber}/${pageCount} Press enter for more..\n`)
           this.print(message.tableTitles)
         }
-        this.print(ticket.toStringSummary())
+        this.print(ticket.getSummaryDetails())
       }
     })
+  }
+
+  printSingleTicket(ticket) {
+    if (ticket) {
+      this.print(message.success)
+      this.print(ticket.getAllDetails)
+    }
   }
 }
 

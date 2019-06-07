@@ -40,7 +40,7 @@ describe('Ticket', () => {
   // Output text tests
   it('HAPPY PATH: returns a condensed summary of the Ticket with default values when passed a default object', () => {
     const mock = new Ticket(undefined)
-      .toStringSummary()
+      .getSummaryDetails()
       .split(' ')
       .join('')
     expect(mock).toEqual('\x1b[2m0NoneNone...\x1b[0m')
@@ -48,7 +48,7 @@ describe('Ticket', () => {
 
   it('HAPPY PATH: returns a full detail description of the Ticket with default values when passed a default object', () => {
     const mock = new Ticket(undefined)
-      .toStringAllDetails()
+      .getAllDetails()
       // Removes return or colour characters, eslint did not recognise \x1b or \x1b as esacpable characters hence the following disable comment.
       // eslint-disable-next-line no-control-regex
       .replace(/\x1b\[0m|\x1b\[2m|\r?\n|\r| /g, '')

@@ -20,7 +20,7 @@ class Ticket {
    *
    * @returns {String} Summary ticket details.
    */
-  toStringSummary() {
+  getSummaryDetails() {
     const id = '\x1b[2m' + this.id
     const subjectGap = 5 - this.id.toString().length
     const subject = ''.padStart(subjectGap, ' ') + this.subject
@@ -36,7 +36,7 @@ class Ticket {
    *
    * @returns {String} All ticket details.
    */
-  toStringAllDetails() {
+  getAllDetails() {
     return (
       'Requester: \x1b[2m' +
       this.id +

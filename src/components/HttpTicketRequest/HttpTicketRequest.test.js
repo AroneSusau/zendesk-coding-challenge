@@ -3,96 +3,46 @@ const HttpTicketRequest = require('./HttpTicketRequest')
 const Ticket = require('../Ticket/Ticket')
 const { USERNAME, PASSWORD } = require('./../../config')
 
-describe('HttpTicketRequet - templateFetchRequest', () => {
-  // All tickets request - templateFetchRequest
-  it('HAPPY PATH - ALL TICKETS: should return tickets array when provided correct credentials for template fetch request.', async () => {
+describe('HttpTicketRequet', () => {
+  // All tickets request
+  it('HAPPY PATH - ALL TICKETS: should return tickets array when provided correct credentials', async () => {
     const requester = new HttpTicketRequest(USERNAME, PASSWORD)
-    requester.setUrlForAllTickets()
-    const list = await requester.templateFetchRequest()
-    expect(list.tickets).not.toBeNull()
-  })
-
-  it('should fail authentication for all tickets when provided incorrect credentials.', async () => {
-    const requester = new HttpTicketRequest('username', 'password')
-    requester.setUrlForAllTickets()
-    const apiResponse = await requester.templateFetchRequest()
-    expect(apiResponse.error).not.toBeNull()
-  })
-
-  // All tickets request - retrieveAllTickets
-  it('HAPPY PATH - ALL TICKETS: should return tickets array when provided correct credentials for full request method', async () => {
-    const requester = new HttpTicketRequest(USERNAME, PASSWORD)
-    const apiResponse = await requester.retrieveAllTickets()
-    expect(apiResponse).not.toBeNull()
-    expect(apiResponse.count).not.toBeNull()
+    const apiResponse = await requester.fetchAllTickets()
+    expect(await apiResponse()).not.toBeNull()
   })
 
   it('HAPPY PATH - ALL TICKETS: should return an object with the correct length when provided the nextUrl param', async () => {
     const requester = new HttpTicketRequest(USERNAME, PASSWORD)
-    const apiResponse = await requester.retrieveAllTickets(
-      'https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=25'
-    )
+    const apiResponse = await requester.fetchAllTickets()
     expect(apiResponse.length).not.toBeNull()
   })
-
   it('should return null for all tickets when provided incorrect credentials', async () => {
     const requester = new HttpTicketRequest('username', 'password')
-    const apiResponse = await requester.retrieveAllTickets()
-    expect(apiResponse).toBeNull()
+    const apiResponse = await requester.fetchAllTickets()
+    expect(await apiResponse()).toBeNull()
   })
 
-  // Single ticket request - templateFetchRequest
-  it('HAPPY PATH - SINGLE TICKET:should return a ticket object when provided correct credentials for simple fetch request.', async () => {
-    const requester = new HttpTicketRequest(USERNAME, PASSWORD)
-    requester.setUrlForSingleTicket(2)
-    const apiResponse = await requester.templateFetchRequest()
-    expect(apiResponse.ticket).not.toBeNull()
-  })
-
+  // Single ticket request - fetchTicketById
   it('HAPPY PATH - SINGLE TICKET:should return a ticket object when provided correct credentials for full fetch request.', async () => {
     const requester = new HttpTicketRequest(USERNAME, PASSWORD)
-    const ticket = await requester.retrieveTicketById(2)
+    const ticket = await requester.fetchTicketById(2)
     expect(ticket instanceof Ticket).not.toBeNull()
-  })
-
-  it('should fail authentication for a single ticket when provided incorrect credentials.', async () => {
-    const requester = new HttpTicketRequest('username', 'password')
-    requester.setUrlForSingleTicket(2)
-    const apiResponse = await requester.templateFetchRequest()
-    expect(apiResponse.error).toBeTruthy()
   })
 
   it('should return null for a single ticket when provided incorrect credentials', async () => {
     const requester = new HttpTicketRequest('username', 'password')
-    const apiResponse = await requester.retrieveTicketById(2)
+    const apiResponse = await requester.fetchTicketById(2)
     expect(apiResponse).toBeNull()
   })
 
   it('should return null for a single ticket when provided an incorrect ticket id', async () => {
     const requester = new HttpTicketRequest(USERNAME, PASSWORD)
-    const apiResponse = await requester.retrieveTicketById(-100)
+    const apiResponse = await requester.fetchTicketById(-100)
     expect(apiResponse).toBeNull()
   })
 
-  // Url change methods
-  it('should change URL to the get all tickets endpoint when called', () => {
-    const requester = new HttpTicketRequest()
-    requester.setUrlForAllTickets()
-    expect(requester.url).toMatch(
-      'https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=50'
-    )
-  })
-
-  it('should change URL to the single ticket endpoint with the correct id when called', () => {
-    const requester = new HttpTicketRequest()
-    requester.setUrlForSingleTicket(123)
-    expect(requester.url).toMatch(
-      'https://aronesusau.zendesk.com/api/v2/tickets/123.json'
-    )
-  })
-
   // Format tickets
-  it('should format all tickets correctly when passed empty objects', () => {
+  it('HAPPY PATH: should format all tickets correctly when passed empty objects', () => {
     const requester = new HttpTicketRequest()
     const mock = [{}, {}, {}]
     expect(requester.formatTickets(mock)).toEqual([

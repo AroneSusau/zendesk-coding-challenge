@@ -4,7 +4,7 @@ const fetchHeaders = require('fetch-headers')
 const Ticket = require('../Ticket/Ticket')
 const console = require('console')
 // Disables debug output in testing environment
-console.log = process.env.NODE_ENV != 'test' ? console.log : function() {}
+// console.log = process.env.NODE_ENV != 'test' ? console.log : function() {}
 
 class HttpTicketRequest {
   /**
@@ -15,7 +15,6 @@ class HttpTicketRequest {
     this.headers = new fetchHeaders()
     this.headers.append('Authorization', 'Basic ' + this.login)
     this.headers.append('method', 'POST')
-    this.url = ''
   }
 
   /**
@@ -23,10 +22,12 @@ class HttpTicketRequest {
    *
    * @returns {Promise} Returns Promise from fetch request.
    */
-  async templateFetchRequest() {
-    return fetch(this.url, { headers: this.headers })
+  async fetchRequest(url) {
+    return fetch(url, { headers: this.headers })
       .then(this.handlesErrors)
-      .then(result => result.json())
+      .then(response => response.json())
+      .then(response => (response.error ? null : response))
+      .catch(error => console.log(error))
   }
 
   /**
@@ -39,16 +40,13 @@ class HttpTicketRequest {
       console.log('\x1b[31mAPI Request Issue..')
       switch (response.status) {
         case 401:
-          console.log(response.statusText, ": Couldn't authenticate you\x1b[0m")
-          break
+          throw response.statusText + ": Couldn't authenticate you\x1b[0m"
         case 404:
-          console.log(response.statusText, ': Ticket not found\x1b[0m')
-          break
+          throw response.statusText + ': Ticket not found\x1b[0m'
         case 400:
-          console.log(response.statusText, ': Invalid Ticket Id\x1b[0m')
-          break
+          throw response.statusText + ': Invalid Ticket Id\x1b[0m'
         default:
-          console.log(response.statusText, '\x1b[0m')
+          throw response.statusText + '\x1b[0m'
       }
     }
 
@@ -68,27 +66,24 @@ class HttpTicketRequest {
   }
 
   /**
-   * Makes a fetch request to the Zendesk API for all tickets.
-   *
-   * @param {Mixed} nextUrl URL for the next page of tickets.
+   * Makes a fetch request to the Zendesk API for all tickets and uses closure to pass the next page url back to itself if there is one.
    *
    * @returns {Mixed} Returns a list of tickets from the Zendesk API or null if an error occurs.
    */
-  async retrieveAllTickets(nextUrl) {
-    // Set url
-    nextUrl ? (this.url = nextUrl) : this.setUrlForAllTickets()
-    // Make fetch request
-    let apiResponse = await this.templateFetchRequest()
-    if (apiResponse.error) {
-      return null
-    } else {
-      // Add next/previous page and count to result object
-      let result = this.formatTickets(apiResponse.tickets)
-      result.nextPage = apiResponse.next_page
-      result.previousPage = apiResponse.previous_page
-      result.page = this.getPageNumberFromUrl()
-      result.count = apiResponse.count
-      return result
+  async fetchAllTickets() {
+    let url = 'https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=25'
+    return async () => {
+      if (url) {
+        let apiResponse = await this.fetchRequest(url)
+        if (apiResponse) {
+          let result = this.formatTickets(apiResponse.tickets)
+          url = apiResponse.next_page
+          result.nextPage = apiResponse.next_page
+          result.page = this.getPageNumberFromUrl(url)
+          result.count = apiResponse.count
+          return result
+        } else return null
+      }
     }
   }
 
@@ -99,26 +94,10 @@ class HttpTicketRequest {
    *
    * @returns {Mixed} Returns a list of tickets from the Zendesk API or null if an error occurs.
    */
-  async retrieveTicketById(ticketId) {
-    this.setUrlForSingleTicket(ticketId)
-    let apiResponse = await this.templateFetchRequest()
-    return apiResponse.error ? null : new Ticket(apiResponse.ticket)
-  }
-
-  /**
-   * Sets the url to retrieve all tickets from the Zendesk API.
-   */
-  setUrlForAllTickets() {
-    this.url = `https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=50`
-  }
-
-  /**
-   * Sets the url to retrieve a single ticket by its id from the Zendesk API.
-   *
-   * @param {number} id Id of ticket to be requested.
-   */
-  setUrlForSingleTicket(id) {
-    this.url = `https://aronesusau.zendesk.com/api/v2/tickets/${id}.json`
+  async fetchTicketById(ticketId) {
+    let url = `https://aronesusau.zendesk.com/api/v2/tickets/${ticketId}.json`
+    let apiResponse = await this.fetchRequest(url)
+    return apiResponse ? new Ticket(apiResponse.ticket) : null
   }
 
   /**
@@ -126,8 +105,8 @@ class HttpTicketRequest {
    *
    * @returns {String} Page number of the current URL.
    */
-  getPageNumberFromUrl() {
-    let page = this.url.match(/\?page=[0-9]*[0-9]/g)
+  getPageNumberFromUrl(url) {
+    let page = url.match(/\?page=[0-9]*[0-9]/g)
     return page ? page[0].split('=')[1] - 1 : 0
   }
 }

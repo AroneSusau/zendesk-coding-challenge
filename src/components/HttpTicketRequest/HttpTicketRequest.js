@@ -1,8 +1,8 @@
 'use-strict'
 const fetch = require('node-fetch')
 const fetchHeaders = require('fetch-headers')
-const LoginCredentials = require('./LoginCredentials')
-const Ticket = require('./Ticket')
+const LoginCredentials = require('../LoginCredential/LoginCredentials')
+const Ticket = require('../Ticket/Ticket')
 const console = require('console')
 // Disables debug output in testing environment
 console.log = process.env.NODE_ENV != 'test' ? console.log : function() {}

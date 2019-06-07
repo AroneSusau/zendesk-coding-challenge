@@ -1,5 +1,5 @@
 'use-strict'
-const LoginCredentials = require('./../modules/LoginCredentials')
+const LoginCredentials = require('./LoginCredentials')
 
 describe('LoginCredentials', () => {
   it('HAPPY PATH: should return the exact string passed to it for username', () => {

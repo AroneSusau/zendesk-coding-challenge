@@ -1,5 +1,5 @@
 'use-strict'
-const Ticket = require('../modules/Ticket')
+const Ticket = require('./Ticket')
 
 // Constructor tests
 describe('Ticket', () => {

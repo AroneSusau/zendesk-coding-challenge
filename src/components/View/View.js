@@ -169,8 +169,9 @@ class Display {
             list.page * (list.count / scrollLimit / (list.count / fetchLimit)) +
               index / scrollLimit
           )
-          readline.question(`\n${pageNumber}/${pageCount}Press enter for more..\n`)
+          readline.question(`\n${pageNumber}/${pageCount} Press enter for more..\n`)
           this.tableTitles()
+          console.log('hi')
         }
         console.log(ticket.toStringSummary())
       }

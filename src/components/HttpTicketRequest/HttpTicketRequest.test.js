@@ -1,6 +1,6 @@
 'use-strict'
-const HttpTicketRequest = require('../modules/HttpTicketRequest')
-const Ticket = require('../modules/Ticket')
+const HttpTicketRequest = require('./HttpTicketRequest')
+const Ticket = require('../Ticket/Ticket')
 
 describe('HttpTicketRequet - templateFetchRequest', () => {
   // All tickets request - templateFetchRequest
@@ -66,9 +66,7 @@ describe('HttpTicketRequet - templateFetchRequest', () => {
     requester.setLoginCredentialsAndHeaders('username', 'password')
     requester.setUrlForSingleTicket(2)
     const apiResponse = await requester.templateFetchRequest()
-    expect(apiResponse).toEqual({
-      error: "Couldn't authenticate you"
-    })
+    expect(apiResponse.error).toBeTruthy()
   })
 
   it('should return null for a single ticket when provided incorrect credentials', async () => {

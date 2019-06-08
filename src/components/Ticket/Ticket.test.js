@@ -3,16 +3,6 @@ const Ticket = require('./Ticket')
 
 // Constructor tests
 describe('Ticket', () => {
-  it('HAPPY PATH: formats the tickets into the correct structure when provided an unformatted ticket object.', () => {
-    const mockTicket = { testAttribute: null }
-    expect(new Ticket(mockTicket)).toEqual({
-      id: 0,
-      subject: 'None',
-      description: 'None',
-      requesterId: 0
-    })
-  })
-
   it('HAPPY PATH: should not change the tickets attributes value if the values are not null', () => {
     const mockTicket = {
       id: 123,
@@ -28,8 +18,9 @@ describe('Ticket', () => {
     })
   })
 
-  it('returns a Ticket object with default attributes when the constructor is passed an invalid value', () => {
-    expect(new Ticket(undefined)).toEqual({
+  it('should format the ticket into the correct structure when provided an unformatted ticket object.', () => {
+    const mockTicket = { testAttribute: null }
+    expect(new Ticket(mockTicket)).toEqual({
       id: 0,
       subject: 'None',
       description: 'None',
@@ -38,7 +29,7 @@ describe('Ticket', () => {
   })
 
   // Output text tests
-  it('HAPPY PATH: returns a condensed summary of the Ticket with default values when passed a default object', () => {
+  it('HAPPY PATH: should return a condensed summary of the Ticket', () => {
     const mock = new Ticket(undefined)
       .getSummaryDetails()
       .split(' ')
@@ -46,10 +37,9 @@ describe('Ticket', () => {
     expect(mock).toEqual('\x1b[2m0NoneNone...\x1b[0m')
   })
 
-  it('HAPPY PATH: returns a full detail description of the Ticket with default values when passed a default object', () => {
+  it('HAPPY PATH: should return all detail descriptions of the Ticket', () => {
     const mock = new Ticket(undefined)
       .getAllDetails()
-      // Removes return or colour characters, eslint did not recognise \x1b or \x1b as esacpable characters hence the following disable comment.
       // eslint-disable-next-line no-control-regex
       .replace(/\x1b\[0m|\x1b\[2m|\r?\n|\r| /g, '')
     expect(mock).toEqual('Requester:0Id:0Subject:NoneDescriptionNone')

@@ -9,6 +9,8 @@ console.log = process.env.NODE_ENV != 'test' ? console.log : function() {}
 class HttpTicketRequest {
   /**
    * HttpTicketRequest Class
+   *
+   * @param {String} token OAuth2 access token used to authenticate the client.
    */
   constructor(token) {
     this.headers = new fetchHeaders()
@@ -22,7 +24,8 @@ class HttpTicketRequest {
    * @returns {Mixed} Returns a list of tickets from the Zendesk API or null if an error occurs.
    */
   async fetchAllTickets() {
-    let url = 'https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=25'
+    const perPage = 25
+    let url = `https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=${perPage}`
     let page = 0
     return async () => {
       if (url) {
@@ -34,6 +37,7 @@ class HttpTicketRequest {
           result.page = this.getPageNumberFromUrl(url)
           result.page = result.page === -1 ? ++page : result.page
           result.count = apiResponse.count
+          result.perPage = perPage
           page = result.page
           return result
         } else return null
@@ -62,7 +66,6 @@ class HttpTicketRequest {
     return fetch(url, { headers: this.headers })
       .then(this.handlesErrors)
       .then(response => response.json())
-      .then(response => (response.error ? null : response))
       .catch(error => console.log(error))
   }
 
@@ -85,7 +88,6 @@ class HttpTicketRequest {
           throw response.statusText + '\x1b[0m'
       }
     }
-
     return response
   }
 
@@ -95,7 +97,9 @@ class HttpTicketRequest {
    * @returns {String} Page number of the current URL.
    */
   getPageNumberFromUrl(url) {
-    return url ? --url.match(/\?page=[0-9]*[0-9]/g)[0].split('=')[1] : -1
+    return typeof url === 'string'
+      ? --url.match(/\?page=[0-9]*[0-9]/g)[0].split('=')[1]
+      : -1
   }
 
   /**

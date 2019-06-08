@@ -3,7 +3,7 @@
  */
 
 const set = {
-  // Sets title output padding for ticket table
+  // Values for padding the table titles.
   subjectPadding: 10,
   descriptionPadding: 54,
   // Sets font settings for text
@@ -20,24 +20,34 @@ const set = {
 }
 
 module.exports = {
+  // Main Loop Prompt
   main: `\nType "${set.fgBlue}menu${set.reset}" to view options or "${set.fgBlue}exit${
     set.reset
   }" to close the program.\n${set.fgRed}>${set.reset}`,
+  // Help Menu
   menu: `\n• Press ${set.dim}1${set.reset} to view all tickets\n• Press ${set.dim}2${
     set.reset
   } to view a ticket\n• Type ${set.dim}exit${set.reset} to close the program`,
+  // Enter Id Prompt
   id: `\n${set.dim}Enter ticket id..${set.reset}`,
+  // Welcome Message
   welcome: `${set.bright + set.fgMagenta}Welcome to the ticket viewer${set.reset}`,
+  // Goodbye Message
   goodbye: `${set.fgGreen +
     set.bright}\nThank you for using the Ticket Viewer :)${set.fgCyan +
     set.bright} Goodbye!\n${set.reset + set.dim}\nCreated By Arone Susau\n`,
+  // Invalid Input Message
   invalidInput: `\n${set.dim}Sorry, invalid command entered!${set.reset}`,
+  // Success Message
   success: `${set.fgGreen}Sucessfully Retrived Tickets${set.reset}\n`,
+  // Fetch Message
   fetch: `\n\x1b[33mRetrieving tickets from zendesk..\x1b[0m`,
+  // Table Titles
   tableTitles:
     'Id' +
     'Subject'.padStart(set.subjectPadding, ' ') +
     'Description'.padStart(set.descriptionPadding, ' '),
   more: `${set.fgBlue}Fetching more tickets..${set.reset}`,
-  done: `\n${set.fgGreen}All tickets received.${set.reset}`
+  done: `\n${set.fgGreen}All tickets received.${set.reset}`,
+  scroll: `\nContinue paging through? Y/N..`
 }

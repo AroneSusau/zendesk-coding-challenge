@@ -11,19 +11,14 @@ describe('TicketFetcher', () => {
     expect(await apiResponse()).not.toBeNull()
   })
 
-  it('HAPPY PATH - ALL TICKETS: should return an object with the correct length when provided the nextUrl param', async () => {
-    const requester = new TicketFetcher(TOKEN)
-    const apiResponse = await requester.fetchAllTickets()
-    expect(apiResponse.length).not.toBeNull()
-  })
   it('should return null for all tickets when provided incorrect credentials', async () => {
-    const requester = new TicketFetcher('username', 'password')
+    const requester = new TicketFetcher('token')
     const apiResponse = await requester.fetchAllTickets()
     expect(await apiResponse()).toBeNull()
   })
 
   // Fetch ticket by id
-  it('HAPPY PATH - SINGLE TICKET:should return a ticket object when provided correct credentials for full fetch request.', async () => {
+  it('HAPPY PATH - SINGLE TICKET: should return a ticket object when provided the correct credentials.', async () => {
     const requester = new TicketFetcher(TOKEN)
     const ticket = await requester.fetchTicketById(2)
     expect(ticket instanceof Ticket).not.toBeNull()
@@ -41,7 +36,7 @@ describe('TicketFetcher', () => {
     expect(apiResponse).toBeNull()
   })
 
-  it('should return null for a single ticket when provided a valid id value, but the ticket does not exists', async () => {
+  it('should return null for a single ticket when provided a valid interger, but the ticket does not exists', async () => {
     const requester = new TicketFetcher(TOKEN)
     // Will need to update id value in future as tickets id grow.
     const id = 10000000
@@ -49,14 +44,8 @@ describe('TicketFetcher', () => {
     expect(apiResponse).toBeNull()
   })
 
-  it('should return null for a single ticket when provided a valid id value, but the ticket does not exists', async () => {
-    const requester = new TicketFetcher(TOKEN)
-    const apiResponse = await requester.fetchTicketById(null)
-    expect(apiResponse).toBeNull()
-  })
-
   // Format tickets
-  it('HAPPY PATH: should format all tickets correctly when passed empty objects', () => {
+  it('should format all tickets correctly when passed empty objects', () => {
     const requester = new TicketFetcher()
     const mock = [{}, {}, {}]
     expect(requester.formatTickets(mock)).toEqual([
@@ -65,8 +54,9 @@ describe('TicketFetcher', () => {
       new Ticket()
     ])
   })
+
   // Handle Errors
-  it('should throw error for default status code received by Zendesk API', () => {
+  it('should throw error for unknow status code received by Zendesk API', () => {
     const requester = new TicketFetcher(TOKEN)
     const mock = {
       status: -1,
@@ -78,5 +68,21 @@ describe('TicketFetcher', () => {
     } catch (error) {
       expect(error).toContain(mock.statusText)
     }
+  })
+
+  // Regex Search for page number
+  it('HAPPY PATH: should return the value of the id passed into the url query string', () => {
+    const requester = new TicketFetcher(TOKEN)
+    let pageNumber = 10
+    const url = `https://aronesusau.zendesk.com/api/v2/tickets.json?page=${pageNumber}`
+    const result = requester.getPageNumberFromUrl(url)
+    expect(result).toEqual(--pageNumber)
+  })
+
+  it('should return -1 if the parameter to getPageNumberFromUrl is not of type string', () => {
+    const requester = new TicketFetcher(TOKEN)
+    const mock = {}
+    const result = requester.getPageNumberFromUrl(mock)
+    expect(result).toEqual(-1)
   })
 })

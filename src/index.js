@@ -25,7 +25,14 @@
 
       while (scrolling) {
         const tickets = await apiCaller()
-        tickets ? display.printAllTickets(tickets) : (scrolling = false)
+        if (tickets) {
+          display.printAllTickets(tickets)
+          if (tickets.nextPage) {
+            // Check if user wants to continue scrolling
+            scrolling = display.getInput(message.scroll).toLowerCase() == 'n' ? 0 : 1
+          }
+          display.print(tickets.nextPage ? message.more : message.done)
+        } else scrolling = false
       }
     } else if (userInput === GET_TICKET_BY_ID) {
       const ticketId = display.getInput(message.id)

@@ -2,7 +2,7 @@
 const console = require('console')
 const readline = require('readline-sync')
 const message = require('./Message')
-// Disables debug output in testing environment
+// Disables console output in testing environment
 console.log = process.env.NODE_ENV != 'test' ? console.log : function() {}
 
 class Display {
@@ -39,6 +39,11 @@ class Display {
     this.print(tickets.nextPage ? message.more : message.done)
   }
 
+  /**
+   * Prints out a single tickets details if the object passed through is not null.
+   *
+   * @param {Object} ticket Ticket returned from Zendesk API
+   */
   printSingleTicket(ticket) {
     if (ticket) {
       this.print(message.success)

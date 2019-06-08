@@ -3,17 +3,16 @@ const fetch = require('node-fetch')
 const fetchHeaders = require('fetch-headers')
 const Ticket = require('../Ticket/Ticket')
 const console = require('console')
-// Disables debug output in testing environment
+// Disables console output in testing environment
 console.log = process.env.NODE_ENV != 'test' ? console.log : function() {}
 
 class HttpTicketRequest {
   /**
    * HttpTicketRequest Class
    */
-  constructor(username, password) {
-    this.login = Buffer.from(username + ':' + password).toString('base64')
+  constructor(token) {
     this.headers = new fetchHeaders()
-    this.headers.append('Authorization', 'Basic ' + this.login)
+    this.headers.append('Authorization', 'Bearer ' + token)
     this.headers.append('method', 'POST')
   }
 
@@ -46,7 +45,7 @@ class HttpTicketRequest {
    * Fetch request to Zendesk API for a single tickets by its id.
    *
    * @param {Number} ticketId Id for ticket.
-   * @returns {Mixed} Returns a list of tickets from the Zendesk API or null if an error occurs.
+   * @returns {Mixed} Returns a single ticket from the Zendesk API.
    */
   async fetchTicketById(ticketId) {
     let url = `https://aronesusau.zendesk.com/api/v2/tickets/${ticketId}.json`

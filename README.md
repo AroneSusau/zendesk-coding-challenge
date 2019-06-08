@@ -64,3 +64,8 @@ The following section contains links to resources I found super useful while bui
 
 - Basic reference I found on stackoverflow for changing terminal output colours.
   - [Terminal Colour Reference](https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color)
+
+curl https://aronesusau.zendesk.com/api/v2/oauth/tokens.json \
+ -d '{"token": {"client_id": "381856962093", "scopes": ["tickets:read"}}' \
+ -H "Content-Type: application/json" \
+ -X POST -v -u arone.s@live.com.au

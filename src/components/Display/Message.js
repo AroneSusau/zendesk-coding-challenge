@@ -3,8 +3,10 @@
  */
 
 const set = {
+  // Sets title output padding for ticket table
   subjectPadding: 10,
   descriptionPadding: 54,
+  // Sets font settings for text
   reset: '\x1b[0m',
   bright: '\x1b[1m',
   dim: '\x1b[2m',

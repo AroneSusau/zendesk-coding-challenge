@@ -95,6 +95,8 @@ The following section contains links to resources I found super useful while bui
   - [Basic Authentication](https://developer.zendesk.com/rest_api/docs/support/introduction#basic-authentication)
 
   - [Pagination](https://developer.zendesk.com/rest_api/docs/support/introduction#pagination)
+  
+  - [OAuth 2.0](https://support.zendesk.com/hc/en-us/articles/203663836-Using-OAuth-authentication-with-your-application)
 
 - Awesome tips that helped make my code more clean organised.
 

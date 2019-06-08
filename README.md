@@ -58,9 +58,7 @@ npm test
 
 ### Design Choices
 
-#### User Authentication
-
-<p style="text-decoration: underline">Connect to the Zendesk API & Request the tickets for your account</p>
+#### Connect to the Zendesk API & Request the tickets for your account
 
 Ticket requests within my application use the NPM node-fetch module which is a node.js version of the vanilla js "_window.fetch_" method. The module is lightweight and easy to use as it retains much of the functionality from the vanilla version.
 
@@ -71,7 +69,7 @@ The application now uses OAuth 2.0 as the primary method of communicating creden
 1. The login username and password are no longer hardcoded in plain text, which would have left them vulnerable to being compomised.
 2. OAuth 2.0 allows scope limits to be set that can restrict token access to **_only reading ticket data_** from the Zendesk API.
 
-<p style="text-decoration: underline">Display tickets in a list & Display individual ticket details</p>
+#### Display tickets in a list & Display individual ticket details
 
 I found that putting all of the string output methods and functionality into the Display class created a ridiculous amount of redundant code
 and made readability quite cumbersome. I opted to add toString methods for both summary and full detail outputs onto the Ticket class and relocated the majority of string output into a separate _message.js_ Object. Moving most of the generic string output to the _message.js_ Object helped to:
@@ -79,9 +77,9 @@ and made readability quite cumbersome. I opted to add toString methods for both 
 1. Increase readbility of the Display.js class file.
 2. Make all text output follow a more concise naming convention e.g: "_display.print(message.goodbye)_".
 
-<p style="text-decoration: underline">Page through tickets when more than 25 are returned</p>
+#### Page through tickets when more than 25 are returned
 
-I had planned to have the TicketFetcher pull down the limit of 100 tickets per requests and only display 10 tickets per page, then allow the user to page through until the tickets until they were complete, but I found that this method of logic was unintuitive and verbose as the calculations for something simple such as the current page number grew rather unwieldy. Also, retriving the limit of tickets per request meant that you would be wasting bandwidth if the user decided to exit after the first page, so for those reasons I decided it would be best to allow the TicketFetch to pull only full twenty five tickets per request then display the full twenty five in console, this meant that:
+I had planned to have the TicketFetcher pull down the limit of 100 tickets per requests and display ten tickets per page. Then allow the user to page through until the tickets until they were complete, but I found that this method of logic was unintuitive and tedious as the calculations for something simple such as the current page number grew rather unwieldy. Also, retrieving the limit of tickets per request meant that you would be wasting bandwidth if the user decided to exit after the first page, so for those reasons I decided it would be best to allow the TicketFetch to pull only twenty-five tickets per request then display the entire twenty-five tickets in console, this meant that:
 
 1. Users were only needing to make network requests for the exact number of pages they wanted to viw.
 2. The code was cleaner and more readable due as the server handled most of the pagination processing.

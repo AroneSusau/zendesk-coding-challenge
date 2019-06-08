@@ -26,9 +26,9 @@ class Display {
   }
 
   /**
-   * Prints out multiple tickets in summary form and paginates the output if the tickets list has a length greater than 25.
+   * Prints out all tickets in summary form.
    *
-   * @param {Array} tickets List of all tickets retrieved from Zendesk API.
+   * @param {Array} Tickets list of all tickets retrieved from Zendesk API.
    */
   printAllTickets(tickets) {
     this.print(message.success)
@@ -39,7 +39,7 @@ class Display {
   }
 
   /**
-   * Prints out a single tickets details if the object passed through is not null.
+   * Prints out a single ticket's details if the object passed through is not null.
    *
    * @param {Object} ticket Ticket returned from Zendesk API
    */

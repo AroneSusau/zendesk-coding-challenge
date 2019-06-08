@@ -50,11 +50,11 @@ npm test
 
 ### Main Component Description
 
-- Index.js : Program entry point, communicates data between components.
-- Ticket.js : Object for ticket data model.
-- TicketFetcher.js : Makes Zendesk API requests and returns tickets.
-- Display.js : Prints output and takes user input.
-- Message.js : Contains general text for output, prompts, warnings, etc.
+- Index : Program entry point, communicates data between components.
+- Ticket : Data model for tickets.
+- TicketFetcher : Makes requests to the Zendesk API and returns tickets.
+- Display : Prints output and takes user input.
+- Message : Contains general text for output, prompts, warnings, etc.
 
 ### Design Choices
 

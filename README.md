@@ -108,7 +108,7 @@ The following section contains links to resources I found super useful while bui
 
 - As writing tests is something I'm improving at everyday, the Jest reference is a must need!
 
-  - [Jest Expect Refernce](https://jestjs.io/docs/en/expect.html)
+  - [Jest Expect Reference](https://jestjs.io/docs/en/expect.html)
 
 - Basic reference I found on stackoverflow for changing terminal output colours.
 

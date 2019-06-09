@@ -13,16 +13,29 @@ class Display {
    * @returns {String} Input from user.
    */
   getInput(question) {
-    return readline.question(question)
+    return readline.question(question).toLowerCase()
   }
 
   /**
    * Prints message to console
    *
-   * @param {String} message Message to be displayed to console
+   * @param {String} message Message to be displayed to console.
    */
   print(message) {
     console.log(message)
+  }
+
+  /**
+   * Prints cancel message if the user decides to stop paging through ticket results,
+   * or prints the update message depending on if a next page exists.
+   *
+   * @param {Boolean} continueScrolling Whether the user would like to cancel scrolling.
+   * @param {Mixed} nextPageExists Whether or not there are more tickets to be displayed.
+   */
+  printNextPageMessage(continueScrolling, nextPageExists) {
+    if (continueScrolling) {
+      this.print(nextPageExists ? message.moreTicketsComing : message.allTicketsReceived)
+    } else this.print(message.cancel)
   }
 
   /**
@@ -41,7 +54,7 @@ class Display {
   /**
    * Prints out a single ticket's details if the object passed through is not null.
    *
-   * @param {Object} ticket Ticket returned from Zendesk API
+   * @param {Object} ticket Ticket returned from Zendesk API.
    */
   printSingleTicket(ticket) {
     if (ticket) {

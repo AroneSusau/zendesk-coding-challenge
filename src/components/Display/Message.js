@@ -1,5 +1,5 @@
 /**
- * This file contains all the messages that can be displayed to console.
+ * This file contains almost all the messages that are displayed to console.
  */
 
 const set = {
@@ -41,7 +41,8 @@ module.exports = {
     'Id' +
     'Subject'.padStart(set.subjectPadding, ' ') +
     'Description'.padStart(set.descriptionPadding, ' '),
-  more: `${set.fgBlue}Fetching more tickets..${set.reset}`,
-  done: `\n${set.fgGreen}All tickets received.${set.reset}`,
-  scroll: `\nContinue paging through? Y/N..`
+  moreTicketsComing: `${set.fgBlue}Fetching more tickets..${set.reset}`,
+  allTicketsReceived: `\n${set.fgGreen}All tickets received.${set.reset}`,
+  continueScrolling: `\nContinue paging through? Y/N..\n${set.fgRed}>${set.reset}`,
+  cancel: `\n${set.fgYellow + set.dim}Exiting Page Scroll${set.reset}`
 }

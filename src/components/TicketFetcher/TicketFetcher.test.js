@@ -71,7 +71,7 @@ describe('TicketFetcher', () => {
   })
 
   // Regex Search for page number
-  it('HAPPY PATH: should return the value of the id passed into the url query string', () => {
+  it('HAPPY PATH: should return the value of the page number passed into the url page query string', () => {
     const requester = new TicketFetcher(TOKEN)
     let pageNumber = 10
     const url = `https://aronesusau.zendesk.com/api/v2/tickets.json?page=${pageNumber}`
@@ -79,7 +79,7 @@ describe('TicketFetcher', () => {
     expect(result).toEqual(--pageNumber)
   })
 
-  it('should return -1 if the parameter to getPageNumberFromUrl is not of type string', () => {
+  it('should return -1 if the argument is not of type string', () => {
     const requester = new TicketFetcher(TOKEN)
     const mock = {}
     const result = requester.getPageNumberFromUrl(mock)

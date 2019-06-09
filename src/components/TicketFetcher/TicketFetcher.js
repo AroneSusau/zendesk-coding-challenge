@@ -28,9 +28,9 @@ class HttpTicketRequest {
     let url = `https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=${perPage}`
     let page = 0
     return async () => {
-      if (url) {
+      if (url != null) {
         let apiResponse = await this.fetchRequest(url)
-        if (apiResponse) {
+        if (apiResponse != null) {
           let result = this.formatTickets(apiResponse.tickets)
           url = apiResponse.next_page
           result.nextPage = apiResponse.next_page

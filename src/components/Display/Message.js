@@ -6,7 +6,7 @@ const set = {
   // Values for padding the table titles.
   subjectPadding: 10,
   descriptionPadding: 54,
-  // Sets font settings for text
+  // Sets font settings for text.
   reset: '\x1b[0m',
   bright: '\x1b[1m',
   dim: '\x1b[2m',

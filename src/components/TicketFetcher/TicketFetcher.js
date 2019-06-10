@@ -8,7 +8,7 @@ console.log = process.env.NODE_ENV != 'test' ? console.log : function() {}
 
 class HttpTicketRequest {
   /**
-   * HttpTicketRequest Class
+   * HttpTicketRequest Class.
    *
    * @param {String} token OAuth2 access token used to authenticate the client.
    */

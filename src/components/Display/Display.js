@@ -3,7 +3,6 @@ const console = require('console')
 const readline = require('readline-sync')
 const message = require('./Message')
 // Disables console output in testing environment
-console.log = process.env.NODE_ENV != 'test' ? console.log : function() {}
 
 class Display {
   /**
@@ -17,7 +16,7 @@ class Display {
   }
 
   /**
-   * Prints message to console
+   * Prints message to console.
    *
    * @param {String} message Message to be displayed to console.
    */

@@ -21,20 +21,20 @@ A command line interface based application that is written in javascript using t
 1. Download the repository to your local machine with the following code.
 
 ```
-git clone https://github.com/AroneSusau/Zendesk-Coding-Challange
+$ git clone https://github.com/AroneSusau/Zendesk-Coding-Challange
 ```
 
 2. Navigate to the repository directory in your MacOS Terminal or equivalent command line application.
 3. Install all npm modules with the following code.
 
 ```
-npm install
+$ npm install
 ```
 
 4. Run the program with the following code.
 
 ```
-npm start
+$ npm start
 ```
 
 #### Run Tests
@@ -43,28 +43,28 @@ npm start
 2. Run the tests with the following code
 
 ```
-npm test
+$ npm test
 ```
 
 ## Architectural Design Overview
 
 ### Main Component Description
 
-- Index : Program entry point, communicates data between components.
-- Ticket : Data model for tickets.
-- TicketFetcher : Makes requests to the Zendesk API and returns tickets.
-- Display : Prints output and takes user input.
-- Message : Contains general text for output, prompts, warnings, etc.
+- ```index.js``` : Program entry point, communicates data between components.
+- ```Ticket.js``` : Data model for tickets.
+- ```TicketFetcher.js``` : Makes requests to the Zendesk API and returns tickets.
+- ```Display.js``` : Prints output and takes user input.
+- ```Message.js``` : Contains general text for output, prompts, warnings, etc.
 
 ### Design Choices
 
 #### Connect to the Zendesk API & Request the tickets for your account
 
-Ticket requests within my application use the NPM node-fetch module which is a node.js version of the vanilla js "_window.fetch_" method. The module is lightweight and easy to use as it retains much of the functionality from the vanilla version.
+Ticket requests within my application use the NPM node-fetch module which is a node.js version of the vanilla js ```window.fetch``` method. The module is lightweight and easy to use as it retains much of the functionality from the vanilla version.
 
 Originally I had used a get request with Basic authentication as my primary method of sending credentials to the API, but after reading further into the Zendesk developer docs, I came to realise that hardcoding the admin username and password into a client application is far too insecure.
 
-The application now uses OAuth 2.0 as the primary method of communicating credentials, using the "Bearer _Token_" syntax, within the request Authorization header. The token resides in the .env file and is read into the node process object on the attribute _TOKEN_ in config.js. The benefit of having used OAuth 2.0 for credential authentical is that:
+The application now uses OAuth 2.0 as the primary method of communicating credentials, using the ```Bearer Token``` syntax, within the request Authorization header. The token resides in the .env file and is read into the node process object on the attribute ```TOKEN``` in config.js. The benefit of having used OAuth 2.0 for credential authentical is that:
 
 1. The login username and password are no longer hardcoded in plain text, which would have left them vulnerable to being compomised.
 2. OAuth 2.0 allows scope limits to be set that can restrict token access to **_only reading ticket data_** from the Zendesk API.
@@ -75,7 +75,7 @@ I found that putting all of the string output methods and functionality into the
 and made readability quite cumbersome. I opted to add toString methods for both summary and full detail outputs onto the Ticket class and relocated the majority of string output into a separate _message.js_ Object. Moving most of the generic string output to the _message.js_ Object helped to:
 
 1. Increase readbility of the Display.js class file.
-2. Make all text output follow a more concise naming convention e.g: "_display.print(message.goodbye)_".
+2. Make all text output follow a more concise naming convention e.g: ```display.print(message.goodbye)```.
 
 #### Page through tickets when more than 25 are returned
 

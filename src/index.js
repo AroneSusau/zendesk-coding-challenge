@@ -5,13 +5,10 @@
   const display = new Display()
   const message = require('./components/Display/Message')
   const TicketFetcher = require('./components/TicketFetcher/TicketFetcher')
-
-  // Named Arguments
   const { MENU, EXIT, GET_ALL_TICKETS, GET_TICKET_BY_ID, TOKEN } = require('./config')
-  // Set authentication
   const requester = new TicketFetcher(TOKEN)
-
   let PROGRAM_RUNNING = true
+  
   display.print(message.welcome)
 
   // Main program loop

@@ -7,7 +7,6 @@
   const TicketFetcher = require('./components/TicketFetcher/TicketFetcher')
   const { MENU, EXIT, GET_ALL_TICKETS, GET_TICKET_BY_ID, TOKEN } = require('./config')
   const requester = new TicketFetcher(TOKEN)
-
   let PROGRAM_RUNNING = true
   let userInput
 

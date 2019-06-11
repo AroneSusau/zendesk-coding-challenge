@@ -8,7 +8,8 @@ describe('TicketFetcher', () => {
   it('HAPPY PATH - ALL TICKETS: should return tickets array when provided correct credentials', async () => {
     const requester = new TicketFetcher(TOKEN)
     const apiResponse = await requester.fetchAllTickets()
-    expect(await apiResponse()).not.toBeNull()
+    const result = await apiResponse()
+    expect(result[0] instanceof Ticket).toBeTruthy()
   })
 
   it('should return null for all tickets when provided incorrect credentials', async () => {

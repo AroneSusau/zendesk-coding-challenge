@@ -48,6 +48,11 @@ $ npm test
 
 ## Architectural Design Overview
 
+### Assumptions
+- Users are familar with CLI usage.
+- Ticket requests to the Zendesk API will always return JSON with the same structure.
+- Error responses from the Zendesk API will always return JSON with the same structure.
+
 ### Main Component Description
 
 - ```index.js``` : Program entry point, communicates data between components.

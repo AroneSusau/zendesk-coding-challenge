@@ -38,10 +38,7 @@
         const tickets = await apiCaller()
         if (tickets != null) {
           display.printAllTickets(tickets)
-          if (tickets.nextPage != null) {
-            // Check if user wants to continue scrolling
-            scrolling = display.getInput(message.continueScrolling) == 'n' ? 0 : 1
-          }
+          scrolling = tickets.nextPage && !display.getInput(message.continueScrolling)
           display.printNextPageMessage(scrolling, tickets.nextPage)
         } else scrolling = false
       }

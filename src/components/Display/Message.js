@@ -43,6 +43,8 @@ module.exports = {
     'Description'.padStart(set.descriptionPadding, ' '),
   moreTicketsComing: `${set.fgBlue}Fetching more tickets..${set.reset}`,
   allTicketsReceived: `\n${set.fgGreen}All tickets received.${set.reset}`,
-  continueScrolling: `\nContinue paging through? Y/N..\n${set.fgRed}>${set.reset}`,
+  continueScrolling:
+    `\nPress enter to continue scrolling or type anything to stop..\n` +
+    `${set.fgRed}>${set.reset}`,
   cancel: `\n${set.fgYellow + set.dim}Exiting Page Scroll${set.reset}`
 }

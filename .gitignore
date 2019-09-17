@@ -1,3 +1,7 @@
-node_modules
-todo
-/coverage
+v1/node_modules
+v1/todo
+v1/coverage
+
+v2/target
+v2/project/target
+v2/.idea

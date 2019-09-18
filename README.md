@@ -1,10 +1,10 @@
-# Zendesk-Coding-Challange
+# Zendesk-Coding-Challenge
 
-This project was conducted for the Zendesk 2019 coding challange for the opportuniuty to engage in a six month internship within the Zendesk Melbourne office. The challange required participants to build a feature that can make http requests to the Zendesk API, then display the tickets in either a GUI or CLI.
+This project was conducted for the Zendesk 2019 coding challenge for the opportuniuty to engage in a six month internship within the Zendesk Melbourne office. The challenge required participants to build a feature that can make http requests to the Zendesk API, then display the tickets in either a GUI or CLI.
 
 *__Internship offer received and accetped.__*
 
-## Challange Requirements
+## Challenge Requirements
 
 - Connect to the Zendesk API.
 - Request the tickets for your account.

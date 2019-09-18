@@ -10,6 +10,6 @@ libraryDependencies ++=  Seq(
 
 lazy val root = (project in file("."))
     .settings(
-      name := "Zendesk-Coding-Challange_2.0",
+      name := "Zendesk-Coding-Challenge_2.0",
       scalaVersion := Versions.scalaVersion
     )

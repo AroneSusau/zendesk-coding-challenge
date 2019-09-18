@@ -1,8 +1,8 @@
-# Zendesk-Coding-Challange - Version 1: Original Submission
+# Zendesk-Coding-Challenge - Version 1: Original Submission
 
 A command line interface based application that is written in javascript using the Node.js runtime. The app makes HTTP requests to the Zendesk API to retrieve account tickets displayed in either a summary table or full details format. The task had a one week deadline to create and submit the application.
 
-## Challange Requirements
+## Challenge Requirements
 
 - Connect to the Zendesk API.
 - Request the tickets for your account.
@@ -21,7 +21,7 @@ A command line interface based application that is written in javascript using t
 1. Download the repository to your local machine with the following code.
 
 ```
-$ git clone https://github.com/AroneSusau/Zendesk-Coding-Challange
+$ git clone https://github.com/AroneSusau/Zendesk-Coding-Challenge
 ```
 
 2. Navigate to the repository directory in your MacOS Terminal or equivalent command line application.

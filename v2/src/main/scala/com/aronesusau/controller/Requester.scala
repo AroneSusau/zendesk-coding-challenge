@@ -1,7 +1,7 @@
 package com.aronesusau.controller
 
-import play.api.libs.json.{JsArray, JsBoolean, JsNull, JsNumber, JsObject, JsString, JsValue, Json}
 import scalaj.http._
+import play.api.libs.json.{JsArray, JsObject, JsValue, Json}
 
 case class Ticket(createdAt: String, requesterId: String, subject: String, description: String) {
 
@@ -11,15 +11,10 @@ case class Ticket(createdAt: String, requesterId: String, subject: String, descr
 
 case object Requester extends App {
 
-  def get(url: String, token: String): HttpResponse[String] =
-    Http(url).header("Authorization",s"Bearer $token").asString
-
-  def parseJson(json: String): JsValue =
-    Json.parse(json)
+  val token: String = sys.env("CODING_CHALLENGE_TOKEN")
 
 
   val url: String = "https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=5"
-  val token: String = sys.env("CODING_CHALLENGE_TOKEN")
   val jsonResponse = get(url, token).body
   val jsonParsed = (parseJson(jsonResponse) \ "tickets").get
 
@@ -34,6 +29,18 @@ case object Requester extends App {
     })
   }
 
-  tickets.foreach(v => println(v))
+  def get(url: String, token: String): HttpResponse[String] =
+    Http(url).header("Authorization",s"Bearer $token").asString
+
+  def parseJson(json: String): JsValue =
+    Json.parse(json)
+
+  def getTicketById(id: Int): JsObject = {
+    val url: String = s"https://aronesusau.zendesk.com/api/v2/tickets/$id.json"
+    val response: String = get(url, token).body
+    println(token)
+    Json.parse(response).as[JsObject]
+  }
+
 
 }

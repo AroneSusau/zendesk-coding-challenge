@@ -1,7 +1,6 @@
 package com.aronesusau.view.AllTicketsPane.InnerPanes
 
 import java.awt.{ Font, GridLayout}
-
 import javax.swing.{JButton, JLabel, JPanel, JSpinner}
 
 case class AllTicketsTopPane() extends JPanel {

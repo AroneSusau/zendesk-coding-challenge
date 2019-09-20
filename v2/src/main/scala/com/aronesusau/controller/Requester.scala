@@ -3,6 +3,7 @@ package com.aronesusau.controller
 import scalaj.http._
 import play.api.libs.json.{JsArray, JsObject, JsValue, Json}
 import com.aronesusau.model.Ticket
+import com.aronesusau.model.optionLike.{Achieved, Failed, Optional}
 
 
 case class Requester() {
@@ -11,21 +12,6 @@ case class Requester() {
     case Some(value) => value
     case None => throw new Exception("CODING_CHALLENGE_TOKEN Not Set.");
   }
-
-  //  val url: String = "https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=5"
-  //  val jsonResponse = get(url, token).body
-  //  val jsonParsed = (parseJson(jsonResponse) \ "tickets").get
-  //
-  //  val tickets: IndexedSeq[Ticket] = jsonParsed match {
-  //    case JsArray(value) => value.map(ticket => {
-  //      val createdAt = (ticket \ "created_at").get.toString()
-  //      val requesterId = (ticket \ "requester_id").get.toString()
-  //      val subject = (ticket \ "subject").get.toString()
-  //      val description = (ticket \ "description").get.toString()
-  //
-  //      Ticket(createdAt, requesterId, subject, description)
-  //    })
-  //  }
 
   def get(url: String, token: String): HttpResponse[String] =
     Http(url).header("Authorization", s"Bearer $token").asString
@@ -38,16 +24,36 @@ case class Requester() {
   def extract(jsValue: JsValue, key: String): JsValue =
     (jsValue \ key).get
 
-  // TODO: Change return value to be Option[Ticket] for any potential failed requests
-  def extractSingleTicketData(initial: JsValue): Ticket = {
+  def extractSingleTicketData(initial: Optional[JsValue]): Ticket = {
     initial match {
-      case JsObject(value) => {
-        val ticket: JsValue = value("ticket")
-        val createdAt = extract(ticket, "created_at").toString()
-        val requesterId = extract(ticket, "requester_id").toString()
-        val subject = extract(ticket, "subject").toString()
-        val description = extract(ticket, "description").toString()
-        Ticket(createdAt, requesterId, subject, description)
+      case Failed(title, message) => Ticket("", "", title, message)
+      case Achieved(value) => value match {
+        case JsObject(value) =>
+          val ticket = value("ticket")
+          val id: String = extract(ticket, "id").toString()
+          val requesterId: String = extract(ticket, "requester_id").toString()
+          val subject: String = extract(ticket, "subject").toString()
+          val description: String = extract(ticket, "description").toString()
+          Ticket(id, requesterId, subject, description)
+      }
+    }
+  }
+
+  def errorHandling(response: JsValue): Optional[JsValue] = {
+    val isResponseEmpty: Boolean = (response \ "error").isEmpty
+
+    isResponseEmpty match {
+      case true => Achieved(response)
+      case false => {
+        val errorResp = response("error")
+        (errorResp \ "title").isEmpty match {
+          case true => Failed(
+            errorResp.toString(),
+            response("description").toString())
+          case false => Failed(
+            (errorResp \ "title").get.toString(),
+            (errorResp \ "message").get.toString())
+        }
       }
     }
   }
@@ -55,7 +61,7 @@ case class Requester() {
   def getTicketById(id: Int): Ticket = {
     val url: String = s"https://aronesusau.zendesk.com/api/v2/tickets/$id.json"
     val response: String = get(url, token).body
-    val data: JsValue = Json.parse(response)
+    val data: Optional[JsValue] = errorHandling(Json.parse(response))
     extractSingleTicketData(data)
   }
 

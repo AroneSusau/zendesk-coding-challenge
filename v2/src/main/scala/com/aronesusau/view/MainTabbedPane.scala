@@ -31,16 +31,15 @@ case class MainTabbedPane() extends JTabbedPane {
   })
 
   // Ticket by Id
-  ticketByIdTab.ticketByIdTopPane.goButton.addActionListener((e: ActionEvent) => {
+  ticketByIdTab.ticketByIdTopPane.goButton.addActionListener((_: ActionEvent) => {
     val id: Int = Integer.parseInt(ticketByIdTab.ticketByIdTopPane.jSpinner.getValue.toString)
     val ticket: Ticket = requester.getTicketById(id)
     val ticketDetailPanel = ticketByIdTab.ticketByIdBottomPane
 
-    ticketDetailPanel.createdAtLabel.setText(ticket.createdAt)
-    ticketDetailPanel.requesterIdLabel.setText(ticket.requesterId)
-    ticketDetailPanel.subjectIdLabel.setText(ticket.subject)
+    ticketDetailPanel.idLabel.setText("<html><b>Id:</b> " + ticket.id + "</html")
+    ticketDetailPanel.requesterIdLabel.setText("<html><b>UID:</b> " + ticket.requesterId + "</html")
+    ticketDetailPanel.subjectIdLabel.setText("<html><b>Subject:</b> " + ticket.subject + "</html")
     ticketDetailPanel.descriptionIdLabel.setText(ticket.description)
-
   })
 
 }

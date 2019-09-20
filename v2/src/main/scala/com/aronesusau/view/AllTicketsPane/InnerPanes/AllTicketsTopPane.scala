@@ -1,17 +1,18 @@
 package com.aronesusau.view.AllTicketsPane.InnerPanes
 
-import java.awt.{ Font, GridLayout}
-import javax.swing.{JButton, JLabel, JPanel, JSpinner}
+import java.awt.{Dimension, Font, GridLayout}
+
+import javax.swing.{ImageIcon, JButton, JLabel, JPanel, JSpinner}
 
 case class AllTicketsTopPane() extends JPanel {
 
   setLayout(new GridLayout(1, 8))
 
-  val perPageLabel: JLabel = new JLabel("Tickets per page:")
+  val perPageLabel: JLabel = new JLabel("Per page:")
   val perPageInput: JSpinner = new JSpinner()
-  val goBtn: JButton = new JButton("Go")
-  val prevBtn: JButton = new JButton("Prev")
-  val nextBtn: JButton = new JButton("Next")
+  val goBtn: JButton = new JButton(new ImageIcon("/Users/asusau/Code/Other/Zendesk-Coding-Challenge/v2/src/main/scala/com/aronesusau/view/resources/search.png"))
+  val prevBtn: JButton = new JButton(new ImageIcon("/Users/asusau/Code/Other/Zendesk-Coding-Challenge/v2/src/main/scala/com/aronesusau/view/resources/arrow-left.png"))
+  val nextBtn: JButton = new JButton(new ImageIcon("/Users/asusau/Code/Other/Zendesk-Coding-Challenge/v2/src/main/scala/com/aronesusau/view/resources/arrow-right.png"))
 
   perPageLabel.setFont(new Font("perPage", Font.PLAIN, 11))
 

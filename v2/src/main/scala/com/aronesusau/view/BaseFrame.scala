@@ -6,7 +6,7 @@ class BaseFrame() extends JFrame {
 
   add(MainTabbedPane())
 
-  setSize(800, 600)
+  setSize(600, 400)
   setResizable(false)
   setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
   setVisible(true)

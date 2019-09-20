@@ -5,3 +5,4 @@ v1/coverage
 v2/target
 v2/project/target
 v2/.idea
+*/.DS_Store

@@ -30,3 +30,13 @@ brew cask install adoptopenjdk8
 
 Java Version 8 is required to run this application or else it will not compile. It is preferable for you to install and use [jEnv](https://www.jenv.be/) to automatically set your java environment versions.
 ## How to run (MacOS)
+
+1. Download the repository to your local machine with the following code.
+```
+git clone https://github.com/AroneSusau/Zendesk-Coding-Challenge
+```
+2. Navigate to the v2 repository directory in your MacOS Terminal or equivalent command line application.
+3. Run the application with the following command.
+```
+sbt clean run
+```

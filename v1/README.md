@@ -15,7 +15,7 @@ A command line interface based application that is written in javascript using t
 $ git clone https://github.com/AroneSusau/Zendesk-Coding-Challenge
 ```
 
-2. Navigate to the repository directory in your MacOS Terminal or equivalent command line application.
+2. Navigate to the v1 repository directory in your MacOS Terminal or equivalent command line application.
 3. Install all npm modules with the following code.
 
 ```

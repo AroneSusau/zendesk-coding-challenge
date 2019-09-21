@@ -11,7 +11,7 @@ case class TicketByIdTopPane() extends JPanel {
   val textLabel = new JLabel("Enter Id: ")
   val spinnerModel = new SpinnerNumberModel()
   val jSpinner = new JSpinner(spinnerModel)
-  val goButton = new JButton(new ImageIcon("/Users/asusau/Code/Other/Zendesk-Coding-Challenge/v2/src/main/scala/com/aronesusau/view/resources/search.png"))
+  val goButton = new JButton(new ImageIcon("resources/search.png"))
 
   textLabel.setFont(new Font("perPage", Font.PLAIN, 11))
 

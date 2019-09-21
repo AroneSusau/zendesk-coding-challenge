@@ -10,9 +10,10 @@ case class AllTicketsTopPane() extends JPanel {
 
   val perPageLabel: JLabel = new JLabel("Per page:")
   val perPageInput: JSpinner = new JSpinner()
-  val goBtn: JButton = new JButton(new ImageIcon("/Users/asusau/Code/Other/Zendesk-Coding-Challenge/v2/src/main/scala/com/aronesusau/view/resources/search.png"))
-  val prevBtn: JButton = new JButton(new ImageIcon("/Users/asusau/Code/Other/Zendesk-Coding-Challenge/v2/src/main/scala/com/aronesusau/view/resources/arrow-left.png"))
-  val nextBtn: JButton = new JButton(new ImageIcon("/Users/asusau/Code/Other/Zendesk-Coding-Challenge/v2/src/main/scala/com/aronesusau/view/resources/arrow-right.png"))
+
+  val goBtn: JButton = new JButton(new ImageIcon("resources/search.png"))
+  val prevBtn: JButton = new JButton(new ImageIcon("resources/arrow-left.png"))
+  val nextBtn: JButton = new JButton(new ImageIcon("resources/arrow-right.png"))
 
   perPageLabel.setFont(new Font("perPage", Font.PLAIN, 11))
 

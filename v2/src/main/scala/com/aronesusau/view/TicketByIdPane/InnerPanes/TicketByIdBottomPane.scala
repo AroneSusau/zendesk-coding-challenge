@@ -1,7 +1,8 @@
 package com.aronesusau.view.TicketByIdPane.InnerPanes
 
-import java.awt.{BorderLayout, GridLayout}
+import java.awt.{BorderLayout, Color, GridLayout}
 
+import javax.swing.border.{EmptyBorder, LineBorder, TitledBorder}
 import javax.swing.{ImageIcon, JLabel, JPanel, JTextArea}
 
 case class TicketByIdBottomPane() extends JPanel {
@@ -17,16 +18,19 @@ case class TicketByIdBottomPane() extends JPanel {
   val topPanel = new JPanel()
   val topTitlePanel = new JPanel()
 
+  subjectIdLabel.setBorder(new EmptyBorder(0, 0, 10, 10))
+
   descriptionIdLabel.setEditable(false)
   descriptionIdLabel.setLineWrap(true)
+  descriptionIdLabel.setBorder(new LineBorder(Color.LIGHT_GRAY))
 
-  topTitlePanel.setLayout(new GridLayout(1, 5))
+  topTitlePanel.setLayout(new GridLayout(1, 5, 10, 2))
   topTitlePanel.add(idLabel)
   topTitlePanel.add(requesterIdLabel)
   topTitlePanel.add(loadingIcon)
   topTitlePanel.add(new JPanel())
 
-  topPanel.setLayout(new GridLayout(2, 1))
+  topPanel.setLayout(new GridLayout(2, 1, 10, 2))
   topPanel.add(topTitlePanel)
   topPanel.add(subjectIdLabel)
 

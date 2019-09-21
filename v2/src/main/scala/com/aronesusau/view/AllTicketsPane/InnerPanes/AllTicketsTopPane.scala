@@ -1,12 +1,14 @@
 package com.aronesusau.view.AllTicketsPane.InnerPanes
 
-import java.awt.{Dimension, Font, GridLayout}
+import java.awt.{Font, GridLayout}
 
+import javax.swing.border.EmptyBorder
 import javax.swing.{ImageIcon, JButton, JLabel, JPanel, JSpinner}
 
 case class AllTicketsTopPane() extends JPanel {
 
   setLayout(new GridLayout(1, 8))
+  setBorder(new EmptyBorder(0, 0, 10, 5))
 
   val perPageLabel: JLabel = new JLabel("Per page:")
   val perPageInput: JSpinner = new JSpinner()

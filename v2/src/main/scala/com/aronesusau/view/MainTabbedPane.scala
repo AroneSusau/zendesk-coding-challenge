@@ -30,7 +30,7 @@ case class MainTabbedPane() extends JTabbedPane {
   allTicketsTab.allTicketsTopPane.prevBtn.addActionListener((_: ActionEvent) => {
     if (pageNumber > 0) {
       decrementPage()
-      pushDataToPanel( paginate())
+      pushDataToPanel(paginate())
     }
   })
 

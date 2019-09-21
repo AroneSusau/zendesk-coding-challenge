@@ -7,10 +7,7 @@ import com.aronesusau.model.optionLike.{Achieved, Failed, Optional}
 
 case class Requester() {
 
-  val token: String = sys.env.get("CODING_CHALLENGE_TOKEN") match {
-    case Some(value) => value
-    case None => throw new Exception("CODING_CHALLENGE_TOKEN Not Set.");
-  }
+  val token = Token.value
 
   def get(url: String, token: String): Optional[JsValue] = {
     val request = Http(url).header("Authorization", s"Bearer $token")
@@ -29,6 +26,7 @@ case class Requester() {
         case JsObject(value) =>
           val ticket: JsValue = value(param)
           extractTicket(ticket)
+        case _ => throw new Exception("Unexpected JsValue returned from request.")
       }
     }
   }
@@ -38,6 +36,7 @@ case class Requester() {
       case Failed(title, message) => IndexedSeq(Ticket("", "", s"$title: $message", ""))
       case Achieved(value) => value match {
         case JsObject(ticketsObj) => ticketsObj("tickets").as[JsArray].value.map(extractTicket)
+        case _ => throw new Exception("Unexpected JsValue returned from request.")
       }
     }
   }

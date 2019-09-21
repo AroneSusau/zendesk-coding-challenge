@@ -2,15 +2,6 @@
 
 A command line interface based application that is written in javascript using the Node.js runtime. The app makes HTTP requests to the Zendesk API to retrieve account tickets displayed in either a summary table or full details format. The task had a one week deadline to create and submit the application.
 
-## Challenge Requirements
-
-- Connect to the Zendesk API.
-- Request the tickets for your account.
-- Page through tickets when more than 25 are returned.
-- Display tickets in a list.
-- Display individual ticket details.
-- Happy path tests provided (minimum).
-
 ## Prerequisite Installations
 
 - [NodeJS](https://nodejs.org/en/) v10.16.0 or greater

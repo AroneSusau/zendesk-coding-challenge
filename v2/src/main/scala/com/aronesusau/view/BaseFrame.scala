@@ -6,6 +6,7 @@ class BaseFrame() extends JFrame {
 
   add(MainTabbedPane())
 
+  setTitle("Ticket Viewer")
   setSize(600, 400)
   setResizable(false)
   setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)

@@ -15,7 +15,7 @@ This project was conducted for the Zendesk 2019 coding challenge for the opportu
 
 A goal set by my team lead during my internship program was to see if I could iterate over my origin design using new skills learnt throughout the course of my internship. Bellow you will find the list of the current iterations I have completed or am currently working on.
 
-| Project | Interface | Langs | Progress |
+| Project | Interface | Languages | Progress |
 | --- | --- | --- | --- |
 | [Version 1](./v1/) | CLI | JS, NodeJS| Complete
 | [Version 2](./v2/) | GUI - AWT/Swing | Scala | In Progress

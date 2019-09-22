@@ -5,6 +5,7 @@ import scalaj.http._
 import play.api.libs.json.{JsArray, JsObject, JsValue, Json}
 import com.aronesusau.model.Ticket
 
+
 import scala.util.{Failure, Success, Try}
 
 case class Requester() {
@@ -43,28 +44,30 @@ case class Requester() {
     }
   }
 
-  def getTickets[A, B, C](url: String, perPage: Int, pageNumber: Int, id: Int, success: B => A, failure: C => A): A = {
+  def getTickets[A, B, C](url: String, perPage: Int, pageNumber: Int, id: Int, success: B => A, failure: C => A, exceptionCase: String => A): A = {
     val token = model.Token.value
     val response = get(url, token)
     response match {
       case Success(value: B) => success(value)
       case Failure(exception: C) => failure(exception)
-      case _ => throw new Exception("Unexpected try object returned from get")
+      case _ => exceptionCase("Undexpected response from get request")
     }
   }
 
-  def getAllTickets(perPage: Int, pageNumber: Int = 1): IndexedSeq[Ticket] = {
+  def getAllTickets(perPage: Int, pageNumber: Int): IndexedSeq[Ticket] = {
     val url: String = s"https://aronesusau.zendesk.com/api/v2/tickets.json?per_page=$perPage&page=$pageNumber"
     getTickets(url, perPage, pageNumber, 0,
       (json: JsObject) => json("tickets").as[JsArray].value.map(extractTicket),
-      (exception: VerboseException) => IndexedSeq(Ticket("", "", exception.title + ": " + exception.message, "")))
+      (exception: VerboseException) => IndexedSeq(Ticket("", "", exception.title + ": " + exception.message, "")),
+      (message: String) => IndexedSeq(Ticket("", "", message, "")))
   }
 
   def getTicketById(id: Int): Ticket = {
     val url: String = s"https://aronesusau.zendesk.com/api/v2/tickets/$id.json"
     getTickets(url, 0, 0, id,
       (json: JsObject) => extractTicket(json("ticket")),
-      (exception: VerboseException) => Ticket("", "", exception.title, exception.message))
+      (exception: VerboseException) => Ticket("", "", exception.title, exception.message),
+      (message: String) => Ticket("", "", message, ""))
   }
 
 

@@ -8,6 +8,7 @@ import com.aronesusau.view.TicketByIdPane.TicketByIdTab
 
 case class TabsEventListener(allTicketsTab: AllTicketsTab, ticketByIdTab: TicketByIdTab) {
 
+  @SuppressWarnings(Array("org.wartremover.warts.Var"))
   var pageNumber = 1
   val requester: Requester = Requester()
 
@@ -40,7 +41,7 @@ case class TabsEventListener(allTicketsTab: AllTicketsTab, ticketByIdTab: Ticket
   // Helper functions
   def paginate(): IndexedSeq[Ticket] = requester.getAllTickets(getPerPageNumber, pageNumber)
 
-  def getPerPageNumber: Int = allTicketsTab.allTicketsTopPane.getSpinnerValue()
+  def getPerPageNumber: Int = allTicketsTab.allTicketsTopPane.getSpinnerValue
 
   def incrementPageNumber(): Unit = pageNumber += 1
 

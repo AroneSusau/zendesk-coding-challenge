@@ -1,6 +1,6 @@
 package com.aronesusau.view.AllTicketsPane.InnerPanes
 
-import java.awt.{Font, GridLayout}
+import java.awt.{Component, Font, GridLayout}
 
 import javax.swing.border.EmptyBorder
 import javax.swing.{ImageIcon, JButton, JLabel, JPanel, JSpinner}
@@ -19,19 +19,17 @@ case class AllTicketsTopPane() extends JPanel {
 
   perPageLabel.setFont(new Font("perPage", Font.PLAIN, 11))
 
-  add(perPageLabel)
-  add(perPageInput)
-  add(goBtn)
-
   // Empty placeholders in grid.
-  add(new JPanel())
-  add(new JPanel())
-  add(new JPanel())
+  val c1: Component = add(perPageLabel)
+  val c2: Component = add(perPageInput)
+  val c3: Component = add(goBtn)
+  val c4: Component = add(new JPanel())
+  val c5: Component = add(new JPanel())
+  val c6: Component = add(new JPanel())
+  val c7: Component = add(prevBtn)
+  val c8: Component = add(nextBtn)
 
-  add(prevBtn)
-  add(nextBtn)
-
-  def getSpinnerValue(): Int = {
+  def getSpinnerValue: Int = {
     Integer.parseInt(perPageInput.getValue.toString)
   }
 }

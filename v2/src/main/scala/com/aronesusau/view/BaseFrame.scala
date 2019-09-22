@@ -1,10 +1,14 @@
 package com.aronesusau.view
 
+
+import java.awt.Component
+
 import javax.swing.JFrame
+
 
 class BaseFrame() extends JFrame {
 
-  add(MainTabbedPane())
+  val c1: Component = add(MainTabbedPane())
 
   setTitle("Ticket Viewer")
   setSize(600, 400)

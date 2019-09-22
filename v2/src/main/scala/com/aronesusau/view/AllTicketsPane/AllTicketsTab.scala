@@ -16,11 +16,12 @@ case class AllTicketsTab() extends JPanel {
 
   val table: JTable = new JTable(tableModel) {
     override def prepareRenderer(renderer: TableCellRenderer, row: Int, column: Int): Component = {
-      val comp: Component  = super.prepareRenderer(renderer, row, column)
+      val comp: Component = super.prepareRenderer(renderer, row, column)
       comp.setBackground(if (row % 2 == 0) Color.WHITE else new Color(220, 220, 220))
       comp
     }
   }
+
   table.getColumnModel.getColumn(0).setPreferredWidth(30)
   table.getColumnModel.getColumn(1).setPreferredWidth(100)
   table.getColumnModel.getColumn(2).setPreferredWidth(400)
@@ -30,8 +31,8 @@ case class AllTicketsTab() extends JPanel {
 
   setLayout(new BorderLayout())
 
-  add(allTicketsTopPane, BorderLayout.NORTH)
-  add(scrollPane)
+  val c1: Unit = add(allTicketsTopPane, BorderLayout.NORTH)
+  val c2: Component = add(scrollPane)
 
   def pushDataToPanel(tickets: IndexedSeq[Ticket]): Unit = {
     tableModel.setRowCount(0)

@@ -1,25 +1,25 @@
 package com.aronesusau.view
 
 import com.aronesusau.controller.TabsEventListener
-import com.aronesusau.view.AllTicketsPane.AllTicketsTab
-import com.aronesusau.view.TicketByIdPane.TicketByIdTab
+import com.aronesusau.view.AllTicketsTab.AllTicketsTabPanel
+import com.aronesusau.view.TicketByIdTab.TicketByIdPanel
+
 import javax.swing.JTabbedPane
 
-case class MainTabbedPane() extends JTabbedPane {
+private[aronesusau] case class MainTabbedPane() extends JTabbedPane {
 
-  val allTicketsTab: AllTicketsTab = AllTicketsTab()
-  val ticketByIdTab: TicketByIdTab = TicketByIdTab()
-  val tabsEventListener: TabsEventListener = TabsEventListener(allTicketsTab, ticketByIdTab)
-
-  addTab("All Tickets", allTicketsTab)
-  addTab("Ticket By Id", ticketByIdTab)
+  val allTicketsTab: AllTicketsTabPanel     = AllTicketsTabPanel()
+  val ticketByIdTab: TicketByIdPanel        = TicketByIdPanel()
+  val tabsEventListener: TabsEventListener  = TabsEventListener(allTicketsTab, ticketByIdTab)
+  val c1: Unit                              = addTab("All Tickets", allTicketsTab)
+  val c2: Unit                              = addTab("Ticket By Id", ticketByIdTab)
 
   // All Tickets Event Listeners
-  allTicketsTab.allTicketsTopPane.goBtn.addActionListener(tabsEventListener.allTicketsGoButtonListener)
-  allTicketsTab.allTicketsTopPane.prevBtn.addActionListener(tabsEventListener.allTicketsPrevButtonListener)
-  allTicketsTab.allTicketsTopPane.nextBtn.addActionListener(tabsEventListener.allTicketsNextButtonListener)
+  allTicketsTab.allTicketsButtonPanel.goBtn.addActionListener(tabsEventListener.allTicketsGoButtonListener)
+  allTicketsTab.allTicketsButtonPanel.prevBtn.addActionListener(tabsEventListener.allTicketsPrevButtonListener)
+  allTicketsTab.allTicketsButtonPanel.nextBtn.addActionListener(tabsEventListener.allTicketsNextButtonListener)
 
   // Ticket By Id Event Listeners
-  ticketByIdTab.ticketByIdTopPane.goButton.addActionListener(tabsEventListener.ticketByIdGoButtonListener)
+  ticketByIdTab.ticketByIdButtonPanel.goButton.addActionListener(tabsEventListener.ticketByIdGoButtonListener)
 
 }

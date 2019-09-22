@@ -1,12 +1,9 @@
 package com.aronesusau.view
 
-
 import java.awt.Component
-
 import javax.swing.JFrame
 
-
-class BaseFrame() extends JFrame {
+private[aronesusau] class BaseFrame() extends JFrame {
 
   val c1: Component = add(MainTabbedPane())
 

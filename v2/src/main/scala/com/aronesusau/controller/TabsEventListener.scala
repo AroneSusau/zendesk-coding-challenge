@@ -3,10 +3,10 @@ package com.aronesusau.controller
 import java.awt.event.ActionEvent
 
 import com.aronesusau.model.Ticket
-import com.aronesusau.view.AllTicketsPane.AllTicketsTab
-import com.aronesusau.view.TicketByIdPane.TicketByIdTab
+import com.aronesusau.view.AllTicketsTab.AllTicketsTabPanel
+import com.aronesusau.view.TicketByIdTab.TicketByIdPanel
 
-case class TabsEventListener(allTicketsTab: AllTicketsTab, ticketByIdTab: TicketByIdTab) {
+private[aronesusau] case class TabsEventListener(allTicketsTab: AllTicketsTabPanel, ticketByIdTab: TicketByIdPanel) {
 
   @SuppressWarnings(Array("org.wartremover.warts.Var"))
   var pageNumber = 1
@@ -33,15 +33,15 @@ case class TabsEventListener(allTicketsTab: AllTicketsTab, ticketByIdTab: Ticket
 
   // Ticket By Id Event Listeners
   def ticketByIdGoButtonListener(e: ActionEvent): Unit = {
-    val id: Int = ticketByIdTab.ticketByIdTopPane.getSpinnerValue()
+    val id: Int = ticketByIdTab.ticketByIdButtonPanel.getSpinnerValue
     val ticket: Ticket = requester.getTicketById(id)
-    ticketByIdTab.ticketByIdBottomPane.pushDataToPanel(ticket)
+    ticketByIdTab.ticketByIdInfoPanel.pushDataToPanel(ticket)
   }
 
   // Helper functions
   def paginate(): IndexedSeq[Ticket] = requester.getAllTickets(getPerPageNumber, pageNumber)
 
-  def getPerPageNumber: Int = allTicketsTab.allTicketsTopPane.getSpinnerValue
+  def getPerPageNumber: Int = allTicketsTab.allTicketsButtonPanel.getSpinnerValue
 
   def incrementPageNumber(): Unit = pageNumber += 1
 

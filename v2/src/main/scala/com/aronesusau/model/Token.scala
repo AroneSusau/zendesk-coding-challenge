@@ -1,6 +1,6 @@
 package com.aronesusau.model
 
-object Token {
+private[aronesusau] object Token {
   /**
    * This is a read only token for the tickets on the account, no other actions can be used via this token.
    */

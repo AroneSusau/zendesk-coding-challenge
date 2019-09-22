@@ -1,12 +1,12 @@
 package com.aronesusau.controller
 
 import com.aronesusau.model
-import scalaj.http._
-import play.api.libs.json.{JsArray, JsObject, JsValue, Json}
 import com.aronesusau.model.Ticket
 
-
+import scalaj.http._
 import scala.util.{Failure, Success, Try}
+
+import play.api.libs.json.{JsArray, JsError, JsObject, JsSuccess, JsValue, Json}
 
 case class Requester() {
 
@@ -28,29 +28,35 @@ case class Requester() {
   }
 
   def errorHandling(response: JsValue): Try[JsValue] = {
-    if ((response \ "error").isEmpty) {
-      Success(response)
-    } else {
-      val errorResp = response("error")
-      if ((errorResp \ "title").isEmpty) {
-        val title = errorResp.toString()
-        val message = (response \ "description").get.toString()
-        Failure(VerboseException(title, message))
-      } else {
-        val title = (errorResp \ "title").get.toString()
-        val message = (errorResp \ "message").get.toString()
-        Failure(VerboseException(title, message))
-      }
+    (response \ "error").validate[JsObject] match {
+      case JsSuccess(value, _) =>
+        Failure(
+          VerboseException(
+            value("title").as[String],
+            value("message").as[String]))
+      case JsError(_) =>
+        (response \ "error").validate[String] match {
+          case JsSuccess(value, _) => Failure(VerboseException(value, response("description").as[String]))
+          case JsError(_) => Success(response)
+        }
     }
   }
 
-  def getTickets[A, B, C](url: String, perPage: Int, pageNumber: Int, id: Int, success: B => A, failure: C => A, exceptionCase: String => A): A = {
+  def getTickets[A, B, C](
+                           url: String,
+                           perPage: Int,
+                           pageNumber: Int,
+                           id: Int,
+                           success: B => A,
+                           failure: C => A,
+                           exception: String => A
+                         ): A = {
     val token = model.Token.value
     val response = get(url, token)
     response match {
       case Success(value: B) => success(value)
       case Failure(exception: C) => failure(exception)
-      case _ => exceptionCase("Undexpected response from get request")
+      case _ => exception("Undexpected response from get request")
     }
   }
 
@@ -69,6 +75,5 @@ case class Requester() {
       (exception: VerboseException) => Ticket("", "", exception.title, exception.message),
       (message: String) => Ticket("", "", message, ""))
   }
-
 
 }

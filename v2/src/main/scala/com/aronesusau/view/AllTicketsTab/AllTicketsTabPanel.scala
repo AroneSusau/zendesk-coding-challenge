@@ -1,20 +1,17 @@
-package com.aronesusau.view.AllTicketsPane
-
-import java.awt.{BorderLayout, Color, Component}
+package com.aronesusau.view.AllTicketsTab
 
 import com.aronesusau.model.Ticket
-import com.aronesusau.view.AllTicketsPane.InnerPanes.AllTicketsTopPane
+
+import java.awt.{BorderLayout, Color, Component}
 import javax.swing.table.{DefaultTableModel, TableCellRenderer}
 import javax.swing.{JPanel, JScrollPane, JTable}
 
-case class AllTicketsTab() extends JPanel {
+private[aronesusau] case class AllTicketsTabPanel() extends JPanel {
 
-  val tableModel: DefaultTableModel = new DefaultTableModel(0, 0)
-  tableModel.addColumn("Id")
-  tableModel.addColumn("UID")
-  tableModel.addColumn("Subject")
+  setLayout(new BorderLayout())
 
-  val table: JTable = new JTable(tableModel) {
+  val tableModel: DefaultTableModel                 = new DefaultTableModel(0, 0)
+  val table: JTable                                 = new JTable(tableModel) {
     override def prepareRenderer(renderer: TableCellRenderer, row: Int, column: Int): Component = {
       val comp: Component = super.prepareRenderer(renderer, row, column)
       comp.setBackground(if (row % 2 == 0) Color.WHITE else new Color(220, 220, 220))
@@ -22,17 +19,17 @@ case class AllTicketsTab() extends JPanel {
     }
   }
 
+  val scrollPane: JScrollPane                       = new JScrollPane(table)
+  val allTicketsButtonPanel: AllTicketsButtonPanel  = AllTicketsButtonPanel()
+  val c1: Unit                                      = add(allTicketsButtonPanel, BorderLayout.NORTH)
+  val c2: Component                                 = add(scrollPane)
+
+  tableModel.addColumn("Id")
+  tableModel.addColumn("UID")
+  tableModel.addColumn("Subject")
   table.getColumnModel.getColumn(0).setPreferredWidth(30)
   table.getColumnModel.getColumn(1).setPreferredWidth(100)
   table.getColumnModel.getColumn(2).setPreferredWidth(400)
-
-  val scrollPane: JScrollPane = new JScrollPane(table)
-  val allTicketsTopPane: AllTicketsTopPane = AllTicketsTopPane()
-
-  setLayout(new BorderLayout())
-
-  val c1: Unit = add(allTicketsTopPane, BorderLayout.NORTH)
-  val c2: Component = add(scrollPane)
 
   def pushDataToPanel(tickets: IndexedSeq[Ticket]): Unit = {
     tableModel.setRowCount(0)
@@ -40,9 +37,8 @@ case class AllTicketsTab() extends JPanel {
       tableModel.addRow(Array[AnyRef](
         ticket.id,
         ticket.requesterId,
-        ticket.subject
-      ))
-    })
-  }
+        ticket.subject ))
+    })}
 
 }
+

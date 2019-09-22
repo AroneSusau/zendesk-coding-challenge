@@ -6,3 +6,4 @@ v2/target
 v2/project/target
 v2/.idea
 *.DS_Store
+v2/project/project/target/config-classes/*

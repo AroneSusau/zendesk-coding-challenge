@@ -2,6 +2,7 @@ package com.aronesusau.view.AllTicketsPane
 
 import java.awt.{BorderLayout, Color, Component}
 
+import com.aronesusau.model.Ticket
 import com.aronesusau.view.AllTicketsPane.InnerPanes.AllTicketsTopPane
 import javax.swing.table.{DefaultTableModel, TableCellRenderer}
 import javax.swing.{JPanel, JScrollPane, JTable}
@@ -31,5 +32,16 @@ case class AllTicketsTab() extends JPanel {
 
   add(allTicketsTopPane, BorderLayout.NORTH)
   add(scrollPane)
+
+  def pushDataToPanel(tickets: IndexedSeq[Ticket]): Unit = {
+    tableModel.setRowCount(0)
+    tickets.foreach(ticket => {
+      tableModel.addRow(Array[AnyRef](
+        ticket.id,
+        ticket.requesterId,
+        ticket.subject
+      ))
+    })
+  }
 
 }

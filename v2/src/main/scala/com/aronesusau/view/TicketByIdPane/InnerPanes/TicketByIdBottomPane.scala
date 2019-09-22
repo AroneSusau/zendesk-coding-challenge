@@ -2,8 +2,9 @@ package com.aronesusau.view.TicketByIdPane.InnerPanes
 
 import java.awt.{BorderLayout, Color, GridLayout}
 
-import javax.swing.border.{EmptyBorder, LineBorder, TitledBorder}
-import javax.swing.{ImageIcon, JLabel, JPanel, JTextArea}
+import com.aronesusau.model.Ticket
+import javax.swing.border.{EmptyBorder, LineBorder}
+import javax.swing.{JLabel, JPanel, JTextArea}
 
 case class TicketByIdBottomPane() extends JPanel {
 
@@ -36,5 +37,12 @@ case class TicketByIdBottomPane() extends JPanel {
 
   add(topPanel, BorderLayout.NORTH)
   add(descriptionIdLabel)
+
+  def updateTicketInfo(ticket: Ticket): Unit = {
+    idLabel.setText("<html><b>Id:</b> " + ticket.id + "</html")
+    requesterIdLabel.setText("<html><b>UID:</b> " + ticket.requesterId + "</html")
+    subjectIdLabel.setText("<html><b>Subject:</b> " + ticket.subject + "</html")
+    descriptionIdLabel.setText(ticket.description)
+  }
 
 }

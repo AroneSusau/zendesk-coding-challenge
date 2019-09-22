@@ -19,18 +19,16 @@ case class MainTabbedPane() extends JTabbedPane {
   addTab("All Tickets", allTicketsTab)
   addTab("Ticket By Id", ticketByIdTab)
 
-  // All Tickets
+  // All Tickets Event Listeners
   allTicketsTab.allTicketsTopPane.goBtn.addActionListener((_: ActionEvent) => {
-    val perPage: Int = Integer.parseInt(allTicketsTab.allTicketsTopPane.perPageInput.getValue.toString)
-    val tickets: IndexedSeq[Ticket] = requester.getAllTickets(perPage)
-    pushDataToPanel(tickets)
+    allTicketsTab.pushDataToPanel(paginate())
     resetPage()
   })
 
   allTicketsTab.allTicketsTopPane.prevBtn.addActionListener((_: ActionEvent) => {
     if (pageNumber > 0) {
       decrementPage()
-      pushDataToPanel(paginate())
+      allTicketsTab.pushDataToPanel(paginate())
     }
   })
 
@@ -39,48 +37,27 @@ case class MainTabbedPane() extends JTabbedPane {
     val tickets: IndexedSeq[Ticket] = paginate()
 
     if (tickets.nonEmpty) {
-      pushDataToPanel(tickets)
+      allTicketsTab.pushDataToPanel(tickets)
     } else decrementPage()
   })
 
-  // Ticket by Id
+  // Ticket By Id Event Listeners
   ticketByIdTab.ticketByIdTopPane.goButton.addActionListener((_: ActionEvent) => {
-    val id: Int = Integer.parseInt(ticketByIdTab.ticketByIdTopPane.jSpinner.getValue.toString)
+    val id: Int = ticketByIdTab.ticketByIdTopPane.getSpinnerValue()
     val ticket: Ticket = requester.getTicketById(id)
-    val ticketDetailPanel = ticketByIdTab.ticketByIdBottomPane
-
-    ticketDetailPanel.idLabel.setText("<html><b>Id:</b> " + ticket.id + "</html")
-    ticketDetailPanel.requesterIdLabel.setText("<html><b>UID:</b> " + ticket.requesterId + "</html")
-    ticketDetailPanel.subjectIdLabel.setText("<html><b>Subject:</b> " + ticket.subject + "</html")
-    ticketDetailPanel.descriptionIdLabel.setText(ticket.description)
+    ticketByIdTab.ticketByIdBottomPane.updateTicketInfo(ticket)
   })
 
+  // Helper functions
   def paginate(): IndexedSeq[Ticket] = {
-    val perPage: Int = Integer.parseInt(allTicketsTab.allTicketsTopPane.perPageInput.getValue.toString)
+    val perPage: Int = allTicketsTab.allTicketsTopPane.getSpinnerValue()
     requester.getAllTickets(perPage, pageNumber)
   }
 
-  def incrementPage(): Unit = {
-    pageNumber += 1
-  }
+  def incrementPage(): Unit = pageNumber += 1
 
-  def decrementPage(): Unit = {
-    if (pageNumber > 1) pageNumber -= 1
-  }
+  def decrementPage(): Unit = if (pageNumber > 1) pageNumber -= 1
 
-  def resetPage(): Unit = {
-    pageNumber = 1
-  }
-
-  def pushDataToPanel(tickets: IndexedSeq[Ticket]): Unit = {
-    allTicketsTab.tableModel.setRowCount(0)
-    tickets.foreach(ticket => {
-      allTicketsTab.tableModel.addRow(Array[AnyRef](
-        ticket.id,
-        ticket.requesterId,
-        ticket.subject
-      ))
-    })
-  }
+  def resetPage(): Unit = pageNumber = 1
 
 }

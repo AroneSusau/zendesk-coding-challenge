@@ -26,4 +26,8 @@ case class TicketByIdTopPane() extends JPanel {
   add(new JLabel())
   add(new JLabel())
 
+  def getSpinnerValue(): Int = {
+    Integer.parseInt(jSpinner.getValue.toString)
+  }
+
 }

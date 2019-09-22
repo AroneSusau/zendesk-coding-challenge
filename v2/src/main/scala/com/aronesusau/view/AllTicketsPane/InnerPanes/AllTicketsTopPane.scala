@@ -30,4 +30,8 @@ case class AllTicketsTopPane() extends JPanel {
 
   add(prevBtn)
   add(nextBtn)
+
+  def getSpinnerValue(): Int = {
+    Integer.parseInt(perPageInput.getValue.toString)
+  }
 }

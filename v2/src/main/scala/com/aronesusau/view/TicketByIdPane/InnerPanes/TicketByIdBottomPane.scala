@@ -38,7 +38,7 @@ case class TicketByIdBottomPane() extends JPanel {
   add(topPanel, BorderLayout.NORTH)
   add(descriptionIdLabel)
 
-  def updateTicketInfo(ticket: Ticket): Unit = {
+  def pushDataToPanel(ticket: Ticket): Unit = {
     idLabel.setText("<html><b>Id:</b> " + ticket.id + "</html")
     requesterIdLabel.setText("<html><b>UID:</b> " + ticket.requesterId + "</html")
     subjectIdLabel.setText("<html><b>Subject:</b> " + ticket.subject + "</html")

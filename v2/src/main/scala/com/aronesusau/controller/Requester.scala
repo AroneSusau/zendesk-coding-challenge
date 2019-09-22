@@ -1,5 +1,6 @@
 package com.aronesusau.controller
 
+import com.aronesusau.model
 import scalaj.http._
 import play.api.libs.json.{JsArray, JsObject, JsValue, Json}
 import com.aronesusau.model.Ticket
@@ -7,7 +8,7 @@ import com.aronesusau.model.optionLike.{Achieved, Failed, Optional}
 
 case class Requester() {
 
-  val token = Token.value
+  val token = model.Token.value
 
   def get(url: String, token: String): Optional[JsValue] = {
     val request = Http(url).header("Authorization", s"Bearer $token")

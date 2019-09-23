@@ -1,10 +1,11 @@
 package com.aronesusau.view.AllTicketsTab
 
 import com.aronesusau.model.Ticket
-
 import java.awt.{BorderLayout, Color, Component}
+
 import javax.swing.table.{DefaultTableModel, TableCellRenderer}
 import javax.swing.{JPanel, JScrollPane, JTable}
+import javax.swing.JOptionPane
 
 private[aronesusau] case class AllTicketsTabPanel() extends JPanel {
 

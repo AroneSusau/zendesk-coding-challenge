@@ -1,7 +1,5 @@
 package com.aronesusau.view.TicketByIdTab
 
-import com.aronesusau.model.Ticket
-
 import java.awt.{BorderLayout, Color, Component, GridLayout}
 import javax.swing.border.{EmptyBorder, LineBorder}
 import javax.swing.{JLabel, JPanel, JTextArea}
@@ -32,12 +30,5 @@ private[aronesusau] case class TicketByIdInfoPanel() extends JPanel {
   descriptionIdLabel.setBorder(new LineBorder(Color.LIGHT_GRAY))
   descriptionIdLabel.setEditable(false)
   descriptionIdLabel.setLineWrap(true)
-
-  def pushDataToPanel(ticket: Ticket): Unit = {
-    idLabel.setText("<html><b>Id:</b> " + ticket.id + "</html")
-    requesterIdLabel.setText("<html><b>UID:</b> " + ticket.requesterId + "</html")
-    subjectIdLabel.setText("<html><b>Subject:</b> " + ticket.subject + "</html")
-    descriptionIdLabel.setText(ticket.description)
-  }
 
 }

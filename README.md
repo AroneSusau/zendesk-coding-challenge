@@ -17,5 +17,8 @@ A goal set by my team lead during my internship program was to see if I could it
 
 | Project | Interface | Languages | Progress |
 | --- | --- | --- | --- |
-| [Version 1](./v1/) | CLI | JS, NodeJS| Complete
-| [Version 2](./v2/) | GUI - AWT/Swing | Scala | In Progress
+| [Version 1](./v1/) | CLI | JS, NodeJS| Complete |
+| [Version 2](./v2/) | GUI | Scala | Complete |
+
+## Update - February 2020
+Unfortunately, the testing account associated with my internship was eventually disabled. So, as a replacement I have implemented my own [API](https://github.com/aronesusau/internship-api-mock) that will be able to provide the relevant mock data.

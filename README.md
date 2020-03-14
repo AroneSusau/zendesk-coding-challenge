@@ -20,5 +20,5 @@ A goal set by my team lead during my internship program was to see if I could it
 | [Version 1](./v1/) | CLI | JS, NodeJS| Complete |
 | [Version 2](./v2/) | GUI | Scala | Complete |
 
-## Update - February 2020
-Unfortunately, the testing account associated with my internship was eventually disabled. So, as a replacement I have implemented my own [API](https://github.com/aronesusau/internship-api-mock) that will be able to provide the relevant mock data.
+## Update - March 2020
+Unfortunately, the testing account associated with my internship was eventually disabled hence all network requests will fail. I am planning on implementing a mock REST API to take over responsibility in the near future.

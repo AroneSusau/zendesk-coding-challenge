@@ -20,5 +20,5 @@ A goal set by my team lead during my internship program was to see if I could it
 | [Version 1](./v1/) | CLI | JS, NodeJS| Complete |
 | [Version 2](./v2/) | GUI | Scala | Complete |
 
-## Update - March 2020
-Unfortunately, the testing account associated with my internship was eventually disabled hence all network requests will fail. I am planning on implementing a mock REST API to take over responsibility in the near future.
+## Update - November 2020
+Unfortunately, the testing account associated with my internship was eventually disabled hence all network requests will fail.

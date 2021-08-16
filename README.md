@@ -47,9 +47,9 @@ I would however reccomended:
 - Understand your code, seriously, don't just smack the keyboard and Ctrl + C, Ctrl + V from stack overflow (or my project :P).
 - Add reasonable comments. Remember, another human will be reading it!
 
-I realise that a lot of the advice I'm writing isn't groundbreaking or super secret insider knowledge, but if I'm able provide some level of releif for all our imposter syndrome and provide some comfort than my job is done.
+I realise that a lot of the advice I'm giving isn't groundbreaking or super secret insider knowledge, but if I'm able provide some level of comfort for all our imposter syndrome, then my job is done.
 
-If for whatever reason you still happen to be reading this, I wish you the best of luck and in your interviews and career ahead.
+If for whatever reason you still happen to be reading this, I wish you the best of luck in your interviews and career ahead.
 
 Until then, see you later mates! 😊
 

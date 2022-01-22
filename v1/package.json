@@ -13,7 +13,7 @@
   "dependencies": {
     "dotenv": "^8.0.0",
     "fetch-headers": "^2.0.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "readline-sync": "^1.4.9"
   },
   "devDependencies": {
